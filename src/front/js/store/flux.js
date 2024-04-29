@@ -1,19 +1,8 @@
+
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			message: null,
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			]
+			recipes: []
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -46,8 +35,56 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 				//reset the global store
 				setStore({ demo: demo });
-			}
+			},
+		getCuisine: async (name) => {
+			fetch(`https://api.spoonacular.com/recipes/complexSearch?apiKey=a0e8493384cc4a6d80e493f1e6480eb7&cuisine=${name}`)
+			.then(resp => {
+				if (!resp.ok) {
+					throw new Error(resp.status);
+				}
+				return resp.json();
+			})
+			.then(data => {
+				console.log(data)
+				setStore({recipes: data.results})
+			})
+			.catch(error => {
+				console.error(error);
+			})
+		},
+		getDiet: async (name) => {
+			fetch(`https://api.spoonacular.com/recipes/complexSearch?apiKey=a0e8493384cc4a6d80e493f1e6480eb7&diet=${name}`)
+			.then(resp => {
+				if (!resp.ok) {
+					throw new Error(resp.status);
+				}
+				return resp.json();
+			})
+			.then(data => {
+				console.log(data)
+				setStore({recipes: data.results})
+			})
+			.catch(error => {
+				console.error(error);
+			})
+		},
+		getIntolerances: async (name) => {
+			fetch(`https://api.spoonacular.com/recipes/complexSearch?apiKey=a0e8493384cc4a6d80e493f1e6480eb7&intolerances=${name}`)
+			.then(resp => {
+				if (!resp.ok) {
+					throw new Error(resp.status);
+				}
+				return resp.json();
+			})
+			.then(data => {
+				console.log(data)
+				setStore({recipes: data.results})
+			})
+			.catch(error => {
+				console.error(error);
+			})
 		}
+	}
 	};
 };
 
