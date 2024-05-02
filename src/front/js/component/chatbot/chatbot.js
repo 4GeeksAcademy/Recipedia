@@ -61,14 +61,21 @@ export const ChatBot = () => {
 
   return (
     <div className="chatbot-container">
-      <div className="chatbot-input">
+      <div className="ml-auto chatbot-input">
         <input
+          classname="chatbot-input"
           type="text"
           value={input}
           onChange={handleInput}
-          placeholder="Type a message..."
+          placeholder="Not sure what to eat? Try our AI.."
+          style={{ width: '2066px', borderRadius: '5px', border: '1px solid grey', padding: '8px' }}
         />
-        <button onClick={sendMessage}>Send</button>
+        <button onClick={sendMessage} style={{
+        backgroundColor: 'white',
+        border: '1px solid grey',
+        borderRadius: '5px',
+        padding: '8px'
+    }}>Send</button>
       </div>
       <div className="chatbot-messages">
         {messages.map((message, index) => (

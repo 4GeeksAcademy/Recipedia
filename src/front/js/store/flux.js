@@ -20,13 +20,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 		},
 		actions: {
 			addRecipes: (recipes) => {
+				console.log(recipes);
 				let store = getStore()
-				let newStore= store.recentlyFetchedRecipes.concat(recipes)
-				setStore(newStore)
-			},
-			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
+				store.recentlyFetchedRecipes= store.recentlyFetchedRecipes.concat(recipes)
+				setStore(store)
 			},
 
 			getMessage: async () => {

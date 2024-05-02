@@ -1,19 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { ChatBot } from "./chatbot/chatbot";
 
 export const Navbar = () => {
-	return (
-		<nav className="navbar navbar-light bg-light">
-			<div className="container">
-				<Link to="/">
-					<span className="navbar-brand mb-0 h1">React Boilerplate</span>
-				</Link>
-				<div className="ml-auto">
-					<Link to="/demo">
-						<button className="btn btn-primary">Check the Context in action</button>
-					</Link>
-				</div>
-			</div>
-		</nav>
-	);
+    const [showChatBot, setShowChatBot] = useState(false);
+
+    return (
+        <nav className="navbar">
+            <div className="ml-auto d-flex justify-content-start">
+                <span className="navbar m-5">Filters</span>
+                <span className="navbar" onClick={() => setShowChatBot(!showChatBot)}>Chatbot</span>
+            </div>
+          
+            <div className="ml-auto me-5">
+                <span className="navbar">Login</span>
+            </div>
+			<div className="chatbot col-12">{showChatBot && <ChatBot />}</div>
+        </nav>
+    );
 };

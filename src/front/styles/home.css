@@ -1,7 +1,20 @@
-/*
-    home.css: This website contains selectors only used in home.css
+.navbar{
+    font-family: 'avenir light';
+    font-size: 20px;
+    color: #303131;
+    margin: 0 44px 0 80px;
+}
 
-    All pages share the styles on index.css but you should create 
-    one more css for each page that will contain the selected used 
-    on that page only (the ones not reused in other pages).
-*/
+.chatbot{
+    margin: 0 0 0 230px;
+}
+
+.chatbot-container{
+    font-family: 'avenir light';
+    font-size: 20px;
+    color: #303131;
+}
+
+.chatbot-input{
+    margin: 0 40px 0 0;
+}
