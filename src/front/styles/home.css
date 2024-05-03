@@ -1,12 +1,12 @@
 .navbar{
     font-family: 'avenir light';
-    font-size: 20px;
+    font-size: 22px;
     color: #303131;
-    margin: 0 44px 0 80px;
+    margin: 0 10% 0 4%;
 }
 
 .chatbot{
-    margin: 0 0 0 230px;
+    margin: 0 0 0 4%;
 }
 
 .chatbot-container{
@@ -15,6 +15,6 @@
     color: #303131;
 }
 
-.chatbot-input{
-    margin: 0 40px 0 0;
-}
+/* .chatbot-input{
+    margin: 0 0 0 0;
+} */

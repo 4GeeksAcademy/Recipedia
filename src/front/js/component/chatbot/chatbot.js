@@ -1,12 +1,13 @@
 import React, { useState, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../../store/appContext";
 
-export const ChatBot = () => {
+
+export const ChatBot = ({setShowChatBot}) => {
   const {store, actions} = useContext(Context);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
-
+  const navigate=useNavigate();
   const handleInput = (e) => {
     setInput(e.target.value);
   };
@@ -31,19 +32,7 @@ export const ChatBot = () => {
       if (response.status != 200) {
         alert("an error ocurred while sending your message");
       } else {
-        let data = await response.json();
-        for (let i = 0; i< data.media.length; i++){
-          let parts = data.media[i].link.split("/")
-          let recipeString = parts[parts.length-1]
-          let recipeStringParts = recipeString.split("-")
-          let recipeId = recipeStringParts[recipeStringParts.length-1]
-         let resp = await fetch ("https://api.spoonacular.com/recipes/"+recipeId+"/information?apiKey=" +
-          process.env.SPOONACULAR_API_KEY
-          )
-          let info = await resp.json();
-          data.media[i]["info"]=info
-          data.media[i]["id"]=recipeId
-        }
+        let data = await response.json();     
         console.log(data);
         setMessages([
           ...messages,
@@ -61,33 +50,36 @@ export const ChatBot = () => {
 
   return (
     <div className="chatbot-container">
-      <div className="ml-auto chatbot-input">
+      <div className="ml-auto chatbot-input" style={{ display: 'flex', alignItems: 'center', margin: '0 5% 0 0'}}>
         <input
-          classname="chatbot-input"
+          className="chatbot-input"
           type="text"
           value={input}
           onChange={handleInput}
           placeholder="Not sure what to eat? Try our AI.."
-          style={{ width: '2066px', borderRadius: '5px', border: '1px solid grey', padding: '8px' }}
+          style={{ flex: '1', maxWidth: '100%', borderRadius: '5px', border: '1px solid grey', padding: '8px', margin: '0 2px 0 0'}}
         />
         <button onClick={sendMessage} style={{
-        backgroundColor: 'white',
-        border: '1px solid grey',
-        borderRadius: '5px',
-        padding: '8px'
-    }}>Send</button>
+          backgroundColor: 'white',
+          border: '1px solid grey',
+          borderRadius: '5px',
+          padding: '8px'
+        }}>Send</button>
       </div>
       <div className="chatbot-messages">
         {messages.map((message, index) => (
           <div key={index} className={`message ${message.sender}`}>
             <p>
-              {message.sender} : {message.text}
+            {message.sender} : {message.text}
             </p>
             <div className="row container mx-auto">
               {message.recipes?.map((recipe, idx) => (
                 <div className="col-2">
                   <div key={idx} className={`card w-100`}>
-                    <img
+                    <img onClick={()=> {
+                          setShowChatBot(false)
+                          navigate("/recipe/"+recipe.title)
+                        }}
                       src={recipe.image}
                       className="card-img-top"
                       alt={recipe.title}
@@ -95,9 +87,12 @@ export const ChatBot = () => {
                     <div className="card-body">
                       <h5 className="card-title">{recipe.title}</h5>
                       <div className="actions">
-                        <Link className="btn btn-primary" to={"/recipe/"+recipe.title}>
+                        <button onClick={()=> {
+                          setShowChatBot(false)
+                          navigate("/recipe/"+recipe.title)
+                        }} className="btn btn-primary">
                           Details
-                        </Link>
+                        </button>
                       </div>
                     </div>
                   </div>

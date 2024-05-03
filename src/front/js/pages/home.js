@@ -9,7 +9,7 @@ export const Home = () => {
 
 	return (
 		<div className="text-center mt-5">
-			<img src={background} />
+			<img src={background} style={{ width: "90%" }}/>
 		</div>
 	);
 };
