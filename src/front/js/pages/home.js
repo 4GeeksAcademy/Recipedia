@@ -8,8 +8,8 @@ export const Home = () => {
 	const { store, actions } = useContext(Context);
 
 	return (
-		<div className="text-center mt-5">
-			<img src={background} style={{ width: "90%" }}/>
-		</div>
+		<div className="text-center mt-5" style={{ minHeight: "100vh" }}>
+            <img src={background} style={{ width: "100%" }} alt="Background" />
+        </div>
 	);
 };

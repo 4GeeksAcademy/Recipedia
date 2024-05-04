@@ -1,7 +1,9 @@
-.navbar{
+#app{
     font-family: 'avenir light';
-    font-size: 22px;
     color: #303131;
+}
+.navbar{
+    font-size: 22px;
     margin: 0 10% 0 4%;
 }
 
@@ -14,7 +16,3 @@
     font-size: 20px;
     color: #303131;
 }
-
-/* .chatbot-input{
-    margin: 0 0 0 0;
-} */
