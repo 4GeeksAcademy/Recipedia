@@ -84,8 +84,18 @@ const getState = ({ getStore, getActions, setStore }) => {
 				console.error(error);
 			})
 		},
-		getTwoThingsTest: async (intolerance, diet, cuisine) => {
-			fetch(`https://api.spoonacular.com/recipes/complexSearch?apiKey=b571ba2d3e4e4a9ea48ce48cf8b4e1ce&intolerances=${intolerance}&diet=${diet}&cuisine=${cuisine}`)
+		filterRecipes: async (intolerance, diet, cuisine) => {
+			let apiURL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=cbd1f9abd7d7442da6ce0eba59999ba6`
+			if (diet) {
+				apiURL += `&diet=${diet}`;
+			}
+			if (intolerance) {
+				apiURL += `&intolerance=${intolerance}`;
+			}
+			if (cuisine) {
+				apiURL += `&cuisine=${cuisine}`;
+			}
+			fetch(apiURL)
 			.then(resp => {
 				if (!resp.ok) {
 					throw new Error(resp.status);
@@ -94,6 +104,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			})
 			.then(data => {
 				console.log(data)
+				setStore({recipes: data.results})
 			})
 			.catch(error => {
 				console.error(error);

@@ -11,7 +11,7 @@ import {Cuisine} from "./pages/cuisine";
 import {Diet} from "./pages/diet";
 import {Intolerances} from "./pages/intolerances"
 import injectContext from "./store/appContext";
-
+import {FilteredRecipes} from "./pages/FilteredRecipes"
 import { Footer } from "./component/footer";
 import {FilterNavbar} from "./component/filternavbar"
 
@@ -35,6 +35,7 @@ const Layout = () => {
                         <Route element={<Cuisine />} path="/cuisine/:type" />
                         <Route element={<Diet />} path="/diet/:type" />
                         <Route element={<Intolerances />} path="/intolerances/:type" />
+                        <Route element={<FilteredRecipes />} path="/filter-recipes" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />
