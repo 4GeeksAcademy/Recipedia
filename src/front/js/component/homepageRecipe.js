@@ -16,7 +16,7 @@ const HomepageRecipe = ({ recipe }) => {
         <div className="card" style={{ display: 'inline-block', margin: '0 5px', marginBottom: '20px', width: 'calc(33.33% - 10px)', height: '250px', overflow: 'hidden', border: '1px solid #ccc' }}>
             <div className="card-body" style={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                 <div style={{ maxHeight: '150px', maxWidth: '100%', width: 'auto', marginBottom: '10px', overflow: 'hidden' }}>
-                <Link to={`/recipeCard/${recipe.title}`}>
+                <Link to={`/recipe/${recipe.title}`}>
                     <img src={recipe.image} style={{ maxHeight: '100%', maxWidth: '100%', width: 'auto' }} alt="Recipe"></img>
                     </Link>
                 </div>

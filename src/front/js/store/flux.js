@@ -4,7 +4,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 			homeRecipe: [],
 			imageURL: "",
 			instructions: "",
-			cookingTime: ""
+			cookingTime: "",
+			ingredients: ""
 		},
 		actions: {		
 			exampleFunction: () => {
@@ -15,8 +16,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 				try{
 					const resp = await fetch("https://api.spoonacular.com/recipes/random?apiKey=2c753fd4502e4c7d8786cd83a6644462&number=12")
 					const data = await resp.json()
-					// console.log(data)
-					setStore({ homeRecipe: data.recipes,imageURL: data.image, instructions: data.instructions })
+					console.log(data)
+					setStore({ homeRecipe: data.recipes,imageURL: data.recipes[0].image, instructions: data.instructions })
 					return data;
 				}catch(error){
 					console.log("Error loading message from backend", error)
@@ -27,7 +28,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 				try{
 					const resp = await fetch(`https://api.spoonacular.com/recipes/${id}/information?apiKey=2c753fd4502e4c7d8786cd83a6644462`)
 					const data = await resp.json()
-					setStore({ instructions: data.instructions, cookingTime: data.readyInMinutes })
+					
+					const ingredientsOriginal = data.extendedIngredients.map(ingredient => ingredient.original);
+					let ingredientsString = ingredientsOriginal.slice(0, -1).join(", ") + (ingredientsOriginal.length > 1 ? " and " : "") + ingredientsOriginal.slice(-1);
+
+        
+					setStore({ instructions: data.instructions, cookingTime: data.readyInMinutes, ingredients: ingredientsOriginal });
 					return data;
 				}catch(error){
 					console.log("Error loading message from backend", error)
@@ -44,6 +50,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log("Error loading message from backend", error)
 				}
 			},
+			
 			changeColor: (index, color) => {
 				//get the store
 				const store = getStore();
