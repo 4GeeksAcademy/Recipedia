@@ -6,7 +6,7 @@ import background from "../../img/background.png";
 export const Recipe = (props) => {
   const { store, actions } = useContext(Context);
   const params = useParams();
-  const [recipe, setRecipe] = useState();
+  const [recipe, setRecipe] = useState(null);
   const [recipeInfo, setRecipeInfo] = useState({});
 
   useEffect(() => {
@@ -35,73 +35,83 @@ export const Recipe = (props) => {
     }
   }, [recipe]);
 
-  return (
-    <div
-      className="jumbotron text-center d-flex mt-5"
-      style={{
-        backgroundImage: `url(${background})`,
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "center",
-        padding: "50px 0 20px 0",
-        minHeight: "100vh",
-        justifyContent: "space-around",
-      }}
-    >
-		{/* <button onClick={()=> (console.log(recipeInfo))}>click here</button> */}
+switch (recipe) {
+  case false:
+  return (<div><h1>Unable to retrive your recipe. Try it again.</h1></div>) 
+  case true:
+    return (
       <div
-        className="card"
+        className="jumbotron text-center d-flex mt-5"
         style={{
-          width: "100rem",
-          padding: "50px 30px 50px 30px",
-          maxWidth: "800px",
-          alignItems: "center",
-		  maxHeight: "1500px"
+          backgroundImage: `url(${background})`,
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center",
+          padding: "50px 0 20px 0",
+          minHeight: "100vh",
+          justifyContent: "space-around",
         }}
       >
-        <h5
-          className="card-title"
+      {/* <button onClick={()=> (console.log(recipeInfo))}>click here</button> */}
+        <div
+          className="card"
           style={{
-            margin: "50px 30px 50px 30px",
-            fontSize: "30px",
+            width: "100rem",
+            padding: "50px 30px 50px 30px",
+            maxWidth: "800px",
+            alignItems: "center",
+        maxHeight: "1500px"
           }}
         >
-          {recipe?.title}
-        </h5>
-        <span>
-          <img src={recipe?.image} style={{width: "600px", height: "auto", borderRadius: "5px"}}/>
-        </span>
-
-        <div className="row" style={{ maxWidth: "80%", margin:"40px 0 0 0", fontSize: "16px", }}>
-          <div className="col-sm-6 mb-3 mb-sm-0">
-            <div className="card" style={{borderColor:"white"}}>
-              <div className="card-body">
-                <h5 className="card-title">Cooking Minutes</h5>
-                <p className="card-text">{recipeInfo?.readyInMinutes}</p>
-              </div>
-            </div>
-          </div>
-          <div className="col-sm-6">
-            <div className="card" style={{borderColor:"white"}}>
-              <div className="card-body">
-                <h5 className="card-title">Ingredients</h5>
-                <p className="card-text">
-                  With supporting text below as a natural lead-in to additional
-                  content.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="card-body">
-          <p
-            className="card-text"
-            style={{width: "600px", textAlign: "justify", marginTop: "10px" }}
+          <h5
+            className="card-title"
+            style={{
+              margin: "50px 30px 50px 30px",
+              fontSize: "30px",
+            }}
           >
-            {recipeInfo?.instructions}
-          </p>
+            {recipe?.title}
+          </h5>
+          <span>
+            <img src={recipe?.image} style={{width: "600px", height: "auto", borderRadius: "5px"}}/>
+          </span>
+    
+          <div className="row" style={{ maxWidth: "80%", margin:"40px 0 0 0", fontSize: "16px", }}>
+            <div className="col-sm-12 mb-3 mb-sm-0">
+              <div className="card" style={{borderColor:"white"}}>
+                <div className="card-body">
+                  <h5 className="card-title">Cooking Minutes</h5>
+                  <p className="card-text">{recipeInfo?.readyInMinutes}</p>
+                </div>
+              </div>
+            </div>
+            <div className="col-sm-12">
+              <div className="card" style={{borderColor:"white"}}>
+                <div className="card-body">
+                  <h5 className="card-title">Ingredients</h5>
+                  {recipeInfo?.extendedIngredients?.map((ingredient, index)=>{
+                    return (
+                      <>
+                        {ingredient.original}{index==recipeInfo.extendedIngredients.length-1?".":", "}
+                      </>
+                    )
+                  })}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="card-body">
+            <p
+              className="card-text"
+              style={{width: "600px", textAlign: "justify", marginTop: "10px" }}
+            >
+              {recipeInfo?.instructions}
+            </p>
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  default:
+    return (<div><h1>Loading..</h1></div>) 
+}
 };
