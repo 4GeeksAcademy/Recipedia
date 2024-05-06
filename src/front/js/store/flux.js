@@ -1,33 +1,44 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			message: null,
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			]
+			homeRecipe: [],
+			imageURL: "",
+			instructions: "",
+			cookingTime: ""
 		},
-		actions: {
-			// Use getActions to call a function within a fuction
+		actions: {		
 			exampleFunction: () => {
 				getActions().changeColor(0, "green");
 			},
 
-			getMessage: async () => {
+			getRandomRecipe: async () => {
 				try{
-					// fetching data from the backend
-					const resp = await fetch(process.env.BACKEND_URL + "/api/hello")
+					const resp = await fetch("https://api.spoonacular.com/recipes/random?apiKey=2c753fd4502e4c7d8786cd83a6644462&number=12")
 					const data = await resp.json()
-					setStore({ message: data.message })
-					// don't forget to return something, that is how the async resolves
+					// console.log(data)
+					setStore({ homeRecipe: data.recipes,imageURL: data.image, instructions: data.instructions })
+					return data;
+				}catch(error){
+					console.log("Error loading message from backend", error)
+				}
+			},
+
+			getRecipeDetails: async (id) => {
+				try{
+					const resp = await fetch(`https://api.spoonacular.com/recipes/${id}/information?apiKey=2c753fd4502e4c7d8786cd83a6644462`)
+					const data = await resp.json()
+					setStore({ instructions: data.instructions, cookingTime: data.readyInMinutes })
+					return data;
+				}catch(error){
+					console.log("Error loading message from backend", error)
+				}
+			},
+		
+			getAnalyzedInstructions: async (id) => {
+				try{
+					const resp = await fetch(`https://api.spoonacular.com/recipes/${id}/analyzedInstructions?apiKey=2c753fd4502e4c7d8786cd83a6644462`)
+					const data = await resp.json()
+					console.log("This is analyzed instructions!!!:" ,data)
 					return data;
 				}catch(error){
 					console.log("Error loading message from backend", error)

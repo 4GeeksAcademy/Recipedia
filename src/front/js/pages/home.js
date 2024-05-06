@@ -1,26 +1,26 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
+import { Link } from "react-router-dom"
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
+
+import HomepageRecipe from "../component/homepageRecipe";
 
 export const Home = () => {
 	const { store, actions } = useContext(Context);
 
+	const homeRecipe = store.homeRecipe || [];
+
+	console.log("this is the homerecipe", homeRecipe)
+
 	return (
-		<div className="text-center mt-5">
-			<h1>Hello Rigo!!</h1>
-			<p>
-				<img src={rigoImageUrl} />
-			</p>
-			<div className="alert alert-info">
-				{store.message || "Loading message from the backend (make sure your python backend is running)..."}
-			</div>
-			<p>
-				This boilerplate comes with lots of documentation:{" "}
-				<a href="https://start.4geeksacademy.com/starters/react-flask">
-					Read documentation
-				</a>
-			</p>
-		</div>
+		<div className="recipes-container">
+            {/* Map over the homeRecipe array and render a HomepageRecipe component for each recipe */}
+            {homeRecipe.map((recipe, index) => (
+                <HomepageRecipe key={index} recipe={recipe} />
+            ))}
+        </div>
 	);
 };
+
+export default Home;
