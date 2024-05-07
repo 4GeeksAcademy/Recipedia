@@ -6,7 +6,7 @@ import background from "../../img/background.png";
 export const Recipe = (props) => {
   const { store, actions } = useContext(Context);
   const params = useParams();
-  const [recipe, setRecipe] = useState(null);
+  const [recipe, setRecipe] = useState();
   const [recipeInfo, setRecipeInfo] = useState({});
 
   useEffect(() => {
@@ -34,84 +34,78 @@ export const Recipe = (props) => {
       getInfo();
     }
   }, [recipe]);
-
-switch (recipe) {
-  case false:
-  return (<div><h1>Unable to retrive your recipe. Try it again.</h1></div>) 
-  case true:
-    return (
+  
+  return (
+    <div
+      className="jumbotron text-center d-flex mt-5"
+      style={{
+        backgroundImage: `url(${background})`,
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+        padding: "50px 0 20px 0",
+        minHeight: "100vh",
+        justifyContent: "space-around",
+      }}
+    >
+		{/* <button onClick={()=> (console.log(recipeInfo))}>click here</button> */}
       <div
-        className="jumbotron text-center d-flex mt-5"
+        className="card"
         style={{
-          backgroundImage: `url(${background})`,
-          backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: "center",
-          padding: "50px 0 20px 0",
-          minHeight: "100vh",
-          justifyContent: "space-around",
+          width: "100rem",
+          padding: "50px 30px 50px 30px",
+          maxWidth: "800px",
+          // alignItems: "center",
+          maxHeight: "1500px"
         }}
       >
-      {/* <button onClick={()=> (console.log(recipeInfo))}>click here</button> */}
-        <div
-          className="card"
+        <h5
+          className="card-title"
           style={{
-            width: "100rem",
-            padding: "50px 30px 50px 30px",
-            maxWidth: "800px",
-            alignItems: "center",
-        maxHeight: "1500px"
+            margin: "50px 30px 50px 30px",
+            fontSize: "30px",
           }}
         >
-          <h5
-            className="card-title"
-            style={{
-              margin: "50px 30px 50px 30px",
-              fontSize: "30px",
-            }}
-          >
-            {recipe?.title}
-          </h5>
-          <span>
-            <img src={recipe?.image} style={{width: "600px", height: "auto", borderRadius: "5px"}}/>
-          </span>
-    
-          <div className="row" style={{ maxWidth: "80%", margin:"40px 0 0 0", fontSize: "16px", }}>
-            <div className="col-sm-12 mb-3 mb-sm-0">
-              <div className="card" style={{borderColor:"white"}}>
-                <div className="card-body">
-                  <h5 className="card-title">Cooking Minutes</h5>
-                  <p className="card-text">{recipeInfo?.readyInMinutes}</p>
-                </div>
-              </div>
-            </div>
-            <div className="col-sm-12">
-              <div className="card" style={{borderColor:"white"}}>
-                <div className="card-body">
-                  <h5 className="card-title">Ingredients</h5>
-                  {recipeInfo?.extendedIngredients?.map((ingredient, index)=>{
-                    return (
-                      <>
-                        {ingredient.original}{index==recipeInfo.extendedIngredients.length-1?".":", "}
-                      </>
-                    )
-                  })}
-                </div>
+          {recipe?.title}
+        </h5>
+        <span>
+          <img src={recipe?.image} style={{width: "600px", height: "auto", borderRadius: "5px",}}/>
+        </span>
+
+        <div className="row" style={{ maxWidth: "90%", margin:"40px 0 0 40px", fontSize: "16px", textAlign:"initial", justifyContent: "flex-start"}}>
+          <div className="col-sm-12 mb-3 mb-sm-0">
+            <div className="card" style={{borderColor:"white"}}>
+              <div className="card-body">
+                <h5 className="card-title">COOKING MINUTES</h5>
+                <p className="card-text" style={{fontSize:"20px"}}>{recipeInfo?.readyInMinutes}</p>
               </div>
             </div>
           </div>
-          <div className="card-body">
-            <p
-              className="card-text"
-              style={{width: "600px", textAlign: "justify", marginTop: "10px" }}
-            >
-              {recipeInfo?.instructions}
-            </p>
+          <div className="col-sm-12">
+            <div className="card" style={{borderColor:"white"}}>
+              <div className="card-body">
+                <h5 className="card-title" style={{textAlign: "justify", }}>INGREDIENTS</h5>
+                {recipeInfo?.extendedIngredients?.map((ingredient, index)=>{
+                  return (
+                    <>
+                      {ingredient.original}{index==recipeInfo.extendedIngredients.length-1?".":", "}
+                    </>
+                  )
+                })}
+              </div>
+            </div>
           </div>
         </div>
+        <div className="row card-body" style={{maxWidth: "90%", margin: "10px 0 0 40px", textAlign:"initial", justifyContent: "flex-start"}}>
+        <h5 className="card-title">PREPARATION</h5>
+          <p
+            className="card-text"
+            style={{width: "600px"}}
+          >
+            {recipeInfo?.instructions}
+          </p>
+        </div>
       </div>
-    );
-  default:
-    return (<div><h1>Loading..</h1></div>) 
-}
+    </div>
+  );
 };
