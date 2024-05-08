@@ -50,7 +50,7 @@ export const ChatBot = ({setShowChatBot}) => {
 
   return (
     <div className="chatbot-container">
-      <div className="ml-auto chatbot-input" style={{ display: 'flex', alignItems: 'center', margin: '0 5% 0 0'}}>
+      <div className="ml-auto chatbot-input" style={{ display: 'flex', alignItems: 'center', margin: '0 5% 0 0',  fontFamily:"avenir-light", color: "#303131"}}>
         <input
           className="chatbot-input"
           type="text"
@@ -66,16 +66,16 @@ export const ChatBot = ({setShowChatBot}) => {
           padding: '8px'
         }}>Send</button>
       </div>
-      <div className="chatbot-messages">
+      <div className="chatbot-messages" style={{fontFamily:"avenir-light", color: "#303131"}}>
         {messages.map((message, index) => (
           <div key={index} className={`message ${message.sender}`}>
-            <p style={{fontFamily: "avenir light", fontSize: "16px"}}>
+            <p style={{fontFamily: "avenir light", fontSize: "28px", margin:"20px 0 20px 0"}}>
             {message.sender} : {message.text}
             </p>
-            <div className="row container mx-auto">
+            <div className="row ml-auto" style={{ display: 'flex', justifyContent:'center', maxHeight:"0", width:"auto"}}>
               {message.recipes?.map((recipe, idx) => (
-                <div className="col-2">
-                  <div key={idx} className={`card w-100`}>
+                <div className="col-2" style={{margin:"2px", color:"white",}}>
+                  <div key={idx} className="card-title">
                     <img onClick={()=> {
                           setShowChatBot(false)
                           navigate("/recipe/"+recipe.title)
@@ -83,17 +83,13 @@ export const ChatBot = ({setShowChatBot}) => {
                       src={recipe.image}
                       className="card-img-top"
                       alt={recipe.title}
+                    
                     />
                     <div className="card-body">
-                      <h5 className="card-title">{recipe.title}</h5>
-                      <div className="actions">
-                        <button onClick={()=> {
+                      <h5 style={{textAlign:"center"}}onClick={()=> {
                           setShowChatBot(false)
                           navigate("/recipe/"+recipe.title)
-                        }} className="btn btn-primary">
-                          Details
-                        </button>
-                      </div>
+                        }}className="card-title">{recipe.title}</h5>
                     </div>
                   </div>
                 </div>
