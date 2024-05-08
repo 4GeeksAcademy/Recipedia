@@ -6,37 +6,49 @@ const Recipe = () => {
     const { store, actions } = useContext(Context);
     const { title } = useParams();
     const [analyzedInstructions, setAnalyzedInstructions] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-       const randomRecipe = store.homeRecipe.find(recipe => recipe.title === title)
-       if (randomRecipe){
-        actions.getRecipeDetails(randomRecipe.id)
-        .then(data => {
-            if (data.analyzedInstructions && data.analyzedInstructions.length > 0){
-                setAnalyzedInstructions(data.analyzedInstructions[0].steps)
-            } else {
-                setAnalyzedInstructions([])
-            }
-        })
-        .catch(error => console.error("Error fetching recipe details!: ", error))
+        const randomRecipe = store.homeRecipe.find(recipe => recipe.title === title);
+        if (randomRecipe) {
+            actions.getRecipeDetails(randomRecipe.id)
+            .then(data => {
+                if (data.analyzedInstructions && data.analyzedInstructions.length > 0) {
+                    setAnalyzedInstructions(data.analyzedInstructions[0].steps);
+                } else {
+                    setAnalyzedInstructions([]);
+                }
+                setLoading(false); // Set loading to false once data is fetched
+            })
+            .catch(error => console.error("Error fetching recipe details!: ", error));
         }   
-       }, []);
-       console.log("L<OLOLOL", store.imageURL)
+    }, [title]); // Update effect when title changes
 
     return (
-        <div>
+        <div style={{ 
+            display: "flex", 
+            flexDirection: "column", 
+            border: "1px solid", 
+            maxWidth: "600px", 
+            margin: "0 auto", 
+            padding: "20px", 
+        }}>
             <h2>{title}</h2>
-            <div>
-                <img src={store.imageURL} alt="recipe"/>
-            </div>
-            <p>Instructions: {store.instructions}</p>
-            <p>Cooking time: {store.cookingTime}</p>
+            {loading ? (
+                <p>Loading...</p>
+            ) : (
+                <div>
+                    <img src={store.imageURL} alt="recipe" />
+                </div>
+            )}
+            <p>Instructions: {store.instructions} </p>
+            <p>Cooking time: {store.cookingTime} minutes</p>
             <p>Ingredients: {store.ingredients}</p>
-            <p>Analyzed Instructions:</p>
+            <p>Preparation</p>
             <ul>
                 {analyzedInstructions.map((step, index) => (
                     <li key={index}>
-                        <strong>Step {step.number}:</strong> {step.step}
+                        {step.step}
                     </li>
                 ))}
             </ul>

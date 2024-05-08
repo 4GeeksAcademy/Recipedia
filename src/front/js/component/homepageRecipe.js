@@ -13,6 +13,14 @@ const HomepageRecipe = ({ recipe }) => {
     // };
 
     return (
+        // <div style={{ display: 'inline-block', margin: '0 5px', marginBottom: '20px', width: 'calc(33.33% - 10px)', height: '250px', overflow: 'hidden', fontFamily:"avenir-light" }}>
+        //   <div style={{ maxHeight: '150px', maxWidth: '100%', width: 'auto', marginBottom: '10px', overflow: 'hidden' }}>
+        //     <Link to={`/recipe/${recipe.title}`}>
+        //       <img src={recipe.image} style={{ height: '200px', width: 'auto' }} alt="Recipe" />
+        //     </Link>
+        //   </div>
+        //   <h5 style={{ textAlign: 'center', fontSize: '20px', color:"white"}}>{recipe.title}</h5>
+        // </div>
         <div className="card" style={{ display: 'inline-block', margin: '0 5px', marginBottom: '20px', width: 'calc(33.33% - 10px)', height: '250px', overflow: 'hidden', border: '1px solid #ccc' }}>
             <div className="card-body" style={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                 <div style={{ maxHeight: '150px', maxWidth: '100%', width: 'auto', marginBottom: '10px', overflow: 'hidden' }}>
@@ -25,9 +33,6 @@ const HomepageRecipe = ({ recipe }) => {
                 {/* Add any other content you want here */}
             </div>
         </div>
-    );
-    
-    
-};
-
+      );
+    }
 export default HomepageRecipe;
