@@ -8,7 +8,7 @@ import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
-import { Recipe } from "./pages/recipe";
+import { RecipeCardChatbot } from "./pages/recipeCardChatbot";
 import { Login } from "./pages/login"
 
 const Layout = () => {
