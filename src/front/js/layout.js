@@ -11,7 +11,6 @@ import { Footer } from "./component/footer";
 import { Recipe } from "./pages/recipe";
 import { Login } from "./pages/login"
 
-
 const Layout = () => {
     const basename = process.env.BASENAME || "";
 
@@ -28,7 +27,6 @@ const Layout = () => {
                         <Route element={<Recipe />} path="/recipe/:title" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
-                    <Footer />
                 </ScrollToTop>
             </BrowserRouter>
         </div>
