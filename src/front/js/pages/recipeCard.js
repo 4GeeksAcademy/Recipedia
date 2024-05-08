@@ -3,8 +3,10 @@ import { Link, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 import background from "../../img/background.png";
 
-export const RecipeCardChatbot = (props) => {
+export const RecipeCard = ({ origin }) => {
+  console.log("Origin", origin);
   const { store, actions } = useContext(Context);
+  // RecipeCard-Chatbot
   const params = useParams();
   const [recipe, setRecipe] = useState();
   const [recipeInfo, setRecipeInfo] = useState();
@@ -46,51 +48,81 @@ export const RecipeCardChatbot = (props) => {
     }
   }, [recipe]);
 
+  // RecipeCard-Home
+  const { title } = useParams();
+  const [analyzedInstructions, setAnalyzedInstructions] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const randomRecipe = store.homeRecipe.find(
+      (recipe) => recipe.title === title
+    );
+    if (randomRecipe) {
+      actions
+        .getRecipeDetails(randomRecipe.id)
+        .then((data) => {
+          if (
+            data.analyzedInstructions &&
+            data.analyzedInstructions.length > 0
+          ) {
+            setAnalyzedInstructions(data.analyzedInstructions[0].steps);
+          } else {
+            setAnalyzedInstructions([]);
+          }
+          setLoading(false); // Set loading to false once data is fetched
+        })
+        .catch((error) =>
+          console.error("Error fetching recipe details!: ", error)
+        );
+    }
+  }, [title]);
+
   return (
     <div
-    className="jumbotron text-center d-flex mt-5"
-          style={{
-            backgroundImage: `url(${background})`,
-            backgroundSize: "cover",
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "center",
-            padding: "50px 0 20px 0",
-            minHeight: "100vh",
-            justifyContent: "space-around",
-            fontFamily:"avenir-light", color: "#303131"
-          }}
+      className="jumbotron text-center d-flex mt-5"
+      style={{
+        backgroundImage: `url(${background})`,
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center",
+        padding: "50px 0 20px 0",
+        minHeight: "100vh",
+        justifyContent: "space-around",
+        fontFamily: "avenir-light",
+        color: "#303131",
+      }}
     >
-      {fecthStatus == "pending" ? (
+      {fecthStatus == "pending" && origin == "chatbot" ? (
         <div className="text-center p-5 h-25">
           <div className="spinner-border text-primary" role="status">
             <span className="sr-only">Loading...</span>
           </div>
           <p className="mt-3">Fetching recipe information...</p>
         </div>
-      ) : fecthStatus == "error" ? (
+      ) : fecthStatus == "error" && origin == "chatbot" ? (
         <div className="bg-white text-center p-5 h-25">
           <h2 className="text-danger">Oops! Something went wrong...</h2>
           <p className="text-muted">
             We apologize for the inconvenience. Please try again later.
           </p>
         </div>
-      ) : (
+      ) : fecthStatus == "success" && origin == "chatbot" ? (
         <div
-        className="card"
-                style={{
-                  width: "100rem",
-                  padding: "50px 30px 50px 30px",
-                  maxWidth: "800px",
-                  // alignItems: "center",
-                  maxHeight: "1500px"
-                }}
+          className="card"
+          style={{
+            width: "100rem",
+            padding: "50px 30px 50px 30px",
+            maxWidth: "800px",
+            // alignItems: "center",
+            maxHeight: "1500px",
+          }}
         >
           <h5
             className="card-title"
             style={{
-                          margin: "50px 30px 50px 30px",
-                          fontSize: "30px",
-                        }}
+              margin: "50px 30px 50px 30px",
+              fontSize: "30px",
+            }}
           >
             {recipe?.title}
           </h5>
@@ -101,19 +133,32 @@ export const RecipeCardChatbot = (props) => {
             />
           </span>
 
-          <div className="row" style={{ maxWidth: "90%", margin:"40px 0 0 40px", fontSize: "16px", textAlign:"initial", justifyContent: "flex-start"}}>
-           <div className="col-sm-12 mb-3 mb-sm-0">
-             <div className="card" style={{borderColor:"white"}}>
-               <div className="card-body">
-                 <h5 className="card-title">COOKING MINUTES</h5>
-                 <p className="card-text" style={{fontSize:"20px"}}>{recipeInfo?.readyInMinutes}</p>
+          <div
+            className="row"
+            style={{
+              maxWidth: "90%",
+              margin: "40px 0 0 40px",
+              fontSize: "16px",
+              textAlign: "initial",
+              justifyContent: "flex-start",
+            }}
+          >
+            <div className="col-sm-12 mb-3 mb-sm-0">
+              <div className="card" style={{ borderColor: "white" }}>
+                <div className="card-body">
+                  <h5 className="card-title">COOKING MINUTES</h5>
+                  <p className="card-text" style={{ fontSize: "20px" }}>
+                    {recipeInfo?.readyInMinutes}
+                  </p>
                 </div>
               </div>
             </div>
             <div className="col-sm-12">
-             <div className="card" style={{borderColor:"white"}}>
-               <div className="card-body">
-                 <h5 className="card-title" style={{textAlign: "justify", }}>INGREDIENTS</h5>
+              <div className="card" style={{ borderColor: "white" }}>
+                <div className="card-body">
+                  <h5 className="card-title" style={{ textAlign: "justify" }}>
+                    INGREDIENTS
+                  </h5>
                   {recipeInfo?.extendedIngredients?.map((ingredient, index) => {
                     return (
                       <>
@@ -128,9 +173,17 @@ export const RecipeCardChatbot = (props) => {
               </div>
             </div>
           </div>
-          <div className="row card-body" style={{maxWidth: "90%", margin: "10px 0 0 40px", textAlign:"initial", justifyContent: "flex-start"}}>
-         <h5 className="card-title">PREPARATION</h5>
-         <p
+          <div
+            className="row card-body"
+            style={{
+              maxWidth: "90%",
+              margin: "10px 0 0 40px",
+              textAlign: "initial",
+              justifyContent: "flex-start",
+            }}
+          >
+            <h5 className="card-title">PREPARATION</h5>
+            <p
               className="card-text"
               style={{
                 width: "600px",
@@ -140,76 +193,51 @@ export const RecipeCardChatbot = (props) => {
             >
               {recipeInfo?.instructions}
             </p>
-         {/* <ol className="list-group">
-          {recipeInfo?.analyzedInstructions[0].steps.map((item, index)=>{
-            return(
-              <li className="list-group-item">
-                {item.step}
-              </li>
-            );
-          })}
-          </ol> */}
+            {/* <ol className="list-group">
+            {recipeInfo?.analyzedInstructions[0].steps.map((item, index)=>{
+              return(
+                <li className="list-group-item">
+                  {item.step}
+                </li>
+              );
+            })}
+            </ol> */}
           </div>
         </div>
-      )}
-    </div>
-  );
-};
-
-
-export const RecipeCardHome = () => {
-  const { store, actions } = useContext(Context);
-  const { title } = useParams();
-  const [analyzedInstructions, setAnalyzedInstructions] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-      const randomRecipe = store.homeRecipe.find(recipe => recipe.title === title);
-      if (randomRecipe) {
-          actions.getRecipeDetails(randomRecipe.id)
-          .then(data => {
-              if (data.analyzedInstructions && data.analyzedInstructions.length > 0) {
-                  setAnalyzedInstructions(data.analyzedInstructions[0].steps);
-              } else {
-                  setAnalyzedInstructions([]);
-              }
-              setLoading(false); // Set loading to false once data is fetched
-          })
-          .catch(error => console.error("Error fetching recipe details!: ", error));
-      }   
-  }, [title]); // Update effect when title changes
-
-  return (
-      <div style={{ 
-          display: "flex", 
-          flexDirection: "column", 
-          border: "1px solid", 
-          maxWidth: "600px", 
-          margin: "0 auto", 
-          padding: "20px", 
-      }}>
+      ) : (
+        <div
+          style={{
+            display: "flex",
+            background: "white",
+            flexDirection: "column",
+            border: "1px solid",
+            maxWidth: "600px",
+            margin: "0 auto",
+            padding: "20px",
+          }}
+        >
           <h2>{title}</h2>
           {loading ? (
-              <p>Loading...</p>
+            <p>Loading...</p>
           ) : (
-              <div>
-                  <img src={store.imageURL} alt="recipe" />
-              </div>
+            <div>
+              <img src={store.imageURL} alt="recipe" />
+            </div>
           )}
           <p>Instructions: {store.instructions} </p>
           <p>Cooking time: {store.cookingTime} minutes</p>
           <p>Ingredients: {store.ingredients}</p>
           <p>Preparation</p>
           <ul>
-              {analyzedInstructions.map((step, index) => (
-                  <li key={index}>
-                      {step.step}
-                  </li>
-              ))}
+            {analyzedInstructions.map((step, index) => (
+              <li key={index}>{step.step}</li>
+            ))}
           </ul>
-      </div>
+        </div>
+      )}
+    </div>
   );
-}
+};
 
 //   return (
 //     <div
