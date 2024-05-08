@@ -7,7 +7,7 @@ export const SignUp = () => {
     const [confirmPassword, setConfirmPassword] = useState('')
     const [errors, setErrors] = useState('')
 
-    const signUpSubmit = () => {
+    const signUpSubmit = (event) => {
         event.preventDefault();
 
         const valid = validateSignUp()

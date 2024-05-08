@@ -59,9 +59,13 @@ export const FilterNavbar = () => {
     <NavLink className="col d-flex justify-content-end" to={`/signup`}>
         <button className="btn btn-secondary" type="button">Signup</button>
     </NavLink>
+    {!store.token ? (
+    
     <NavLink className="col d-flex justify-content-end" to={`/login`}>
         <button className="btn btn-secondary" type="button">Login</button>
-    </NavLink>
+    </NavLink> ) : (
+        <button className="btn btn-secondary" onClick = {actions.logout} type="button">Logout</button>)
+    }
 <div className="dropdown col">
 <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         Filters

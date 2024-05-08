@@ -2,7 +2,8 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			recipes: []
+			recipes: [],
+			token: null
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -109,9 +110,46 @@ const getState = ({ getStore, getActions, setStore }) => {
 			.catch(error => {
 				console.error(error);
 			})
+		},
+		loginToken: async (username, password) => {
+
+			const options = {
+				method: 'POST',
+				headers: {"Content-type": "application/json"},
+				body: JSON.stringify({
+					"username": username,
+					"password": password
+				})
+			}
+			try {
+				const resp = await fetch(`https://turbo-space-dollop-44r77w9r76rhjv6v-3001.app.github.dev/api/token`, options)
+				if (resp.status !== 200) 
+					{	alert("error accessing account")
+						return false
+					}
+				const data = await resp.json()
+				console.log("Token:", data)
+				sessionStorage.setItem("token", data.access_token)	
+				setStore({token: data.access_token})
+				return true
+			}
+			catch(error) {
+				console.log(error)
+			}
+		},
+
+		syncTokenFromSessionStore: () => {
+			let token = sessionStorage.getItem("token");
+			if (token && token != " && token != undefined") setStore({token: token})
+		},
+
+		logout: () => {
+			sessionStorage.removeItem("token")
+			setStore({token:null
+			})
 		}
 	}
-	};
-};
+}
+}
 
 export default getState;

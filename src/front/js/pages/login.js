@@ -1,46 +1,25 @@
-import React, {useState} from "react";
-import { NoEmitOnErrorsPlugin } from "webpack";
+import React, {useState, useContext} from "react";
+import { Context } from "../store/appContext";
 
 export const Login = () => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const {store, actions} = useContext(Context)
 
-    const fetchToken = () => {
 
-        const options = {
-            method: 'POST',
-            headers: {"Content-type": "application/json"},
-            body: JSON.stringify({
-                "username": username,
-                "password": password
-            })
-        }
-        fetch(`https://turbo-space-dollop-44r77w9r76rhjv6v-3001.app.github.dev/api/token`, options)
-        .then(resp => {
-            if (resp.status === 200) return resp.json()
-                else throw new Error("Error accessing account")
-        })
-        .then(data =>{
-            
-        })
-        .catch(error =>{
-            console.log(error)
-            alert("error accessing account")
-        })
-
-    }
+    console.log("This is your token:", store.token)
 
     const loginSubmit = () => {
-        console.log("Login Submitted!", username, password)
-        fetchToken()
-        setUsername('')
-        setPassword('')
+        console.log("Login Submitted!", username, password, store.token)
+        actions.loginToken(username, password)
     }
+
 
     return(
         <div className="container">
             <h1>Login</h1>
-            <form>
+            {(store.token && store.token!="" && store.token !=undefined) ? "You are logged in with " + store.token : (
+            <div>
                <label for="username">Username</label>
                <input type="text" 
                id="username" 
@@ -58,7 +37,9 @@ export const Login = () => {
                onChange = {(event) => {setPassword(event.target.value)}} />
                <br />
                <button className="btn btn-secondary" onClick={loginSubmit}>Login</button>
-            </form>
-        </div>
+            </div>
+            )
+        }
+            </div>
     )
 }
