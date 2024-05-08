@@ -12,6 +12,24 @@ export const SignUp = () => {
 
         const valid = validateSignUp()
         if (valid) {
+            try {
+                const response = await fetch(`your-backend-signup-endpoint`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        username,
+                        email,
+                        password
+                    })
+                });
+    
+                if (!response.ok) {
+                    const responseData = await response.json();
+                    console.error('Signup failed:', responseData.error);
+                    return;
+                }
             const accountData = {
                 username: username,
                 email: email,

@@ -30,7 +30,23 @@ def handle_hello():
 def create_token():
     username = request.json.get("username", None)
     password = request.json.get("password", None)
-    if username != "test" or password != "test":
-        return jsonify({"msg": "Bad username or password"})
+    user = User.query.filter_by(username=username).first()
+    if not user:
+        return jsonify({"msg": "Invalid username or password"}), 401
+    
     access_token = create_access_token(identity=username)
-    return jsonify(access_token = access_token)
+    return jsonify(access_token=access_token)
+
+@api.route('/signup', methods=['POST'])
+def signup():
+    username = request.json.get("username", None)
+    password = request.json.get("password", None)
+    email = request.json.get("email", None)
+    if User.query.filter_by(username=username).first():
+        return jsonify({"msg": "Username already exists"}), 400
+    new_user = User(username=username, password=password, email=email)
+    db.session.add(new_user)
+    db.session.commit()
+    
+    access_token = create_access_token(identity=username)
+    return jsonify(access_token=access_token)
