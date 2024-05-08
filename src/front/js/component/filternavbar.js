@@ -54,7 +54,13 @@ export const FilterNavbar = () => {
     <div className="row">
 
     <NavLink className="col d-flex justify-content-end" to={`/`}>
-        <button className="btn btn-secondary" type="button" onClick="clearFilter">Home</button>
+        <button className="btn btn-secondary" type="button">Home</button>
+    </NavLink>
+    <NavLink className="col d-flex justify-content-end" to={`/signup`}>
+        <button className="btn btn-secondary" type="button">Signup</button>
+    </NavLink>
+    <NavLink className="col d-flex justify-content-end" to={`/login`}>
+        <button className="btn btn-secondary" type="button">Login</button>
     </NavLink>
 <div className="dropdown col">
 <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
