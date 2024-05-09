@@ -13,6 +13,8 @@ export const Home = ({ setOrigin }) => {
 
   console.log("this is the homerecipe", homeRecipe);
   return (
+    <div className="text-center mt-5" style={{ minHeight: "100vh"}}>
+      <img src={background} style={{ width: "100%", position:"absolute", zIndex:"-1"}} alt="Background" />
     <div className="text-center mt-5" style={{ minHeight: "100vh" }}>
       <img src={background} style={{ width: "100%", position:"absolute"}} alt="Background" />
       {!chatbotMessage &&
