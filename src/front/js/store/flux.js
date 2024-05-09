@@ -31,10 +31,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			getRandomRecipe: async () => {
 				try{
-					const resp = await fetch("https://api.spoonacular.com/recipes/random?apiKey=ab67f7131f724bd4827677c889c68548&number=20")
+					const resp = await fetch("https://api.spoonacular.com/recipes/random?apiKey=2c753fd4502e4c7d8786cd83a6644462&number=20")
 					const data = await resp.json()
 					console.log(data)
-					setStore({ homeRecipe: data.recipes,imageURL: data.recipes[0].image, instructions: data.instructions })
+					setStore({ homeRecipe: data.recipes, instructions: data.instructions })
 					return data;
 				}catch(error){
 					console.log("Error loading message from backend", error)
@@ -43,7 +43,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			getRecipeDetails: async (id) => {
 				try {
-					const resp = await fetch(`https://api.spoonacular.com/recipes/${id}/information?apiKey=ab67f7131f724bd4827677c889c68548`);
+					const resp = await fetch(`https://api.spoonacular.com/recipes/${id}/information?apiKey=2c753fd4502e4c7d8786cd83a6644462`);
 					const data = await resp.json();
 					
 					const ingredientsOriginal = data.extendedIngredients.map(ingredient => ingredient.original);
@@ -59,7 +59,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		
 			getAnalyzedInstructions: async (id) => {
 				try{
-					const resp = await fetch(`https://api.spoonacular.com/recipes/${id}/analyzedInstructions?apiKey=ab67f7131f724bd4827677c889c68548`)
+					const resp = await fetch(`https://api.spoonacular.com/recipes/${id}/analyzedInstructions?apiKey=2c753fd4502e4c7d8786cd83a6644462`)
 					const data = await resp.json()
 					console.log("This is analyzed instructions!!!:" ,data)
 					return data;

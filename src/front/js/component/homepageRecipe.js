@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext.js";
+import background from "../../img/background.png";
 
 const HomepageRecipe = ({ recipe, setOrigin }) => {
   const { actions, store } = useContext(Context);
@@ -30,7 +31,8 @@ const HomepageRecipe = ({ recipe, setOrigin }) => {
         width: "calc(33.33% - 10px)",
         height: "250px",
         overflow: "hidden",
-        border: "1px solid #ccc",
+        border: "none",
+        background:"transparent"
       }}
     >
       <div
@@ -70,6 +72,7 @@ const HomepageRecipe = ({ recipe, setOrigin }) => {
             textAlign: "center",
             fontSize: "20px",
             maxWidth: "80%",
+            color: "white"
           }}
         >
           {recipe.title}
