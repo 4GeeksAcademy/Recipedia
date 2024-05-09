@@ -30,7 +30,8 @@ const HomepageRecipe = ({ recipe, setOrigin }) => {
         width: "calc(33.33% - 10px)",
         height: "250px",
         overflow: "hidden",
-        border: "1px solid #ccc",
+        border: "none",
+        background:"transparent"
       }}
     >
       <div
