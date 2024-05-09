@@ -220,19 +220,45 @@ export const RecipeCard = ({ origin }) => {
           {loading ? (
             <p>Loading...</p>
           ) : (
+            
             <div>
               <img src={store.imageURL} alt="recipe" />
             </div>
           )}
-          <p>Instructions: {store.instructions} </p>
-          <p>Cooking time: {store.cookingTime} minutes</p>
-          <p>Ingredients: {store.ingredients}</p>
-          <p>Preparation</p>
-          <ul>
+          <div style={{
+              maxWidth: "90%",
+              margin: "40px 0 0 40px",
+              fontSize: "16px",
+              textAlign: "initial",
+              justifyContent: "flex-start",
+              fontFamily: "avenir-light",
+              color: "#303131",
+            }}>
+          {/* <h5>
+            Instructions: <p>{store.instructions} </p>
+          </h5> */}
+          <h5>
+          COOKING MINUTES{" "}
+            <p className="card-text" style={{ fontSize: "20px", fontFamily: "avenir-light",
+              color: "#303131", }}>{store.cookingTime}</p> 
+          </h5>
+          <h5>
+          INGREDIENTS <p className="card-text">{store.ingredients}</p>
+          </h5>
+          <h5>PREPARATION</h5>
+          <div
+            className="card-text"
+            style={{
+              width: "600px",
+              textAlign: "justify",
+              marginTop: "10px",
+            }}
+          >
             {analyzedInstructions.map((step, index) => (
-              <li key={index}>{step.step}</li>
+              <p  className="card-text" key={index}>{step.step}</p>
             ))}
-          </ul>
+          </div>
+          </div>
         </div>
       )}
     </div>
