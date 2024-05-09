@@ -22,16 +22,20 @@ const HomepageRecipe = ({ recipe, setOrigin }) => {
     //   <h5 style={{ textAlign: 'center', fontSize: '20px', color:"white"}}>{recipe.title}</h5>
     // </div>
     <div
-      className="card"
+      className="card p-0"
       style={{
         display: "inline-block",
-        margin: "0 5px",
-        marginBottom: "20px",
-        width: "calc(33.33% - 10px)",
+        // margin: "0 5px",
+        padding:"0",
+        // marginBottom: "20px",
+        width: "calc(20% - 10px)",
         height: "250px",
         overflow: "hidden",
         border: "none",
-        background:"transparent"
+        background:"transparent",
+        color:"white",
+        fontFamily: "avenir-light",
+        maxWidth: "100%",
       }}
     >
       <div
@@ -42,6 +46,7 @@ const HomepageRecipe = ({ recipe, setOrigin }) => {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
+          background: "rgba(0, 0, 0, 0.5)",
         }}
       >
         <div
@@ -55,7 +60,7 @@ const HomepageRecipe = ({ recipe, setOrigin }) => {
         >
           <img
             src={recipe.image}
-            style={{ maxHeight: "100%", maxWidth: "100%", width: "auto" }}
+            style={{ maxHeight: "100%", maxWidth: "100%", width: "auto", borderRadius: "5px", }}
             alt="Recipe"
             onClick={() => {
               setOrigin("home");
