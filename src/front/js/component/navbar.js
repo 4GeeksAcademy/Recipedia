@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ChatBot } from "./chatbot";
 import recipedia from "../../img/recipedia.png";
 import "../../styles/home.css";
+import { Context } from "../store/appContext";
 
 export const Navbar = ({ setOrigin }) => {
   const [showChatBot, setShowChatBot] = useState(false);
   const navigate = useNavigate();
   console.log(useNavigate);
+  const { store, actions } = useContext(Context);
 
   return (
     <nav
@@ -42,15 +44,20 @@ export const Navbar = ({ setOrigin }) => {
         </span>
       </div>
       <div className="ml-auto me-3">
-        <button
-          onClick={() => {
-            navigate("/login");
-          }}
-          className="navbar navbarCustom"
-          style={{ border: "none", background: "transparent" }}
-        >
-          Login
-        </button>
+        {store.logged ? (
+          <button className="navbar navbarCustom" style={{ border: "none", background: "transparent",}} onClick={actions.logout}>
+              Logout
+          </button>
+          ) : (
+          <Link style={{ textDecoration: "none", outline: "none" }} to="/login">
+          <button
+            className="navbar navbarCustom"
+            style={{ border: "none", background: "transparent", }}
+          >
+            Login
+          </button>
+          </Link>
+        )}
       </div>
       <div className="chatbot col-12" style={{ marginTop: "-40px",}}>
         {showChatBot && (

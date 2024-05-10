@@ -10,6 +10,8 @@ import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import { RecipeCard } from "./pages/recipeCard";
 import { Login } from "./pages/login";
+import { Signup } from "./pages/signup";
+import { Private } from "./pages/private";
 
 const Layout = () => {
   const basename = process.env.BASENAME || "";
@@ -26,10 +28,9 @@ const Layout = () => {
           <Routes>
             <Route element={<Home setOrigin={setOrigin} />} path="/" />
             <Route element={<Login />} path="/login" />
-            <Route
-              element={<RecipeCard origin={origin} />}
-              path="/recipe/:title"
-            />
+            <Route element={<Signup />} path="/signup" />
+            <Route element={<Private />} path="/private" />
+            <Route element={<RecipeCard origin={origin} />}path="/recipe/:title"/>
             <Route element={<h1>Not found!</h1>} />
           </Routes>
         </ScrollToTop>

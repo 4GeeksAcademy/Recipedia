@@ -128,7 +128,7 @@ export const ChatBot = ({ setShowChatBot, setOrigin }) => {
                   border: "1px solid black",
                   maxWidth: "100%",
                   marginTop: "50px",
-                  padding: "16px"
+                  padding: "16px",
                 }}
                 >
                   <div key={idx} className="card-title" style={{ display: "flex", flexDirection: "column", alignItems: "center", paddingTop: "20px" }}>
@@ -142,7 +142,6 @@ export const ChatBot = ({ setShowChatBot, setOrigin }) => {
                       style={{ maxHeight: "150px", maxWidth: "100%", width: "auto", borderRadius: "5px", marginTop: "20px", display: "block", margin:"auto", marginTop: "16px"}}
                       className="card-img-top"
                       alt={recipe.title}
-                      style={{paddingTop:"5px"}}
                     />
                     <div className="card-body">
                       <h5
