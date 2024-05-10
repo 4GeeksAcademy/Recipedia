@@ -1,4 +1,6 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
+import {Navigate, useNavigate} from "react-router-dom";
+import { Context } from "../store/appContext";
 
 export const SignUp = () => {
     const [username, setUsername] = useState('')
@@ -6,43 +8,29 @@ export const SignUp = () => {
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const [errors, setErrors] = useState('')
+    const {store, actions} = useContext(Context)
 
-    const signUpSubmit = (event) => {
-        event.preventDefault();
+    const navigate = useNavigate();
 
-        const valid = validateSignUp()
-        if (valid) {
-            try {
-                const response = await fetch(`your-backend-signup-endpoint`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        username,
-                        email,
-                        password
-                    })
-                });
-    
-                if (!response.ok) {
-                    const responseData = await response.json();
-                    console.error('Signup failed:', responseData.error);
-                    return;
-                }
-            const accountData = {
-                username: username,
-                email: email,
-                password: password,
-                confirmPassword: confirmPassword
-            }
-            console.log("SignUp Submitted!", accountData)
-            setUsername('')
-            setEmail('')
-            setPassword('')
-            setConfirmPassword('')
-        } 
-        
+    // const signUpSubmit = (event) => {
+    //     event.preventDefault();
+
+    //     const valid = validateSignUp()
+    //         if (valid) {
+    //             const accountData = {
+    //                 username: username,
+    //                 email: email,
+    //                 password: password,
+    //                 confirmPassword: confirmPassword
+    //             }
+    //             console.log("SignUp Submitted!", accountData)
+    //             setUsername('')
+    //             setEmail('')
+    //             setPassword('')
+    //             setConfirmPassword('')
+    const createUser = () => {
+        actions.signUpUser()
+        navigate("/")
     }
 
     const validateSignUp = () =>{
@@ -73,8 +61,7 @@ export const SignUp = () => {
     return(
         <div className="container">
             <h1>Signup</h1>
-            <form onSubmit={signUpSubmit}>
-               <label for="username">Username</label>
+               {/* <label for="username">Username</label>
                <input type="text" 
                id="username" 
                name="username" 
@@ -82,12 +69,10 @@ export const SignUp = () => {
                value={username}
                onChange = {(event) => {setUsername(event.target.value)}} />
                {errors.username && <div>{errors.username}</div>}
-               <br />
+               <br /> */}
 
                <label for="email">Email</label>
                <input type="email" 
-               id="email" 
-               name="email" 
                placeholder="Email" 
                value={email}
                onChange = {(event) => {setEmail(event.target.value)}} />
@@ -114,8 +99,7 @@ export const SignUp = () => {
                {errors.confirmPassword && <div>{errors.confirmPassword}</div>}
                <br />
 
-               <button className="btn btn-secondary" onClick={signUpSubmit}>SignUp</button>
-            </form>
+               <button className="btn btn-secondary" onClick={createUser}>SignUp</button>
         </div>
     )
 }

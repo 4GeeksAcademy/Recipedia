@@ -2,8 +2,8 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 
-from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User
+from flask import Flask, request, jsonify, url_for, Blueprint, session
+from api.models import db, Users
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import create_access_token
@@ -26,27 +26,63 @@ def handle_hello():
 
     return jsonify(response_body), 200
 
-@api.route('/token', methods=['POST'])
-def create_token():
-    username = request.json.get("username", None)
-    password = request.json.get("password", None)
-    user = User.query.filter_by(username=username).first()
-    if not user:
-        return jsonify({"msg": "Invalid username or password"}), 401
-    
-    access_token = create_access_token(identity=username)
-    return jsonify(access_token=access_token)
 
-@api.route('/signup', methods=['POST'])
+# @api.route('/token', methods=['POST'])
+# def create_token():
+#     email = request.json.get("email", None)
+#     password = request.json.get("password", None)
+#     user = User.query.filter_by(username=username).first()
+#     if user and user.check_password(password):
+#         access_token = create_access_token(identity=username)
+#         return jsonify(access_token=access_token), 200
+#     else:
+#         return jsonify({'msg': 'Invalid username or password'}), 401
+#     if not user:
+#         return jsonify({"msg": "Invalid username or password"}), 401
+    
+#     access_token = create_access_token(identity=username)
+#     return jsonify(access_token=access_token)
+
+@api.route('/signup', methods = ['POST'])
 def signup():
-    username = request.json.get("username", None)
-    password = request.json.get("password", None)
-    email = request.json.get("email", None)
-    if User.query.filter_by(username=username).first():
-        return jsonify({"msg": "Username already exists"}), 400
-    new_user = User(username=username, password=password, email=email)
+    email = request.json["email"]
+    password = request.json["password"]
+
+    user_exists = Users.query.filter_by(email=email).first() is not None
+
+    if user_exists:
+        return jsonify({"error": "Email already exists"})
+
+    new_user = Users(email=email, password=password)
     db.session.add(new_user)
     db.session.commit()
+
+    session["user_id"] = new_user.id
+
+    return jsonify({
+        "id": new_user.id,
+        "email": new_user.email
+    })
+
+@api.route('/login', methods = ['POST'])
+def login():
+    email = request.json["email"]
+    password = request.json["password"]
+
+    user = Users.query.filter_by(email=email).first() is not None
+
+    if user is None:
+        return jsonify({"error": "This is not a registered account"}), 401
+    if user.password != password:
+        return jsonify({"error": "Wrong password"}), 401
     
-    access_token = create_access_token(identity=username)
-    return jsonify(access_token=access_token)
+    session["user_id"] = user.id
+
+    return jsonify({
+        "id": user.id,
+        "email": user.email
+    })
+        
+
+    
+        
