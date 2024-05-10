@@ -128,7 +128,7 @@ export const ChatBot = ({ setShowChatBot, setOrigin }) => {
                   border: "1px solid black",
                   maxWidth: "100%",
                   marginTop: "50px",
-                  padding: "16px"
+                  padding: "16px",
                 }}
                 >
                   <div key={idx} className="card-title" style={{ display: "flex", flexDirection: "column", alignItems: "center", paddingTop: "20px" }}>
