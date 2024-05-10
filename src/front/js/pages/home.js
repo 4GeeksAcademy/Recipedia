@@ -21,23 +21,6 @@ export const Home = ({ setOrigin }) => {
         ))}
     </div>
   );
-  // return (
-  //     <div
-  //         className="recipes-container"
-  //         style={{
-  //             backgroundImage: `url(${background})`,
-  //             backgroundSize: 'cover',
-  //             backgroundPosition: 'center',
-  //             minHeight: '94.3vh',
-  //             paddingTop: '20px'
-  //         }}
-  //     >
-  //         {/* Render products only if there are products and chatbot message hasn't been sent */}
-  //         {!chatbotMessage && homeRecipe.map((recipe, index) => (
-  //             <HomepageRecipe key={index} recipe={recipe} />
-  //         ))}
-  //     </div>
-  // );
 };
 
 export default Home;
