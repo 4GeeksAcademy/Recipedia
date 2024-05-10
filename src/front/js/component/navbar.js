@@ -52,7 +52,7 @@ export const Navbar = ({ setOrigin }) => {
           Login
         </button>
       </div>
-      <div className="chatbot col-12" style={{ marginTop: "-40px" }}>
+      <div className="chatbot col-12" style={{ marginTop: "-40px",}}>
         {showChatBot && (
           <ChatBot setShowChatBot={setShowChatBot} setOrigin={setOrigin} />
         )}

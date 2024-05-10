@@ -46,7 +46,8 @@ const HomepageRecipe = ({ recipe, setOrigin }) => {
           flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
-          background: "rgba(0, 0, 0, 0.5)",
+          background: "rgba(0, 0, 0, 0.2)",
+          width:"85%",
         }}
       >
         <div

@@ -115,7 +115,7 @@ export const ChatBot = ({ setShowChatBot, setOrigin }) => {
               {message.recipes?.map((recipe, idx) => (
                 <div
                   className="col-2"
-                  style={{ margin: "2px", color: "white", background: "rgba(0, 0, 0, 0.5)", width: "calc(20% - 10px)", height: "250px", }}
+                  style={{ margin: "2px", color: "white", background: "rgba(0, 0, 0, 0.5)", width: "calc(20% - 10px)", height: "250px", zIndex:"+1"}}
                 >
                   <div key={idx} className="card-title">
                     <img
@@ -127,10 +127,11 @@ export const ChatBot = ({ setShowChatBot, setOrigin }) => {
                       src={recipe.image}
                       className="card-img-top"
                       alt={recipe.title}
+                      style={{paddingTop:"5px"}}
                     />
                     <div className="card-body">
                       <h5
-                        style={{ textAlign: "center" }}
+                        style={{ textAlign: "center",}}
                         onClick={() => {
                           setShowChatBot(false);
                           setOrigin("chatbot");
