@@ -109,15 +109,29 @@ export const ChatBot = ({ setShowChatBot, setOrigin }) => {
                 justifyContent: "center",
                 maxHeight: "0",
                 width: "auto",
+                marginTop:"50px"
               }}
             > 
             {/* //recipes */}
               {message.recipes?.map((recipe, idx) => (
                 <div
                   className="col-2"
-                  style={{ margin: "2px", color: "white", background: "rgba(0, 0, 0, 0.5)", width: "calc(20% - 10px)", height: "250px", }}
+                  style={{ display: "inline-block",
+                  width: "15vw", // Set width relative to viewport width
+                  height: "32vh", // Set height relative to viewport height
+                  margin: "0 5px",
+                  overflow: "hidden",
+                  background: "rgba(0, 0, 0, 0.3)",
+                  color: "white",
+                  fontFamily: "avenir-light",
+                  borderRadius: "10px",
+                  border: "1px solid black",
+                  maxWidth: "100%",
+                  marginTop: "50px",
+                  padding: "16px"
+                }}
                 >
-                  <div key={idx} className="card-title">
+                  <div key={idx} className="card-title" style={{ display: "flex", flexDirection: "column", alignItems: "center", paddingTop: "20px" }}>
                     <img
                       onClick={() => {
                         setShowChatBot(false);
@@ -125,12 +139,13 @@ export const ChatBot = ({ setShowChatBot, setOrigin }) => {
                         navigate("/recipe/" + recipe.title);
                       }}
                       src={recipe.image}
+                      style={{ maxHeight: "150px", maxWidth: "100%", width: "auto", borderRadius: "5px", marginTop: "20px", display: "block", margin:"auto", marginTop: "16px"}}
                       className="card-img-top"
                       alt={recipe.title}
                     />
                     <div className="card-body">
                       <h5
-                        style={{ textAlign: "center" }}
+                        style={{ textAlign: "center", fontSize:"20px",}}
                         onClick={() => {
                           setShowChatBot(false);
                           setOrigin("chatbot");
