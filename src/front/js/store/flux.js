@@ -157,7 +157,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				 		"password": password
 				 	})
 				}
-			fetch(`https://turbo-space-dollop-44r77w9r76rhjv6v-3001.app.github.dev/api/login`, options)
+			fetch(`https://automatic-xylophone-v45vvq7wxxvfw645-3001.app.github.dev/api/login`, options)
 			.then(resp => {
 				console.log(resp);
 			})
@@ -177,7 +177,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				 		"password": password
 				 	})
 			}
-			fetch(`https://turbo-space-dollop-44r77w9r76rhjv6v-3001.app.github.dev/api/signup`, options)
+			fetch(`https://automatic-xylophone-v45vvq7wxxvfw645-3001.app.github.dev/api/signup`, options)
 			.then(resp => {
 				console.log(resp);
 			})

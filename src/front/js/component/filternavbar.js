@@ -16,6 +16,12 @@ const diets = ["Gluten Free", "Ketogenic", "Vegetarian", "Lacto-Vegetarian", "Ov
 const intolerances = ["Dairy", "Egg", "Gluten", "Grain", "Peanut", "Seafood", 
 "Shellfish", "Sesame", "Soy", "Sulfite", "Tree Nut", "Wheat"]
 
+const filterCard = () => {
+    return(<div className="card">
+        Hello!
+    </div>)
+}
+
 export const FilterNavbar = () => {
     const { store, actions } = useContext(Context);
     const [selectedDiet, setSelectedDiet] = useState([]);
@@ -55,6 +61,9 @@ export const FilterNavbar = () => {
 
     <NavLink className="col d-flex justify-content-end" to={`/`}>
         <button className="btn btn-secondary" type="button">Home</button>
+    </NavLink>
+    <NavLink className="col d-flex justify-content-end" to={`/`}>
+        <button className="btn btn-secondary" type="button">FilterCSS</button>
     </NavLink>
     <NavLink className="col d-flex justify-content-end" to={`/signup`}>
         <button className="btn btn-secondary" type="button">Signup</button>
