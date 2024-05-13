@@ -18,11 +18,11 @@ const Recipe = () => {
                 } else {
                     setAnalyzedInstructions([]);
                 }
-                setLoading(false); // Set loading to false once data is fetched
+                setLoading(false); 
             })
             .catch(error => console.error("Error fetching recipe details!: ", error));
         }   
-    }, [title]); // Update effect when title changes
+    }, [title]); 
 
     return (
         <div style={{ 
@@ -57,3 +57,4 @@ const Recipe = () => {
 }
 
 export default Recipe;
+
