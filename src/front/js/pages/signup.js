@@ -1,105 +1,56 @@
-import React, {useState, useContext} from "react";
-import {Navigate, useNavigate} from "react-router-dom";
+import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
+import login from "../../img/login.png";
+import "../../styles/home.css";
+import { Link, useNavigate } from "react-router-dom";
 
-export const SignUp = () => {
-    const [username, setUsername] = useState('')
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [confirmPassword, setConfirmPassword] = useState('')
-    const [errors, setErrors] = useState('')
-    const {store, actions} = useContext(Context)
-
+export const Signup = () => {
+	const { store, actions } = useContext(Context);
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
     const navigate = useNavigate();
 
-    // const signUpSubmit = (event) => {
-    //     event.preventDefault();
+    const handleSignup = async() => {
+       let result = await actions.signup(email, password)
+       if (result) {
+        navigate("/login")
+       }
+       else {
+        setError("Error occurred, while signing you up")
+       }
+    };
 
-    //     const valid = validateSignUp()
-    //         if (valid) {
-    //             const accountData = {
-    //                 username: username,
-    //                 email: email,
-    //                 password: password,
-    //                 confirmPassword: confirmPassword
-    //             }
-    //             console.log("SignUp Submitted!", accountData)
-    //             setUsername('')
-    //             setEmail('')
-    //             setPassword('')
-    //             setConfirmPassword('')
-    const createUser = () => {
-        actions.signUpUser()
-        navigate("/")
-    }
-
-    const validateSignUp = () =>{
-        const errors = {};
-        
-        if (!username.trim()) {
-            errors.username = "Username is required"
-        }
-        if (!email.trim()) {
-            errors.email = "Email is required"
-        }
-        else if(!/\S+@\S+\.\S+/.test(email)) {
-            errors.email = "Invalid email format"
-        }
-        if(!password.trim()) {
-            errors.password = "Password is required"
-        }
-        else if (password.length < 8) {
-            errors.password = "Password is required to be 8 characters or more."
-        }
-        if(password != confirmPassword) {
-            errors.confirmPassword = "Passwords do not match"
-        }
-        setErrors(errors)
-        return Object.keys(errors).length === 0;
-    }
-
-    return(
-        <div className="container">
-            <h1>Signup</h1>
-               {/* <label for="username">Username</label>
-               <input type="text" 
-               id="username" 
-               name="username" 
-               placeholder="Username" 
-               value={username}
-               onChange = {(event) => {setUsername(event.target.value)}} />
-               {errors.username && <div>{errors.username}</div>}
-               <br /> */}
-
-               <label for="email">Email</label>
-               <input type="email" 
-               placeholder="Email" 
-               value={email}
-               onChange = {(event) => {setEmail(event.target.value)}} />
-               {errors.email && <div>{errors.email}</div>}
-               <br />
-
-               <label for="password">Password</label>
-               <input type="password" 
-               id="password" 
-               name="password" 
-               placeholder="Password" 
-               value={password}
-               onChange = {(event) => {setPassword(event.target.value)}} />
-               {errors.password && <div>{errors.password}</div>}
-               <br />
-
-               <label for="confirmpassword">Confirm Password</label>
-               <input type="password" 
-               id="confirmpassword" 
-               name="confirmpassword" 
-               placeholder="Confirm Password" 
-               value={confirmPassword}
-               onChange = {(event) => {setConfirmPassword(event.target.value)}} />
-               {errors.confirmPassword && <div>{errors.confirmPassword}</div>}
-               <br />
-
-               <button className="btn btn-secondary" onClick={createUser}>SignUp</button>
-        </div>
-    )
-}
+	return (
+		<div className="card" style={{minHeight: "100vh", fontFamily:"avenir-light", color: "#303131", borderBottomColor:"white"}}>
+		<div className="row">
+			<div className="col-md-6" style={{ height: "700px", overflow: "hidden", position:"relative" }}>
+			<img src={login} className="img-fluid rounded-start" alt="login" style={{position:"absolute", top:"50%", left:"50%", transform: "translate(-50%, -50%)"}}/>
+			</div>
+			<div className="col-md-6 mx-auto" style={{ width: "500px" }}>
+				<div className="card-body ">
+					<h5 className="card-title" style={{ fontSize: "50px", margin:"30px 0 30px 0" }}>Signup</h5>
+						<input
+						type="email"
+						className="form-control mb-1"
+						value={email}
+						onChange={(e) => setEmail(e.target.value)}
+						placeholder="Your Email Address"
+						/>
+						<input
+						type="password"
+						className="form-control"
+						value={password}
+						onChange={(e) => setPassword(e.target.value)}
+						placeholder="Your Password"
+						/>
+					<button type="button" className="btn btn-light mb-3 w-100 mt-1" onClick={handleSignup}>Register</button>
+					<Link to="/login">
+					<button type="button" className="btn btn-light w-100">Do you already have an account? Login here!</button>
+					</Link>
+				</div>
+			</div>
+		</div>
+		</div>
+	);
+};
