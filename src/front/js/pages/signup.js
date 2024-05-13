@@ -32,7 +32,7 @@ export const Signup = () => {
 					<h5 className="card-title" style={{ fontSize: "50px", margin:"30px 0 30px 0" }}>Signup</h5>
 						<input
 						type="email"
-						className="form-control"
+						className="form-control mb-1"
 						value={email}
 						onChange={(e) => setEmail(e.target.value)}
 						placeholder="Your Email Address"
@@ -44,7 +44,7 @@ export const Signup = () => {
 						onChange={(e) => setPassword(e.target.value)}
 						placeholder="Your Password"
 						/>
-					<button type="button" className="btn btn-light mb-3 w-100" onClick={handleSignup}>Register</button>
+					<button type="button" className="btn btn-light mb-3 w-100 mt-1" onClick={handleSignup}>Register</button>
 					<Link to="/login">
 					<button type="button" className="btn btn-light w-100">Do you already have an account? Login here!</button>
 					</Link>

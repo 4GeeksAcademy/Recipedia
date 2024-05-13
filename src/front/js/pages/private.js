@@ -18,11 +18,7 @@ export const Private = ({ setOrigin }) => {
 
     return (
       <>
-        {store.logged ? (
-          <Home />
-        ) : (
             <Home />
-        )}
       </>
     );
   }    

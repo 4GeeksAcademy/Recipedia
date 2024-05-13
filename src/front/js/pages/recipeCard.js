@@ -186,9 +186,18 @@ export const RecipeCard = ({ origin }) => {
           >
             <div className="card" style={{ borderColor: "white", padding:"0 25px 0 25px"}}>
             <h5 className="card-title">PREPARATION</h5>
-              <>{recipeInfo?.instructions}
-            </>
-            </div>
+              {/* <>{recipeInfo?.instructions}
+            </> */}
+            <ol className="list-group">
+          {recipeInfo?.analyzedInstructions[0].steps.map((item, index)=>{
+            return(
+              <li className="list-group-item">
+                {item.step}
+              </li>
+            );
+          })}
+          </ol>
+          </div>
           </div>
         </div>
       ) : (
