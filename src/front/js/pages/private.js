@@ -1,14 +1,15 @@
 import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
+import { Home } from "../pages/home";
 import "../../styles/home.css";
 import background from "../../img/background.png";
 import { Link } from "react-router-dom";
 import HomepageRecipe from "../component/homepageRecipe";
 
 export const Private = ({ setOrigin }) => {
-  const homeRecipe = store.homeRecipe || [];
-  const chatbotMessage = store.chatbotMessage; // Flag to track chatbot messages
-  const { store, actions } = useContext(Context);
+    const { store, actions } = useContext(Context);
+//   const homeRecipe = store.homeRecipe || [];
+//   const chatbotMessage = store.chatbotMessage; // Flag to track chatbot messages
 
     useEffect(() => {
         if (!store.logged) {

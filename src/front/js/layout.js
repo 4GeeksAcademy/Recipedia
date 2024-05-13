@@ -5,15 +5,11 @@ import { BackendURL } from "./component/backendURL";
 
 
 import { Home } from "./pages/home";
-import { Demo } from "./pages/demo";
-import { Single } from "./pages/single";
 import {Cuisine} from "./pages/cuisine";
 import {Diet} from "./pages/diet";
 import {Intolerances} from "./pages/intolerances"
 import injectContext from "./store/appContext";
 import {FilteredRecipes} from "./pages/FilteredRecipes"
-import {SignUp} from "./pages/signup"
-import {Login} from "./pages/login"
 import { Footer } from "./component/footer";
 import {FilterNavbar} from "./component/filternavbar"
 import { RecipeCard } from "./pages/recipeCard";
@@ -32,8 +28,13 @@ const Layout = () => {
     <div>
       <BrowserRouter basename={basename}>
         <ScrollToTop>
-          <Navbar setOrigin={setOrigin} />
+          <FilterNavbar />
           <Routes>
+            <Route element={<Cuisine />} path="/cuisine/:type" />
+           <Route element={<Diet />} path="/diet/:type" />
+            <Route element={<Intolerances />} path="/intolerances/:type" />
+            <Route element={<FilteredRecipes />} path="/filter-recipes" />
+           <Route element={<h1>Not found!</h1>} />
             <Route element={<Home setOrigin={setOrigin} />} path="/" />
             <Route element={<Login />} path="/login" />
             <Route element={<Signup />} path="/signup" />

@@ -12,7 +12,7 @@ export const Signup = () => {
     const navigate = useNavigate();
 
     const handleSignup = async() => {
-       let result = await actions.signup(email, password)
+       let result = await actions.signUpUser(email, password)
        if (result) {
         navigate("/login")
        }

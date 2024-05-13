@@ -10,8 +10,8 @@ export const Login = () => {
     const [password, setPassword] = useState("");
 
     const handleLogin = (e) => {
-        e.preventDefault();
-        actions.login(email, password);
+        // e.preventDefault();
+        actions.loginUser(email, password);
     };
 
 	return (

@@ -1,6 +1,6 @@
 
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User
+from api.models import db, Users
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import create_access_token
@@ -18,34 +18,34 @@ def handle_hello():
     return jsonify(response_body), 200
 
 
-@api.route("/signup", methods=["POST"])
-def signup():
-    request_body = request.get_json(force=True)
+# @api.route("/signup", methods=["POST"])
+# def signup():
+#     request_body = request.get_json(force=True)
 
-    required_fields = ["email", "password"]
-    for field in required_fields:
-        if field not in request_body or not request_body[field]:
-            raise APIException(f'The "{field}" field cannot be empty', 400)
+#     required_fields = ["email", "password"]
+#     for field in required_fields:
+#         if field not in request_body or not request_body[field]:
+#             raise APIException(f'The "{field}" field cannot be empty', 400)
 
-    verify_email = User.query.filter_by(email=request_body["email"]).first()
-    if verify_email:
-        raise APIException("An account with this email already exists", 400)
+#     verify_email = User.query.filter_by(email=request_body["email"]).first()
+#     if verify_email:
+#         raise APIException("An account with this email already exists", 400)
 
-    user = User(email=request_body["email"], password=request_body["password"],is_active=True)
+#     user = User(email=request_body["email"], password=request_body["password"],is_active=True)
 
-    db.session.add(user)
+#     db.session.add(user)
 
-    try:
-        db.session.commit()
-    except:
-        raise APIException('Internal error', 500)
+#     try:
+#         db.session.commit()
+#     except:
+#         raise APIException('Internal error', 500)
 
-    response_body = {
-        "msg": "Successfully created user",
-        "user": user.serialize()
-    }
+#     response_body = {
+#         "msg": "Successfully created user",
+#         "user": user.serialize()
+#     }
 
-    return jsonify(response_body), 200
+#     return jsonify(response_body), 200
 
 @api.route('/signup', methods = ['POST'])
 def signup():
@@ -73,12 +73,16 @@ def login():
 
     user = Users.query.filter_by(email=email, password=password).first()
 
+    access_token = create_access_token(identity=user.id)
+    print(access_token)
+
     if not user:
         return jsonify({"Wrong email or password"}), 401
     return jsonify({
-        "id": user.id,
-        "email": user.email
-    })
+        "msg": "logged",
+        "user": user.serialize(),
+        "token": access_token
+    }), 200
 
 
 
