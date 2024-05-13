@@ -7,8 +7,8 @@ from api.models import db, Users
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from flask_jwt_extended import create_access_token
-#from flask_jwt_extended import get_jwt_identity
-#from flask_jwt_extended import jwt_required
+from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import jwt_required
 
 
 api = Blueprint('api', __name__)
@@ -67,19 +67,40 @@ def login():
     email = request.json["email"]
     password = request.json["password"]
 
-    user = Users.query.filter_by(email=email).first() is not None
+    user = Users.query.filter_by(email=email, password=password).first()
 
-    if user is None:
-        return jsonify({"error": "This is not a registered account"}), 401
-    if user.password != password:
-        return jsonify({"error": "Wrong password"}), 401
+    if not user:
+        return jsonify({"Wrong email or password"}), 401
+    # if not email or not password:
+    #     return jsonify({"error": "Email or password missing"}), 400
     
-    session["user_id"] = user.id
+    # user = Users.query.filter_by(email=email).first()
+
+    # if user is None:
+    #     return jsonify({"error": "This is not a registered account"}), 401
+    # if user.password is not password:
+    #     return jsonify({"error": "Wrong password"}), 401
 
     return jsonify({
         "id": user.id,
         "email": user.email
     })
+
+@api.route('/protected', methods=['GET'])
+@jwt_required()
+def protected():
+    current_user = get_jwt_identity()
+    user = Users.query.filter_by(id=current_user).first()
+
+    if not user:
+        return jsonify(success=False, message='User not found'), 404
+    
+    response_body = {
+        "logged_in_as": current_user,
+        "user": user.serialize()
+    }
+
+    return jsonify(success=True, response=response_body), 200
         
 
     
