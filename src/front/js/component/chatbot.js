@@ -121,14 +121,15 @@ export const ChatBot = ({ setShowChatBot, setOrigin }) => {
                   height: "32vh", // Set height relative to viewport height
                   margin: "0 5px",
                   overflow: "hidden",
-                  background: "rgba(0, 0, 0, 0.3)",
-                  color: "white",
+                  background: "rgba(250, 250, 250, 1)",
+                  color: "#303131",
                   fontFamily: "avenir-light",
                   borderRadius: "10px",
-                  border: "1px solid black",
+                  // border: "1px solid black",
                   maxWidth: "100%",
-                  marginTop: "50px",
-                  padding: "16px",
+                  marginTop: "37px",
+                  // marginTop: "50px",
+                  // padding: "16px",
                 }}
                 >
                   <div key={idx} className="card-title" style={{ display: "flex", flexDirection: "column", alignItems: "center", paddingTop: "20px" }}>
@@ -139,7 +140,7 @@ export const ChatBot = ({ setShowChatBot, setOrigin }) => {
                         navigate("/recipe/" + recipe.title);
                       }}
                       src={recipe.image}
-                      style={{ maxHeight: "150px", maxWidth: "100%", width: "auto", borderRadius: "5px", marginTop: "20px", display: "block", margin:"auto", marginTop: "16px"}}
+                      style={{ maxHeight: "150px", maxWidth: "100%", width: "auto", borderRadius: "5px", marginTop: "30px", display: "block", margin:"auto", marginTop: "16px"}}
                       className="card-img-top"
                       alt={recipe.title}
                     />

@@ -186,9 +186,16 @@ export const RecipeCard = ({ origin }) => {
           >
             <div className="card" style={{ borderColor: "white", padding:"0 25px 0 25px"}}>
             <h5 className="card-title">PREPARATION</h5>
-              <>{recipeInfo?.instructions}
-            </>
-            </div>
+            <ol className="list-group">
+          {recipeInfo?.analyzedInstructions[0].steps.map((item, index)=>{
+            return(
+              <li className="list-group-item">
+                {item.step}
+              </li>
+            );
+          })}
+          </ol>
+</div>
           </div>
         </div>
       ) : (
@@ -199,7 +206,7 @@ export const RecipeCard = ({ origin }) => {
             background: "white",
             flexDirection: "column",
             padding: "20px",
-            maxWidth: "800px",
+            maxWidth: "1500px",
             maxHeight: "1500px",
             alignItems: "center",
             textAlign: "justify" 
@@ -226,18 +233,41 @@ export const RecipeCard = ({ origin }) => {
           </div>
           </div>
           </div>
-          <div className="col-sm-12">
-              <div className="card" style={{ borderColor: "white", }}>
-                <div className="card-body">
-          <h5 className="card-title">
-          INGREDIENTS</h5> <>{store.ingredients}</>
-          </div>
-          </div>
-          </div>
+          <div className="col-sm-12 ingredient-container" style={{border: "1px solid black", padding: "10px"}}>
+            <div className="card" style={{ borderColor: "white" }}>
+              <div className="card-body">
+                <h5 className="card-title">INGREDIENTS</h5>
+                <ul style={{display: "flex", flexWrap: "wrap", flexDirection: "row", justifyContent:"space-between", padding: "0px", margin: "0px", listStyle: "none"}}>
+                    {Array.isArray(store.ingredients) && store.ingredients.map((ingredient, index) => (
+                      <li key={index}>{ingredient}</li>
+                     ))}
+                  </ul>
+              </div>
+            </div>
+         </div>
+
           <div className="card" style={{ borderColor: "white", padding:"0 25px 0 25px"}}>
           <h5 className="card-title">PREPARATION</h5>
-              <>{store.instructions} </>
+              {/* <>{store.instructions} </> */}
           </div>
+          <ul style={{ listStyleType: 'none'}}>
+                {analyzedInstructions.map((step, index) => (
+                    <li key={index}>
+                        <strong> {step.number}:</strong> {step.step}
+                        {step.step}
+                    </li>
+                ))}
+            </ul>
+            {/* <div style={{ border: '1px solid #ccc', borderRadius: '5px', padding: '10px' }}>
+    <ul style={{ listStyleType: 'none', margin: 0, padding: 0 }}>
+        {analyzedInstructions.map((step, index) => (
+            <li key={index} style={{ borderBottom: '1px solid #ccc', padding: '5px 0' }}>
+                <strong>Step {step.number}:</strong> {step.step}
+            </li>
+        ))}
+    </ul>
+</div> */}
+
           {/* <div
             className="card-text"
             style={{
@@ -249,7 +279,7 @@ export const RecipeCard = ({ origin }) => {
             {analyzedInstructions.map((step, index) => (
               <p  className="card-text" key={index}>{step.step}</p>
             ))}
-          </div> */}
+          </div> */} 
           </div>
         </div>
       )}

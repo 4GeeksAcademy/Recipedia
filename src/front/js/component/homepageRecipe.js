@@ -16,11 +16,11 @@ const HomepageRecipe = ({ recipe, setOrigin }) => {
         height: "32vh", // Set height relative to viewport height
         margin: "0 5px",
         overflow: "hidden",
-        background: "rgba(0, 0, 0, 0.3)",
-        color: "white",
+        background: "rgba(250,250,250, 0.8)",
+        color: "#303131",
         fontFamily: "avenir-light",
         borderRadius: "10px",
-        borderColor: "black",
+        // borderColor: "black",
         maxWidth: "100%",
         marginTop: "37px",
         
@@ -38,7 +38,7 @@ const HomepageRecipe = ({ recipe, setOrigin }) => {
       >
         <div
           style={{
-            maxHeight: "150px",
+            maxHeight: "200px",
             maxWidth: "100%",
             width: "auto",
             marginBottom: "10px",
@@ -47,13 +47,14 @@ const HomepageRecipe = ({ recipe, setOrigin }) => {
         >
           <img
             src={recipe.image}
-            style={{ maxHeight: "100%", maxWidth: "100%", width: "auto", borderRadius: "5px", }}
+            style={{ maxHeight: "150px", maxWidth: "100%", width: "auto", borderRadius: "5px", display: "block" }}
             alt="Recipe"
             onClick={() => {
               setOrigin("home");
               navigate("/recipe/" + recipe.title);
             }}
           />
+          {/* maxheight was 100% */}
         </div>
         <h5
           className="card-title"
