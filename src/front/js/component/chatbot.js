@@ -89,7 +89,7 @@ export const ChatBot = ({ setShowChatBot, setOrigin }) => {
       </div>
       <div
         className="chatbot-messages"
-        style={{ fontFamily: "avenir-light", color: "#303131" }}
+        style={{ fontFamily: "avenir-light", color303131: "#" }}
       >
         {messages.map((message, index) => (
           <div key={index} className={`message ${message.sender}`}>

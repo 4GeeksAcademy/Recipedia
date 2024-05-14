@@ -4,6 +4,25 @@ const getState = ({ getStore, getActions, setStore }) => {
 			recentlyFetchedRecipes: [
 
 			],			
+            favourites: [
+                {
+                    title: "Recipe 1",
+                    image: "https://img.spoonacular.com/recipes/655540-556x370.jpg",
+                    summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et nisl vel ex sodales placerat.",
+                },
+                {
+                    title: "Recipe 2",
+                    image: "https://img.spoonacular.com/recipes/655540-556x370.jpg",
+                    summary: "Praesent euismod ligula et magna vehicula, sed malesuada sapien sollicitudin.",
+                },
+                {
+                    title: "Recipe 3",
+                    image: "https://img.spoonacular.com/recipes/655540-556x370.jpg",
+                    summary: "Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nunc accumsan.",
+                },
+                
+            ],
+            
 			homeRecipe: [],
 			imageURL: "",
 			instructions: "",
@@ -233,6 +252,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.log("User account deleted successfully");
                     // Clear session storage or any other necessary actions
                     sessionStorage.clear();
+                    setStore({logged:null})
                     return true;
                   } else {
                     console.error("An error occurred during user account deletion");

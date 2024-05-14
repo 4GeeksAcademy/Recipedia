@@ -12,6 +12,7 @@ import { RecipeCard } from "./pages/recipeCard";
 import { Login } from "./pages/login";
 import { Signup } from "./pages/signup";
 import { ManageAccount } from "./pages/manageAccount";
+import { Favourites } from "./pages/favourites";
 
 const Layout = () => {
   const basename = process.env.BASENAME || "";
@@ -31,6 +32,7 @@ const Layout = () => {
             <Route element={<Signup />} path="/signup" />
             <Route element={<ManageAccount />} path="/manageaccount" />
             <Route element={<RecipeCard origin={origin} />}path="/recipe/:title"/>
+            <Route element={<Favourites />} path="/favourites" />
             <Route element={<h1>Not found!</h1>} />
           </Routes>
         </ScrollToTop>

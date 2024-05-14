@@ -24,7 +24,7 @@ export const ManageAccount = () => {
     const handleDelete = async () => {
         let result = actions.delete();
 		if (result) {
-			navigate("/signup")
+			navigate("/")
 		}
 		else{
 			alert ("Unable to delete")
@@ -69,7 +69,7 @@ export const ManageAccount = () => {
 	</div>
     <button type="button" className="btn btn-light mb-3 w-100 mt-4" onClick={handleUpdate} style={{ backgroundColor: "#273A4E", color: "white", maxWidth:"420px" }}>Update my Account</button>
         {/* <button type="button" className="btn btn-light w-100" onClick={handleDelete} style={{ backgroundColor: "red", color: "white" }}>Delete my Account</button> */}
-        <button type="button" className="btn btn-light w-100" onClick={() => setShowModal(true)} style={{ backgroundColor: "red", color: "white", maxWidth:"420px" }}>Delete my Account</button>
+        <button type="button" className="btn btn-light w-100" onClick={() => setShowModal(true)} style={{ backgroundColor: "#E84A43", color: "white", maxWidth:"420px" }}>Delete my Account</button>
 
 {showModal && (
     <div className="modal-dialog modal-dialog-centered">
@@ -83,7 +83,7 @@ export const ManageAccount = () => {
             </div>
             <div className="modal-footer">
                 <button type="button" className="btn btn-secondary" onClick={() => setShowModal(false)}>Go back</button>
-                <button type="button" className="btn" onClick={handleDelete} style={{ backgroundColor: "red", color: "white", }}>Delete my account</button>
+                <button type="button" className="btn" onClick={handleDelete} style={{ backgroundColor: "#E84A43", color: "white", }}>Delete my account</button>
             </div>
         </div>
     </div>
