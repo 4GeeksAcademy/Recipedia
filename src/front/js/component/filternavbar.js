@@ -16,17 +16,71 @@ const diets = ["Gluten Free", "Ketogenic", "Vegetarian", "Lacto-Vegetarian", "Ov
 const intolerances = ["Dairy", "Egg", "Gluten", "Grain", "Peanut", "Seafood", 
 "Shellfish", "Sesame", "Soy", "Sulfite", "Tree Nut", "Wheat"]
 
-const filterCard = () => {
-    return(<div className="card">
-        Hello!
-    </div>)
-}
+const FilterCard = () => {
+    const [showCuisine, setShowCuisine] = useState(false);
+    const [showDiets, setShowDiets] = useState(false);
+    const [showIntolerances, setShowIntolerances] = useState(false);
+
+    const handleShowCuisine = () => {
+        setShowCuisine(!showCuisine);
+        setShowDiets(false);
+        setShowIntolerances(false);
+    }
+
+    const handleShowDiets = () => {
+        setShowDiets(!showDiets);
+        setShowCuisine(false);
+        setShowIntolerances(false);
+    }
+
+    const handleShowIntolerances = () => {
+        setShowIntolerances(!showIntolerances);
+        setShowDiets(false);
+        setShowCuisine(false);
+    }
+
+    return(<div className="card filter-card">
+        <div className="buttons-section">
+            <button className="btn filter-button" type="button" onClick={handleShowDiets}>Diets</button>
+            <button className="btn filter-button" type="button" onClick={handleShowIntolerances}>Intolerances</button>
+            <button className="btn filter-button" onClick={handleShowCuisine}>Cuisine</button>
+            </div>
+        <div className="white-space-section">
+        {showDiets && (
+                    <ul className="filter-options">
+                        {diets.map((diet, index) => (
+                            <li key={index}>{diet}</li>
+                        ))}
+                    </ul>
+                )}
+        {showIntolerances && (
+            <ul className="filter-options">
+                {intolerances.map((intolerance, index) => (
+                    <li key={index}>{intolerance}</li>
+                ))}
+            </ul>
+                )}
+        {showCuisine && (
+                    <ul className="filter-options">
+                        {cuisines.map((cuisine, index) => (
+                            <li key={cuisine}>{cuisine}</li>
+                        ))}
+                    </ul>
+                )}
+        </div>
+    </div>
+)}
 
 export const FilterNavbar = () => {
     const { store, actions } = useContext(Context);
     const [selectedDiet, setSelectedDiet] = useState([]);
     const [selectedIntolerance, setSelectedIntolerance] = useState([]);
     const [selectedCuisine, setSelectedCuisine] = useState([]); 
+    const [showFilterCard, setShowFilterCard] = useState(false);
+
+    const toggleFilterCard = () => {
+        setShowFilterCard(!showFilterCard);
+    };
 
     const handleSelectedDiet = (diet) => {
         setSelectedDiet([diet])
@@ -57,17 +111,18 @@ export const FilterNavbar = () => {
 
     return (
     <div className="navbar navbar-light bg-light">
-    <div className="row">
+        <div className="row">
 
     <NavLink className="col d-flex justify-content-end" to={`/`}>
-        <button className="btn btn-secondary" type="button">Home</button>
+        <button className="btn btn-secondary" type="button" onClick={toggleFilterCard}>FilterCSS</button>
     </NavLink>
-    <NavLink className="col d-flex justify-content-end" to={`/`}>
-        <button className="btn btn-secondary" type="button">FilterCSS</button>
-    </NavLink>
-    <NavLink className="col d-flex justify-content-end" to={`/signup`}>
-        <button className="btn btn-secondary" type="button">Signup</button>
-    </NavLink>
+    {showFilterCard && 
+    <div className="col">
+        <FilterCard />
+    </div>
+    }
+    
+
     {!store.token ? (
     
     <NavLink className="col d-flex justify-content-end" to={`/login`}>
