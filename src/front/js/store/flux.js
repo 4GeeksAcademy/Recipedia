@@ -37,7 +37,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			getRandomRecipe: async () => {
 				try{
-					const resp = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${process.env.SPOONACULAR_API_KEY_2}&number=18`)
+					const resp = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${process.env.SPOONACULAR_API_KEY_2}&number=1`)
 					const data = await resp.json()
 					console.log(data)
 					setStore({ homeRecipe: data.recipes, instructions: data.instructions })
@@ -129,7 +129,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                         });
                         sessionStorage.setItem("token", data.token);
                         sessionStorage.setItem("userID", data.user.id);
-                        window.location = '/private';
                         return true;
                     } else {
                         console.error("An error occurred during user login");
@@ -189,6 +188,62 @@ const getState = ({ getStore, getActions, setStore }) => {
                 sessionStorage.removeItem("token");
                 sessionStorage.removeItem("userID");
             },
+
+            update: async (dataEmail, dataPassword) => {
+                try {
+                    const response = await fetch(process.env.BACKEND_URL + "/api/update", {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            Authorization : 'Bearer '+sessionStorage.getItem("token")
+                        },
+                        body: JSON.stringify({
+                            "email": dataEmail,
+                            "password": dataPassword,
+                        })
+                    });
+                    console.log(response);
+                    if (response.ok) {
+                        const data = await response.json();
+                        setStore({
+                            user: data.user
+                        });
+                        return true;
+                    } else {
+                        console.error("An error occurred during user update");
+                        return false;
+                    }
+                } catch (error) {
+                    console.error("An error occurred during user update", error);
+                    return false;
+                }
+            },
+
+            delete: async () => {
+                try {
+                  const token = sessionStorage.getItem("token");
+                  const response = await fetch(`${process.env.BACKEND_URL}/api/delete`, {
+                    method: 'DELETE',
+                    headers: {
+                      'Authorization': 'Bearer '+sessionStorage.getItem("token")
+                    }
+                  });
+              
+                  if (response.ok) {
+                    console.log("User account deleted successfully");
+                    // Clear session storage or any other necessary actions
+                    sessionStorage.clear();
+                    return true;
+                  } else {
+                    console.error("An error occurred during user account deletion");
+                    return false;
+                  }
+                } catch (error) {
+                  console.error("An error occurred during user account deletion", error);
+                  return false;
+                }
+              }
+              
 		}
 	};
 };

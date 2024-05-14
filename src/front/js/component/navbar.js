@@ -43,11 +43,21 @@ export const Navbar = ({ setOrigin }) => {
           Chatbot
         </span>
       </div>
-      <div className="ml-auto me-3">
+      <div className="ml-auto me-3" style={{fontFamily: "avenir-light", color: "#303131"}}>
         {store.logged ? (
-          <button className="navbar navbarCustom" style={{ border: "none", background: "transparent",}} onClick={actions.logout}>
-              Logout
+          <div className="dropdown">
+          <button className="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style={{ border: "none", background: "transparent", fontSize:"22px"}}>
+            My Profile
           </button>
+          <ul className="dropdown-menu ps-2">
+          <li><Link style={{ textDecoration: "none", outline: "none", color:"black"}} to="/favourites">Favourites</Link></li>
+          <li><Link style={{ textDecoration: "none", outline: "none", color:"black"}} to="/manageaccount">Manage my Account</Link></li>
+          <li><a type="button" onClick={actions.logout}> Logout</a></li>
+          {/* <button className="navbar navbarCustom" style={{ border: "none", background: "transparent",}} onClick={actions.logout}>
+              Logout
+          </button> */}
+          </ul>
+        </div>
           ) : (
           <Link style={{ textDecoration: "none", outline: "none" }} to="/login">
           <button

@@ -11,7 +11,6 @@ export const Home = ({ setOrigin }) => {
   const homeRecipe = store.homeRecipe || [];
   const chatbotMessage = store.chatbotMessage; // Flag to track chatbot messages
 
-  console.log("this is the homerecipe", homeRecipe);
   return (
     <div className="text-center mt-5" style={{ minHeight: "100vh"}}>
       <img src={background} style={{ width: "100%", position:"absolute", zIndex:"-1", left:"0"}} alt="Background" />

@@ -86,32 +86,47 @@ def protected():
 
     return jsonify(success=True, response=response_body), 200
 
+@api.route('/update', methods=['PUT'])
+@jwt_required()
+def update():
+    request_body = request.get_json(force=True)
+    email = request_body["email"]
+    password = request_body["password"]
+
+    user = User.query.filter_by(id=get_jwt_identity()).first()
+    user.email = email 
+    # conditionals
+    user.password = password
+    
+    try:
+        db.session.commit()
+    except:
+        raise APIException('Internal error', 500)
+
+    response_body = {
+        "msg": "successfully updated account info",
+        "user": user.serialize(),
+    }
+    return jsonify(response_body), 200
+
+@api.route('/delete', methods=['DELETE'])
+@jwt_required()
+def delete_account():
+    # Get the current user
+    current_user_id = get_jwt_identity()
+    user = User.query.filter_by(id=current_user_id).first()
+
+    # Check if user exists
+    if not user:
+        return jsonify(success=False, message='User not found'), 404
+    
+    # Delete the user
+    try:
+        db.session.delete(user)
+        db.session.commit()
+    except:
+        raise APIException('Internal error', 500)
+
+    return jsonify(success=True, message='User deleted successfully'), 200
 
 
-
-
-
-
-
-# """
-# This module takes care of starting the API Server, Loading the DB and Adding the endpoints
-# """
-# from flask import Flask, request, jsonify, url_for, Blueprint
-# from api.models import db, User
-# from api.utils import generate_sitemap, APIException
-# from flask_cors import CORS
-
-# api = Blueprint('api', __name__)
-
-# # Allow CORS requests to this API
-# CORS(api)
-
-
-# @api.route('/hello', methods=['POST', 'GET'])
-# def handle_hello():
-
-#     response_body = {
-#         "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request"
-#     }
-
-#     return jsonify(response_body), 200
