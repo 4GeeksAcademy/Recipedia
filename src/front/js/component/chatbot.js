@@ -23,7 +23,7 @@ export const ChatBot = ({ setShowChatBot, setOrigin }) => {
 
       let response = await fetch(
         "https://api.spoonacular.com/food/converse?apiKey=" +
-          process.env.SPOONACULAR_API_KEY +
+          process.env.SPOONACULAR_API_KEY_5 +
           "&text=" +
           input
       );
@@ -115,19 +115,18 @@ export const ChatBot = ({ setShowChatBot, setOrigin }) => {
             {/* //recipes */}
               {message.recipes?.map((recipe, idx) => (
                 <div
-                  className="col-2"
                   style={{ display: "inline-block",
                   width: "15vw", // Set width relative to viewport width
                   height: "32vh", // Set height relative to viewport height
                   margin: "0 5px",
                   overflow: "hidden",
-                  background: "rgba(250, 250, 250, 1)",
-                  color: "#303131",
+                  // background: "rgba(250, 250, 250, 1)",
+                  color: "white",
                   fontFamily: "avenir-light",
                   borderRadius: "10px",
                   // border: "1px solid black",
                   maxWidth: "100%",
-                  marginTop: "37px",
+                  marginTop: "100px",
                   // marginTop: "50px",
                   // padding: "16px",
                 }}
@@ -140,13 +139,23 @@ export const ChatBot = ({ setShowChatBot, setOrigin }) => {
                         navigate("/recipe/" + recipe.title);
                       }}
                       src={recipe.image}
-                      style={{ maxHeight: "150px", maxWidth: "100%", width: "auto", borderRadius: "5px", marginTop: "30px", display: "block", margin:"auto", marginTop: "16px"}}
+                      style={{ 
+                        maxHeight: "150px", 
+                        maxWidth: "100%", 
+                        width: "auto", 
+                        borderRadius: "5px", 
+                        marginTop: "30px", 
+                        display: "block", 
+                        margin:"auto", 
+                        marginTop: "16px",
+                        border: "2px solid white",
+                      }}
                       className="card-img-top"
                       alt={recipe.title}
                     />
                     <div className="card-body">
                       <h5
-                        style={{ textAlign: "center", fontSize:"20px",}}
+                        style={{ textAlign: "center", fontSize:"20px", }}
                         onClick={() => {
                           setShowChatBot(false);
                           setOrigin("chatbot");
@@ -154,7 +163,7 @@ export const ChatBot = ({ setShowChatBot, setOrigin }) => {
                         }}
                         className="card-title"
                       >
-                        {recipe.title}
+                        <strong>{recipe.title}</strong>
                       </h5>
                     </div>
                   </div>

@@ -9,25 +9,23 @@ const HomepageRecipe = ({ recipe, setOrigin }) => {
 
   return (
     <div
-      className="card p-0"
       style={{
         display: "inline-block",
         width: "15vw", // Set width relative to viewport width
         height: "32vh", // Set height relative to viewport height
-        margin: "0 5px",
+        margin: "0 10px",
         overflow: "hidden",
-        background: "rgba(250,250,250, 0.8)",
-        color: "#303131",
+        // background: "rgba(250,250,250, 0.8)",
+        color: "white",
         fontFamily: "avenir-light",
         borderRadius: "10px",
         // borderColor: "black",
         maxWidth: "100%",
-        marginTop: "37px",
+        marginTop: "100px",
         
       }}
     >
       <div
-        className="card-body"
         style={{
           height: "100%",
           display: "flex",
@@ -38,35 +36,45 @@ const HomepageRecipe = ({ recipe, setOrigin }) => {
       >
         <div
           style={{
-            maxHeight: "200px",
-            maxWidth: "100%",
-            width: "auto",
-            marginBottom: "10px",
+            // border: "2px solid white", 
+            borderRadius: "10px", 
             overflow: "hidden",
+            marginBottom: "10px"
           }}
         >
           <img
             src={recipe.image}
-            style={{ maxHeight: "150px", maxWidth: "100%", width: "auto", borderRadius: "5px", display: "block" }}
+            style={{ 
+              maxHeight: "150px", 
+                        maxWidth: "100%", 
+                        width: "auto", 
+                        borderRadius: "10px", 
+                        marginTop: "30px", 
+                        display: "block", 
+                        margin:"auto", 
+                        marginTop: "16px",
+                        border: "2px solid white",
+            }}
             alt="Recipe"
             onClick={() => {
               setOrigin("home");
               navigate("/recipe/" + recipe.title);
             }}
           />
-          {/* maxheight was 100% */}
         </div>
         <h5
-          className="card-title"
-          style={{
-            overflow: "hidden",
-            textOverflow: "ellipsis",
-            textAlign: "center",
-            fontSize: "20px",
-            maxWidth: "80%",
-          }}
-        >
-          {recipe.title}
+  style={{
+    textAlign: "center",
+    fontSize: "20px",
+    maxWidth: "80%",
+    height: "3em", 
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    // WebkitTextStroke: "1px black", // Add black border around letters
+  }}
+>
+
+          <strong>{recipe.title}</strong>
         </h5>
       </div>
     </div>
