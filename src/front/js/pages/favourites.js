@@ -9,10 +9,10 @@ let favouritesList = store.favourites
 return(
 <div style={{backgroundColor:"#F0F3F6", display:"flex", alignItems:"center", flexDirection:"column", paddingBottom:"40px"}}>
     {favouritesList.map((item, index) => (
-        <div className="card mt-5" style={{width: "1000px", height:"300px",}}>
+        <div className="card mt-5" style={{width: "1000px", height:"280px",}}>
         <div className="row g-0">
             <div className="col-md-4">
-            <img src={item.image} className="img-fluid rounded-start" alt="..."style={{width:"700px", height:"300px"}}/>
+            <img src={item.image} className="img-fluid rounded-start" alt="..."style={{width:"700px", height:"280px"}}/>
             </div>
             <div className="col-md-8">
             <div className="card-body" style={{padding:"30px 0 0 50px"}}>

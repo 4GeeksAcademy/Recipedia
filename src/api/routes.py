@@ -129,4 +129,32 @@ def delete_account():
 
     return jsonify(success=True, message='User deleted successfully'), 200
 
+@api.route('/user/favourites', methods=['GET'])
+@jwt_required()
+def get_favourites():
+    current_user_id = get_jwt_identity()
+    user = User.query.filter_by(id=current_user_id).first()
 
+    if not user:
+        return jsonify(success=False, message='User not found'), 404
+        
+    user = user.serialize()
+    favourites = user['favourites']
+    return jsonify(success=True, message='Here are your favourites', favourites = favourites), 200
+
+
+# @api.route('/user/favourites', methods=['GET'])
+# @jwt_required()
+# def get_favourites():
+#     current_user_id = get_jwt_identity()
+#     user = User.query.filter_by(id=current_user_id).first()
+
+#     if not user:
+#         return jsonify(success=False, message='User not found'), 404
+    
+#     if user.favourites is None:
+#         return jsonify(success=False, message='User has no favourites'), 404
+    
+#     favourites = user.serialize().favourites
+    
+#     return jsonify(success=True, message='Here are your favourites', favourites = favourites), 200

@@ -250,7 +250,6 @@ const getState = ({ getStore, getActions, setStore }) => {
               
                   if (response.ok) {
                     console.log("User account deleted successfully");
-                    // Clear session storage or any other necessary actions
                     sessionStorage.clear();
                     setStore({logged:null})
                     return true;
