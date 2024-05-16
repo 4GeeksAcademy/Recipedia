@@ -10,8 +10,8 @@ import {Diet} from "./pages/diet";
 import {Intolerances} from "./pages/intolerances"
 import injectContext from "./store/appContext";
 import {FilteredRecipes} from "./pages/FilteredRecipes"
+import {Navbar} from "./component/navbar"
 import { Footer } from "./component/footer";
-import {FilterNavbar} from "./component/filternavbar"
 import { RecipeCard } from "./pages/recipeCard";
 import { Login } from "./pages/login";
 import { Signup } from "./pages/signup";
@@ -28,7 +28,7 @@ const Layout = () => {
     <div>
       <BrowserRouter basename={basename}>
         <ScrollToTop>
-          <FilterNavbar />
+          <Navbar />
           <Routes>
             <Route element={<Cuisine />} path="/cuisine/:type" />
            <Route element={<Diet />} path="/diet/:type" />

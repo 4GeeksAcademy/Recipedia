@@ -129,7 +129,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			})
 		},
 		filterRecipes: async (intolerance, diet, cuisine) => {
-			let apiURL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=cbd1f9abd7d7442da6ce0eba59999ba6`
+			let apiURL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=1d556000ce964a5e887de0ce17ef6150`
 			if (diet) {
 				apiURL += `&diet=${diet}`;
 			}
