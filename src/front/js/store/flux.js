@@ -3,6 +3,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			recipes: [],
+			filterStatus: false,
 			token: null,
 			homeRecipe: [],
 			imageURL: "",
@@ -80,8 +81,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log("Error loading message from backend", error)
 				}
 			},
-		filterRecipes: async (intolerance, diet, cuisine) => {
-			let apiURL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=1d556000ce964a5e887de0ce17ef6150`
+		filterRecipes: async (diet, intolerance, cuisine) => { 
+			console.log(diet, intolerance, cuisine);
+			let apiURL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.SPOONACULAR_API_KEY_2}`
 			if (diet) {
 				apiURL += `&diet=${diet}`;
 			}
@@ -91,17 +93,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 			if (cuisine) {
 				apiURL += `&cuisine=${cuisine}`;
 			}
+			console.log(apiURL)
 			fetch(apiURL)
 			.then(resp => {
 				if (!resp.ok) {
 					throw new Error(resp.status);
 				}
-				return resp.json();
+				const data = resp.json()
+				console.log(data)
+				setStore({ recipes: data.results, filterStatus: true})
+				return data;
 			})
 			.then(data => {
 				console.log(diet, intolerance, cuisine)
-				console.log(data)
-				setStore({recipes: data.results})
+				// const data = resp.json
+				// console.log(data)
+				// setStore({ homeRecipe: data.recipes, instructions: data.instructions })
 			})
 			.catch(error => {
 				console.error(error);

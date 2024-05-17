@@ -74,26 +74,27 @@ export const FilterCard = () => {
             <button className="btn filter-button" type="button" onClick={handleShowDiets}>Diets</button>
             <button className="btn filter-button" type="button" onClick={handleShowIntolerances}>Intolerances</button>
             <button className="btn filter-button" onClick={handleShowCuisine}>Cuisine</button>
+            <button className="btn filter-button" onClick={() => {actions.filterRecipes(selectedDiet, selectedIntolerance, selectedCuisine)}}>Apply Filters</button>
             </div>
         <div className="white-space-section">
         {showDiets && (
                     <ul className="filter-options">
                     <li>
-                        <NavLink key="None" 
-                        to={`/filter-recipes?diet=&intolerance=${encodeURIComponent(selectedIntolerance)}&cuisine=${encodeURIComponent(selectedCuisine)}`}
+                        <a key="None" 
+                        
                         className={`filter-item ${selectedIntolerance === null ? 'active' : ''}`}
                         onClick={handleDeselectDiet}>
                             None
-                        </NavLink>
+                        </a>
                     </li>
                     {diets.map((diet) => {
                         return <li>
-                            <NavLink key={diet} 
-                            to={`/filter-recipes?diet=${encodeURIComponent(selectedDiet)}&intolerance=${encodeURIComponent(selectedIntolerance)}&cuisine=${encodeURIComponent(selectedIntolerance)}${encodeURIComponent(selectedCuisine)}`} 
+                            <a key={diet} 
+                            
                             className={`filter-item ${selectedDiet === diet ? 'active' : ''}`}
                             onClick={() => handleSelectedDiet(diet)}>
                                 {diet}
-                            </NavLink>
+                            </a>
                         </li>
                         }
                     )}

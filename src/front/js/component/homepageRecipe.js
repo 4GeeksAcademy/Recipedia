@@ -6,6 +6,7 @@ import background from "../../img/background.png";
 const HomepageRecipe = ({ recipe, setOrigin }) => {
   const { actions, store } = useContext(Context);
   const navigate = useNavigate();
+  console.log(recipe)
 
   return (
     <div
