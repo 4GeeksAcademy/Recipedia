@@ -30,9 +30,6 @@ const Layout = () => {
         <ScrollToTop>
           <Navbar />
           <Routes>
-            <Route element={<Cuisine />} path="/cuisine/:type" />
-           <Route element={<Diet />} path="/diet/:type" />
-            <Route element={<Intolerances />} path="/intolerances/:type" />
             <Route element={<FilteredRecipes />} path="/filter-recipes" />
            <Route element={<h1>Not found!</h1>} />
             <Route element={<Home setOrigin={setOrigin} />} path="/" />
@@ -46,28 +43,6 @@ const Layout = () => {
       </BrowserRouter>
     </div>
   );
-    return (
-        <div>
-            <BrowserRouter basename={basename}>
-                <ScrollToTop>
-                    <FilterNavbar />
-                    <Routes>
-                        <Route element={<Home />} path="/" />
-                        <Route element={<Demo />} path="/demo" />
-                        <Route element={<Single />} path="/single/:theid" />
-                        <Route element={<Cuisine />} path="/cuisine/:type" />
-                        <Route element={<Diet />} path="/diet/:type" />
-                        <Route element={<Intolerances />} path="/intolerances/:type" />
-                        <Route element={<FilteredRecipes />} path="/filter-recipes" />
-                        <Route element={<SignUp />} path="/signup" />
-                        <Route element={<Login />} path="/login" />
-                        <Route element={<h1>Not found!</h1>} />
-                    </Routes>
-                    <Footer />
-                </ScrollToTop>
-            </BrowserRouter>
-        </div>
-    );
 };
 
 export default injectContext(Layout);

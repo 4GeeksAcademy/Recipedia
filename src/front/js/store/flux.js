@@ -80,54 +80,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log("Error loading message from backend", error)
 				}
 			},
-		getCuisine: async (name) => {
-			fetch(`https://api.spoonacular.com/recipes/complexSearch?apiKey=b571ba2d3e4e4a9ea48ce48cf8b4e1ce&cuisine=${name}`)
-			.then(resp => {
-				if (!resp.ok) {
-					throw new Error(resp.status);
-				}
-				return resp.json();
-			})
-			.then(data => {
-				console.log(data)
-				setStore({recipes: data.results})
-			})
-			.catch(error => {
-				console.error(error);
-			})
-		},
-		getDiet: async (name) => {
-			fetch(`https://api.spoonacular.com/recipes/complexSearch?apiKey=b571ba2d3e4e4a9ea48ce48cf8b4e1ce&diet=${name}`)
-			.then(resp => {
-				if (!resp.ok) {
-					throw new Error(resp.status);
-				}
-				return resp.json();
-			})
-			.then(data => {
-				console.log(data)
-				setStore({recipes: data.results})
-			})
-			.catch(error => {
-				console.error(error);
-			})
-		},
-		getIntolerances: async (name) => {
-			fetch(`https://api.spoonacular.com/recipes/complexSearch?apiKey=b571ba2d3e4e4a9ea48ce48cf8b4e1ce&intolerances=${name}`)
-			.then(resp => {
-				if (!resp.ok) {
-					throw new Error(resp.status);
-				}
-				return resp.json();
-			})
-			.then(data => {
-				console.log(data)
-				setStore({recipes: data.results})
-			})
-			.catch(error => {
-				console.error(error);
-			})
-		},
 		filterRecipes: async (intolerance, diet, cuisine) => {
 			let apiURL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=1d556000ce964a5e887de0ce17ef6150`
 			if (diet) {
@@ -147,6 +99,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				return resp.json();
 			})
 			.then(data => {
+				console.log(diet, intolerance, cuisine)
 				console.log(data)
 				setStore({recipes: data.results})
 			})
