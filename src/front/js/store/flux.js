@@ -1,28 +1,8 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			recentlyFetchedRecipes: [
-
-			],			
-            favourites: [
-                {
-                    title: "Recipe 1",
-                    image: "https://img.spoonacular.com/recipes/655540-556x370.jpg",
-                    summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et nisl vel ex sodales placerat.",
-                },
-                {
-                    title: "Recipe 2",
-                    image: "https://img.spoonacular.com/recipes/655540-556x370.jpg",
-                    summary: "Praesent euismod ligula et magna vehicula, sed malesuada sapien sollicitudin.",
-                },
-                {
-                    title: "Recipe 3",
-                    image: "https://img.spoonacular.com/recipes/655540-556x370.jpg",
-                    summary: "Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nunc accumsan.",
-                },
-                
-            ],
-            
+			recentlyFetchedRecipes: [],			
+            favourites: [],
 			homeRecipe: [],
 			imageURL: "",
 			instructions: "",
@@ -261,8 +241,60 @@ const getState = ({ getStore, getActions, setStore }) => {
                   console.error("An error occurred during user account deletion", error);
                   return false;
                 }
-              }
+              },
               
+            getFavourites: () => {
+                fetch(`${process.env.BACKEND_URL}/api/user/favourites`, {
+                    headers: {
+                        'Authorization': 'Bearer '+sessionStorage.getItem("token")
+                        } 
+                }).then(resp => resp.json()).then(data => setStore({favourites:data.favourites})).catch(error=> console.log(error))
+            },
+
+            addFavourites: async (title, image, summary, api_id) => {
+                let actions = getActions ()
+                let opt = {
+                    method: 'POST',
+                    headers: {
+                    'Content-Type': 'application/json',
+                      'Authorization': 'Bearer '+sessionStorage.getItem("token")
+                    },
+                    body: JSON.stringify({
+                        "title": title,
+                        "image": image,
+                        "summary": summary,
+                        "api_id": api_id,
+                    })
+                }
+                let response = await fetch (`${process.env.BACKEND_URL}/api/user/favourites`, opt)
+                if (response.status !== 200) {
+                    return false
+                }
+                else {
+                    let data = await response.json()
+                    console.log (data)
+                    actions.getFavourites() //get the updated list of favourites
+                    return true
+                }
+            },
+
+            deleteFavourite: async (favouriteId) => {
+                let actions = getActions();
+                let opt = {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': 'Bearer ' + sessionStorage.getItem("token")
+                    }
+                };
+                let response = await fetch(`${process.env.BACKEND_URL}/api/user/favourites/${favouriteId}`, opt);
+                if (response.status !== 200) {
+                    return false;
+                } else {
+                    actions.getFavourites();
+                    return true;
+                }
+            }
+            
 		}
 	};
 };

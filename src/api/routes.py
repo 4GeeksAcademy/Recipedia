@@ -1,6 +1,6 @@
 import os
 from flask import Flask, request, jsonify, url_for, Blueprint, current_app
-from api.models import db, User
+from api.models import db, User, Favourite
 from api.utils import APIException
 from flask_cors import CORS
 from flask_jwt_extended import create_access_token
@@ -158,3 +158,31 @@ def get_favourites():
 #     favourites = user.serialize().favourites
     
 #     return jsonify(success=True, message='Here are your favourites', favourites = favourites), 200
+
+
+
+@api.route('/user/favourites', methods=['POST'])
+@jwt_required()
+def add_favourites():
+    user_id = get_jwt_identity()
+    user = User.query.filter_by(id=user_id).first()
+
+    if not user:
+        return jsonify(success=False, message='User not found'), 404
+    
+    body = request.json
+    if body["title"] is None or body["api_id"] is None or body["image"]  is None or body["summary"] is None:
+        return jsonify(success=False, message='Please send all required fields'), 400
+
+    checkFavourite = Favourite.query.filter_by(api_id=body["api_id"]).first()
+    if checkFavourite: return jsonify(success=False, message='This favourite already exist'), 409
+
+    favourite = Favourite(title = body["title"], api_id = body["api_id"], image = body["image"], summary = body["summary"], user_id = user_id,)
+    
+    db.session.add(favourite)
+    db.session.commit()
+    db.session.refresh(favourite)
+
+    return jsonify(success=True, message='Your favourite was successfully added',), 200
+
+
