@@ -7,7 +7,7 @@ const cuisines = ["African", "Asian", "American", "British", "Cajun", "Caribbean
 "Eastern European", "European", "French", "German", "Greek", 
 "Indian", "Irish", "Italian", "Japanese", "Jewish", "Korean", 
 "Latin American", "Mediterranean", "Mexican", "Middle Eastern", 
-"Nordic", "Southern", "Spanish", "Thai", "Vietnamese"]
+"Nordic", "Southern", "Spanish", "Thai"]
 
 const diets = ["Gluten Free", "Ketogenic", "Vegetarian", "Lacto-Vegetarian", "Ovo-Vegetarian", "Vegan",
 "Pescatarian", "Paleo", "Primal", "Low FODMAP", "Whole30"]
@@ -74,7 +74,6 @@ export const FilterCard = () => {
             <button className="btn filter-button" type="button" onClick={handleShowDiets}>Diets</button>
             <button className="btn filter-button" type="button" onClick={handleShowIntolerances}>Intolerances</button>
             <button className="btn filter-button" onClick={handleShowCuisine}>Cuisine</button>
-            <button className="btn filter-button" onClick={() => {actions.filterRecipes(selectedDiet, selectedIntolerance, selectedCuisine)}}>Apply Filters</button>
             </div>
         <div className="white-space-section">
         {showDiets && (
@@ -103,21 +102,21 @@ export const FilterCard = () => {
         {showIntolerances && (
             <ul className="filter-options">
                 <li>
-                    <NavLink key="None" 
-                    to={`/filter-recipes?diet=${encodeURIComponent(selectedDiet)}&intolerance=&cuisine=${encodeURIComponent(selectedCuisine)}`} 
+                    <a key="None" 
+     
                     className={`filter-item ${selectedIntolerance === null ? 'active' : ''}`}
                     onClick={handleDeselectIntolerance}>
                         None
-                    </NavLink>
+                    </a>
                     </li>
             {intolerances.map((intolerance) => {
                 return <li>
-                    <NavLink key={intolerance} 
-                    to={`/filter-recipes?diet=${encodeURIComponent(selectedDiet)}&intolerance=${encodeURIComponent(selectedIntolerance)}&cuisine=${encodeURIComponent(selectedCuisine)}`} 
+                    <a key={intolerance} 
+                    
                     className={`filter-item ${selectedIntolerance === intolerance ? 'active' : ''}`}
                     onClick = {() => handleSelectedIntolerance(intolerance)}>
                         {intolerance}
-                    </NavLink>
+                    </a>
                 </li>
                 }
             )}
@@ -126,52 +125,27 @@ export const FilterCard = () => {
         {showCuisine && (
                     <ul className="filter-options">
                     <li>
-                        <NavLink key="None" 
-                        to={`/filter-recipes?diet=${encodeURIComponent(selectedDiet)}&intolerance=${encodeURIComponent(selectedIntolerance)}&cuisine=`}
+                        <a key="None" 
+                        
                         className={`filter-item ${selectedCuisine === null ? 'active' : ''}`}
                         onClick={handleDeselectCuisine}>
                             None
-                        </NavLink>
+                        </a>
                     </li>
                     {cuisines.map((cuisine) => {
                         return <li>
-                            <NavLink key={cuisine} 
-                            to={`/filter-recipes?diet=${encodeURIComponent(selectedDiet)}&intolerance=${encodeURIComponent(selectedIntolerance)}&cuisine=${encodeURIComponent(selectedCuisine)}`} 
+                            <a key={cuisine} 
+                            
                             className={`filter-item ${selectedCuisine === cuisine ? 'active' : ''}`}
                             onClick={() => handleSelectedCuisine(cuisine)}>
                                 {cuisine}
-                            </NavLink>
+                            </a>
                         </li>
                         }
                     )}
                 </ul>
                 )}
+            <button className="apply-filters-button" onClick={() => {actions.filterRecipes(selectedDiet, selectedIntolerance, selectedCuisine); console.log(store.recipes);}}>Apply Filters</button>
         </div>
     </div>
 )}
-
-export const FilterNavbar = () => {
-    const { store, actions } = useContext(Context);
-    const [showFilterCard, setShowFilterCard] = useState(false);
-
-    const toggleFilterCard = () => {
-        setShowFilterCard(!showFilterCard);
-    };
-
-    return (
-    <div className="navbar navbar-light bg-light">
-        <div className="col-6">
-        <button className="btn btn-secondary" type="button" onClick={toggleFilterCard}>Filters</button>
-
-    {showFilterCard && 
-    <div className="col">
-        <FilterCard />
-    </div>
-    }
-    
-
-            </div>
-        </div>
-)}
-
-

@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ChatBot } from "./chatbot";
-import { FilterCard } from "./filternavbar"
+import { FilterCard } from "./filtercard"
 import recipedia from "../../img/recipedia.png";
 import "../../styles/home.css";
 import "../../styles/filternavbar.css";

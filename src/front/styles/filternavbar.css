@@ -97,3 +97,16 @@
 .filters-button:hover{
     border: 1px solid black;
 }
+
+.apply-filters-button {
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+    height: 40px;
+    width: auto;
+    padding: 5px 10px;
+    background-color: #007bff;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+}

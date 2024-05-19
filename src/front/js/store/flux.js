@@ -2,8 +2,9 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			recipes: [],
+			filteredRecipes: [],
 			filterStatus: false,
+			showFilters: true,
 			token: null,
 			homeRecipe: [],
 			imageURL: "",
@@ -83,7 +84,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			},
 		filterRecipes: async (diet, intolerance, cuisine) => { 
 			console.log(diet, intolerance, cuisine);
-			let apiURL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.SPOONACULAR_API_KEY_2}`
+			let apiURL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.SPOONACULAR_API_KEY_2}`;
 			if (diet) {
 				apiURL += `&diet=${diet}`;
 			}
@@ -93,26 +94,24 @@ const getState = ({ getStore, getActions, setStore }) => {
 			if (cuisine) {
 				apiURL += `&cuisine=${cuisine}`;
 			}
-			console.log(apiURL)
-			fetch(apiURL)
-			.then(resp => {
-				if (!resp.ok) {
-					throw new Error(resp.status);
+			console.log(apiURL);
+			
+			try {
+				const response = await fetch(apiURL);
+				if (!response.ok) {
+					throw new Error(response.status);
 				}
-				const data = resp.json()
-				console.log(data)
-				setStore({ recipes: data.results, filterStatus: true})
-				return data;
-			})
-			.then(data => {
-				console.log(diet, intolerance, cuisine)
-				// const data = resp.json
-				// console.log(data)
-				// setStore({ homeRecipe: data.recipes, instructions: data.instructions })
-			})
-			.catch(error => {
+				const data = await response.json();
+				console.log(data);
+				const recipes = data.results || [];
+				setStore({ filteredRecipes: recipes, filterStatus: true, showFilters: true });
+				return recipes;
+			} catch (error) {
 				console.error(error);
-			})
+			}
+		},
+		resetFilters: () => {
+			setStore({filterStatus: false, showFilter: false})
 		},
 		loginUser: (email, password) => {
 			const options = {
