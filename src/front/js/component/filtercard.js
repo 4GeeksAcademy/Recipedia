@@ -45,16 +45,19 @@ export const FilterCard = () => {
     const handleSelectedDiet = (diet) => {
        setSelectedDiet([diet])
         console.log(selectedDiet);
+        console.log(selectedDiet, selectedIntolerance, selectedCuisine);
     }
 
     const handleSelectedIntolerance = (intolerance) => {
         setSelectedIntolerance([intolerance])
         console.log(selectedIntolerance);
+        console.log(selectedDiet, selectedIntolerance, selectedCuisine);
     }
 
     const handleSelectedCuisine = (cuisine) => {
         setSelectedCuisine([cuisine])
         console.log(selectedCuisine)
+        console.log(selectedDiet, selectedIntolerance, selectedCuisine);
     }
 
     const handleDeselectCuisine = () => {
