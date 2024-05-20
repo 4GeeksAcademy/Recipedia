@@ -4,7 +4,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 			filteredRecipes: [],
 			filterStatus: false,
-			showFilters: true,
 			token: null,
 			homeRecipe: [],
 			imageURL: "",
@@ -104,14 +103,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 				const data = await response.json();
 				console.log(data);
 				const recipes = data.results || [];
-				setStore({ filteredRecipes: recipes, filterStatus: true, showFilters: true });
+				setStore({ filteredRecipes: recipes, filterStatus: true});
 				return recipes;
 			} catch (error) {
 				console.error(error);
 			}
 		},
 		resetFilters: () => {
-			setStore({filterStatus: false, showFilter: false})
+			setStore({filterStatus: false})
 		},
 		loginUser: (email, password) => {
 			const options = {
