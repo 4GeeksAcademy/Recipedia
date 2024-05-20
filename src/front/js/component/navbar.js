@@ -1,5 +1,5 @@
-import React, { useState, useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState, useContext, useEffect } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { ChatBot } from "./chatbot";
 import recipedia from "../../img/recipedia.png";
 import "../../styles/home.css";
@@ -10,6 +10,11 @@ export const Navbar = ({ setOrigin }) => {
   const navigate = useNavigate();
   console.log(useNavigate);
   const { store, actions } = useContext(Context);
+  // let location = Window.location;
+
+  // useEffect (()=> {
+  //   setShowChatBot(false)
+  // },[location])
 
   return (
     <nav

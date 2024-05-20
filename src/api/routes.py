@@ -169,15 +169,15 @@ def add_favourites():
 
     if not user:
         return jsonify(success=False, message='User not found'), 404
-    
+     
     body = request.json
-    if body["title"] is None or body["api_id"] is None or body["image"]  is None or body["summary"] is None:
+    if body["title"] is None or body["api_id"] is None or body["image"]  is None:
         return jsonify(success=False, message='Please send all required fields'), 400
 
     checkFavourite = Favourite.query.filter_by(api_id=body["api_id"]).first()
     if checkFavourite: return jsonify(success=False, message='This favourite already exist'), 409
 
-    favourite = Favourite(title = body["title"], api_id = body["api_id"], image = body["image"], summary = body["summary"], user_id = user_id,)
+    favourite = Favourite(title = body["title"], api_id = body["api_id"], image = body["image"], user_id = user_id,)
     
     db.session.add(favourite)
     db.session.commit()
@@ -186,3 +186,27 @@ def add_favourites():
     return jsonify(success=True, message='Your favourite was successfully added',), 200
 
 
+@api.route('/user/favourites', methods=['DELETE'])
+@jwt_required()
+def delete_favourite():
+    current_user_id = get_jwt_identity()
+    user = User.query.filter_by(id=current_user_id).first()
+
+    if not user:
+        return jsonify(success=False, message='User not found'), 404
+
+    body = request.json
+    api_id = body.get("api_id")
+
+    if not api_id:
+        return jsonify(success=False, message='API ID is required'), 400
+
+    favourite = Favourite.query.filter_by(api_id=api_id, user_id=current_user_id).first()
+
+    if not favourite:
+        return jsonify(success=False, message='Favorite not found'), 404
+
+    db.session.delete(favourite)
+    db.session.commit()
+
+    return jsonify(success=True, message='Favorite deleted successfully'), 200

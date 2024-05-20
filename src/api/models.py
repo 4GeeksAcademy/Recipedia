@@ -27,7 +27,6 @@ class Favourite(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     title = db.Column(db.String(80), unique=False, nullable=False)
     image = db.Column(db.String(250), unique=False, nullable=False)
-    summary = db.Column(db.Text, unique=False, nullable=False)
     user = db.relationship("User", back_populates = "favourites")
 
     def __repr__(self):
@@ -40,5 +39,4 @@ class Favourite(db.Model):
             "user_id": self.user_id,
             "title": self.title,
             "image": self.image,
-            "summary": self.summary,
         }

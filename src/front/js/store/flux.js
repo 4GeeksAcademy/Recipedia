@@ -3,11 +3,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 			recentlyFetchedRecipes: [],			
             favourites: [],
-			homeRecipe: [],
+			homeRecipes: [],
 			imageURL: "",
 			instructions: "",
 			cookingTime: "",
 			ingredients: "",
+            id:"",
+            title:"",
 			chatbotMessage: false,
 			
 			//authentication
@@ -24,14 +26,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore(store)
 			},	
 				// other actions...
-				clearHomeRecipe: () => {
-					setStore({ homeRecipe: [] });
+				clearHomeRecipes: () => {
+					setStore({ homeRecipes: [] });
 				},
 	
 				// Call this action when the chatbot sends a message
 				handleChatbotMessage: () => {
 					setStore({ chatbotMessage: true });
-					getActions().clearHomeRecipe(); // Clear homeRecipe when chatbot sends a message
+					getActions().clearHomeRecipes(); // Clear homeRecipes when chatbot sends a message
 				},
 
 			getRandomRecipe: async () => {
@@ -39,7 +41,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const resp = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${process.env.SPOONACULAR_API_KEY_2}&number=1`)
 					const data = await resp.json()
 					console.log(data)
-					setStore({ homeRecipe: data.recipes, instructions: data.instructions })
+					setStore({ homeRecipes: data.recipes, instructions: data.instructions, })
 					return data;
 				}catch(error){
 					console.log("Error loading message from backend", error)
@@ -54,7 +56,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const ingredientsOriginal = data.extendedIngredients.map(ingredient => ingredient.original);
 					let ingredientsString = ingredientsOriginal.slice(0, -1).join(", ") + (ingredientsOriginal.length > 1 ? " and " : "") + ingredientsOriginal.slice(-1);
 			
-					setStore({ imageURL: data.image, instructions: data.instructions, cookingTime: data.readyInMinutes, ingredients: ingredientsOriginal });
+					setStore({ imageURL: data.image, instructions: data.instructions, cookingTime: data.readyInMinutes, ingredients: ingredientsOriginal, id: data.id, title: data.title });
 					return data;
 				} catch (error) {
 					console.log("Error loading message from backend", error);
@@ -251,18 +253,17 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }).then(resp => resp.json()).then(data => setStore({favourites:data.favourites})).catch(error=> console.log(error))
             },
 
-            addFavourites: async (title, image, summary, api_id) => {
+            addFavourites: async (title, image, api_id) => {
                 let actions = getActions ()
                 let opt = {
                     method: 'POST',
                     headers: {
                     'Content-Type': 'application/json',
                       'Authorization': 'Bearer '+sessionStorage.getItem("token")
-                    },
+                    }, 
                     body: JSON.stringify({
                         "title": title,
                         "image": image,
-                        "summary": summary,
                         "api_id": api_id,
                     })
                 }
@@ -278,22 +279,35 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
-            deleteFavourite: async (favouriteId) => {
-                let actions = getActions();
-                let opt = {
+            deleteFavourite: async (api_id) => {
+                try {
+                  let actions = getActions();
+                  let opt = {
                     method: 'DELETE',
                     headers: {
-                        'Authorization': 'Bearer ' + sessionStorage.getItem("token")
-                    }
-                };
-                let response = await fetch(`${process.env.BACKEND_URL}/api/user/favourites/${favouriteId}`, opt);
-                if (response.status !== 200) {
-                    return false;
-                } else {
-                    actions.getFavourites();
-                    return true;
+                      'Authorization': 'Bearer ' + sessionStorage.getItem("token"),
+                      'Content-Type': 'application/json' // Specify content type for the request body
+                    },
+                    body: JSON.stringify({ api_id: api_id }) // Convert the data to JSON format
+                  };
+                  let response = await fetch(`${process.env.BACKEND_URL}/api/user/favourites`, opt);
+              
+                  if (!response.status == 200) { 
+                    let error = await response.json()
+                    console.log(response.status);
+                    console.log('Failed to delete favourite', error.message);
+                    return false
+                  }
+              
+                  // Success: Trigger the action to refresh the favourites
+                  actions.getFavourites();
+                  return true;
+                } catch (error) {
+                  console.error('Error deleting favourite:', error);
+                  return false;
                 }
-            }
+              }
+              
             
 		}
 	};
