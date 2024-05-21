@@ -49,7 +49,7 @@ export const ChatBot = ({ setShowChatBot, setOrigin }) => {
   };
 
   return (
-    <div className="chatbot-container">
+    <div className="chatbot-container" style={{zIndex:"3", position:"relative"}}>
       <div
         className="ml-auto chatbot-input"
         style={{

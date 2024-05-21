@@ -1,20 +1,28 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams, useLocation } from "react-router-dom";
 import { ChatBot } from "./chatbot";
 import recipedia from "../../img/recipedia.png";
 import "../../styles/home.css";
 import { Context } from "../store/appContext";
 
-export const Navbar = ({ setOrigin }) => {
-  const [showChatBot, setShowChatBot] = useState(false);
+export const Navbar = ({ setOrigin, showChatBot, setShowChatBot }) => {
   const navigate = useNavigate();
   console.log(useNavigate);
   const { store, actions } = useContext(Context);
-  // let location = Window.location;
+  const [showCredentialsVersion, setShowCredentialsVersion] = useState(false);
 
-  // useEffect (()=> {
-  //   setShowChatBot(false)
-  // },[location])
+  const location = useLocation();
+  
+  useEffect(() => { 
+    console.log("Current pathname:", location.pathname);
+
+    setShowChatBot(false)
+    if (location.pathname === `/login` || location.pathname === `/signup` || location.pathname === `/manageaccount`) {
+      setShowCredentialsVersion(true);
+    } else {
+      setShowCredentialsVersion(false);
+    }
+  }, [location]);  
 
   return (
     <nav
@@ -40,9 +48,9 @@ export const Navbar = ({ setOrigin }) => {
         </Link>
       </div>
       <div className="ml-auto d-flex justify-content-start">
-        <span className="navbar navbarCustom m-5">Filters</span>
-        <span
-          className="navbar navbarCustom"
+        <span className={"navbar navbarCustom m-5 "+(showCredentialsVersion ? "invisible" : "")}>Filters</span>
+        <span 
+          className={"navbar navbarCustom "+(showCredentialsVersion ? "invisible" : "")}
           onClick={() => setShowChatBot(!showChatBot)}
         >
           Chatbot
@@ -56,7 +64,7 @@ export const Navbar = ({ setOrigin }) => {
           </button>
           <ul className="dropdown-menu ps-2" style={{fontSize:"18px", width:"200px"}}>
           <li className="dropdown-element pb-2"><Link style={{ textDecoration: "none", outline: "none", color:"black"}} to="/favourites">Favourites</Link></li>
-          <li className="dropdown-element pb-2"><Link style={{ textDecoration: "none", outline: "none", color:"black"}} to="/manageaccount">Manage my Account</Link></li>
+          <li className={"dropdown-element pb-2" +(showCredentialsVersion ? "invisible" : "")}><Link style={{ textDecoration: "none", outline: "none", color:"black"}} to="/manageaccount">Manage my Account</Link></li>
           <li className="dropdown-element"><a type="button" onClick={actions.logout}> Logout</a></li>
           {/* <button className="navbar navbarCustom" style={{ border: "none", background: "transparent",}} onClick={actions.logout}>
               Logout

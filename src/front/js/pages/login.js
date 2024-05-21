@@ -47,9 +47,9 @@ export const Login = () => {
                 <div className="col-md-6" style={{ height: "700px", overflow: "hidden", position: "relative" }}>
                     <img src={login} className="img-fluid rounded-start" alt="login" style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }} />
                 </div>
-                <div className="col-md-6 mx-auto" style={{ width: "500px" }}>
+                <div className="col-md-6 mx-auto" style={{ width: "700px" }}>
                     <div className="card-body ">
-                        <h5 className="card-title" style={{ fontSize: "50px", margin: "30px 0 30px 0" }}>LOGIN</h5>
+                        <h5 className="card-title" style={{ fontSize: "60px", margin:"90px 0 60px 0" }}>LOGIN</h5>
                         <label htmlFor="InputEmail" className="form-label">Email</label>
                         <input
                             type="email"

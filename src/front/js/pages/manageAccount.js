@@ -38,9 +38,9 @@ export const ManageAccount = () => {
 			<div className="col-md-6" style={{ height: "700px", overflow: "hidden", position:"relative" }}>
 			<img src={login} className="img-fluid rounded-start" alt="login" style={{position:"absolute", top:"50%", left:"50%", transform: "translate(-50%, -50%)"}}/>
 			</div>
-			<div className="col-md-6 mx-auto" style={{ width: "500px" }}>
+			<div className="col-md-6 mx-auto" style={{ width: "700px" }}>
 			<div className="card-body">
-    <h5 className="card-title" style={{ fontSize: "50px", margin: "30px 0 30px 0" }}>MANAGE MY ACCOUNT</h5>
+    <h5 className="card-title" style={{ fontSize: "60px", margin:"90px 0 60px 0"}}>MANAGE MY ACCOUNT</h5>
         <label htmlFor="InputEmail" className="form-label mr-2">Update Email</label>
     <div className="input-container d-flex align-items-center mb-2">
         <input
@@ -67,13 +67,13 @@ export const ManageAccount = () => {
             <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
         </svg>
 	</div>
-    <button type="button" className="btn btn-light mb-3 w-100 mt-4" onClick={handleUpdate} style={{ backgroundColor: "#273A4E", color: "white", maxWidth:"420px" }}>Update my Account</button>
+    <button type="button" className="btn btn-light mb-3 mt-4" onClick={handleUpdate} style={{ backgroundColor: "#273A4E", color: "white", width:"622px" }}>Update my Account</button>
         {/* <button type="button" className="btn btn-light w-100" onClick={handleDelete} style={{ backgroundColor: "red", color: "white" }}>Delete my Account</button> */}
-        <button type="button" className="btn btn-light w-100" onClick={() => setShowModal(true)} style={{ backgroundColor: "#E84A43", color: "white", maxWidth:"420px" }}>Delete my Account</button>
+        <button type="button" className="btn btn-light" onClick={() => setShowModal(true)} style={{ backgroundColor: "#E84A43", color: "white", width:"622px" }}>Delete my Account</button>
 
 {showModal && (
-    <div className="modal-dialog modal-dialog-centered">
-        <div className="modal-content">
+    <div className="modal-dialog modal-dialog-centered" style={{width:"622px" }}>
+        <div className="modal-content" >
             <div className="modal-header">
                 <h5 className="modal-title">Are you sure you want to delete your account?</h5>
                 <button type="button" className="btn-close" onClick={() => setShowModal(false)} aria-label="Close"></button>

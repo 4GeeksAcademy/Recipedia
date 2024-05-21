@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
+import background from "../../img/background.png";
 
-export const Favourites = () => {
+export const Favourites = ({showChatBot}) => {
 const {store, actions} = useContext(Context);
 let favouritesList = store.favourites
 
@@ -11,9 +12,15 @@ useEffect (() =>{
 },[])
 
 return(
-<div style={{backgroundColor:"#F0F3F6", display:"flex", alignItems:"center", flexDirection:"column", paddingBottom:"40px"}}>
+<div style={{backgroundColor:showChatBot == false ? "#F0F3F6" : "", display:"flex", alignItems:"center", flexDirection:"column", paddingBottom:"40px"}}>
+    {showChatBot == false ? "": ( <img 
+        className="mt-5"
+        src={background}
+        style={{ width: "100%", position: "absolute", zIndex: "0", left: "0",}}
+        alt="Background"
+      />)}
     {favouritesList.map((item, index) => (
-        <div className="card mt-5" style={{width: "1000px",}}>
+        <div className={"card mt-5 "+(showChatBot == false? "": "invisible")} style={{width: "1000px"}}>
         <div className="row g-0">
             <div className="col-md-4">
             <img src={item.image} className="img-fluid rounded-start" alt="..."style={{width:"700px", height:"280px"}}/>

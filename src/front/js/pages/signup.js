@@ -27,9 +27,9 @@ export const Signup = () => {
 			<div className="col-md-6" style={{ height: "700px", overflow: "hidden", position:"relative", paddingLeft:"0" }}>
 			<img src={signup} className="img-fluid rounded-start" alt="signup" style={{ position: "absolute", width:"110vh"}} />
 			</div>
-			<div className="col-md-6 mx-auto" style={{ width: "500px" }}>
+			<div className="col-md-6 mx-auto" style={{ width: "700px" }}>
 				<div className="card-body ">
-					<h5 className="card-title" style={{ fontSize: "50px", margin:"30px 0 30px 0" }}>SIGNUP</h5>
+					<h5 className="card-title" style={{ fontSize: "60px", margin:"90px 0 60px 0" }}>SIGNUP</h5>
 						<label for="InputEmail" className="form-label">Email</label>
 						<input
 						type="email"
