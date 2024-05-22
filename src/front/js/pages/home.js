@@ -8,15 +8,18 @@ import HomepageRecipe from "../component/homepageRecipe";
 export const Home = ({ setOrigin }) => {
   const { store, actions } = useContext(Context);
 
-  const homeRecipe = store.homeRecipe || [];
+  const homeRecipes = store.homeRecipes || [];
   const chatbotMessage = store.chatbotMessage; // Flag to track chatbot messages
 
-  console.log("this is the homerecipe", homeRecipe);
   return (
-    <div className="text-center mt-5" style={{ minHeight: "100vh"}}>
-      <img src={background} style={{ width: "100%", position:"absolute", zIndex:"-1", left:"0"}} alt="Background" />
+    <div className="text-center mt-5" style={{ minHeight: "100vh" }}>
+      <img
+        src={background}
+        style={{ width: "100%", position: "absolute", zIndex: "-1", left: "0" }}
+        alt="Background"
+      />
       {!chatbotMessage &&
-        homeRecipe.map((recipe, index) => (
+        homeRecipes.map((recipe, index) => (
           <HomepageRecipe key={index} recipe={recipe} setOrigin={setOrigin} />
         ))}
     </div>

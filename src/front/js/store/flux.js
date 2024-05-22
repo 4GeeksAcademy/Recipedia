@@ -1,14 +1,15 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			recentlyFetchedRecipes: [
-
-			],			
-			homeRecipe: [],
+			recentlyFetchedRecipes: [],			
+            favourites: [],
+			homeRecipes: [],
 			imageURL: "",
 			instructions: "",
 			cookingTime: "",
 			ingredients: "",
+            id:"",
+            title:"",
 			chatbotMessage: false,
 			
 			//authentication
@@ -25,22 +26,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 				setStore(store)
 			},	
 				// other actions...
-				clearHomeRecipe: () => {
-					setStore({ homeRecipe: [] });
+				clearHomeRecipes: () => {
+					setStore({ homeRecipes: [] });
 				},
 	
 				// Call this action when the chatbot sends a message
 				handleChatbotMessage: () => {
 					setStore({ chatbotMessage: true });
-					getActions().clearHomeRecipe(); // Clear homeRecipe when chatbot sends a message
+					getActions().clearHomeRecipes(); // Clear homeRecipes when chatbot sends a message
 				},
 
 			getRandomRecipe: async () => {
 				try{
-					const resp = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${process.env.SPOONACULAR_API_KEY_2}&number=18`)
+					const resp = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${process.env.SPOONACULAR_API_KEY_2}&number=1`)
 					const data = await resp.json()
 					console.log(data)
-					setStore({ homeRecipe: data.recipes, instructions: data.instructions })
+					setStore({ homeRecipes: data.recipes, instructions: data.instructions, })
 					return data;
 				}catch(error){
 					console.log("Error loading message from backend", error)
@@ -55,7 +56,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const ingredientsOriginal = data.extendedIngredients.map(ingredient => ingredient.original);
 					let ingredientsString = ingredientsOriginal.slice(0, -1).join(", ") + (ingredientsOriginal.length > 1 ? " and " : "") + ingredientsOriginal.slice(-1);
 			
-					setStore({ imageURL: data.image, instructions: data.instructions, cookingTime: data.readyInMinutes, ingredients: ingredientsOriginal });
+					setStore({ imageURL: data.image, instructions: data.instructions, cookingTime: data.readyInMinutes, ingredients: ingredientsOriginal, id: data.id, title: data.title });
 					return data;
 				} catch (error) {
 					console.log("Error loading message from backend", error);
@@ -129,7 +130,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                         });
                         sessionStorage.setItem("token", data.token);
                         sessionStorage.setItem("userID", data.user.id);
-                        window.location = '/private';
                         return true;
                     } else {
                         console.error("An error occurred during user login");
@@ -189,6 +189,126 @@ const getState = ({ getStore, getActions, setStore }) => {
                 sessionStorage.removeItem("token");
                 sessionStorage.removeItem("userID");
             },
+
+            update: async (dataEmail, dataPassword) => {
+                try {
+                    const response = await fetch(process.env.BACKEND_URL + "/api/update", {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            Authorization : 'Bearer '+sessionStorage.getItem("token")
+                        },
+                        body: JSON.stringify({
+                            "email": dataEmail,
+                            "password": dataPassword,
+                        })
+                    });
+                    console.log(response);
+                    if (response.ok) {
+                        const data = await response.json();
+                        setStore({
+                            user: data.user
+                        });
+                        return true;
+                    } else {
+                        console.error("An error occurred during user update");
+                        return false;
+                    }
+                } catch (error) {
+                    console.error("An error occurred during user update", error);
+                    return false;
+                }
+            },
+
+            delete: async () => {
+                try {
+                  const token = sessionStorage.getItem("token");
+                  const response = await fetch(`${process.env.BACKEND_URL}/api/delete`, {
+                    method: 'DELETE',
+                    headers: {
+                      'Authorization': 'Bearer '+sessionStorage.getItem("token")
+                    }
+                  });
+              
+                  if (response.ok) {
+                    console.log("User account deleted successfully");
+                    sessionStorage.clear();
+                    setStore({logged:null})
+                    return true;
+                  } else {
+                    console.error("An error occurred during user account deletion");
+                    return false;
+                  }
+                } catch (error) {
+                  console.error("An error occurred during user account deletion", error);
+                  return false;
+                }
+              },
+              
+            getFavourites: () => {
+                fetch(`${process.env.BACKEND_URL}/api/user/favourites`, {
+                    headers: {
+                        'Authorization': 'Bearer '+sessionStorage.getItem("token")
+                        } 
+                }).then(resp => resp.json()).then(data => setStore({favourites:data.favourites})).catch(error=> console.log(error))
+            },
+
+            addFavourites: async (title, image, api_id) => {
+                let actions = getActions ()
+                let opt = {
+                    method: 'POST',
+                    headers: {
+                    'Content-Type': 'application/json',
+                      'Authorization': 'Bearer '+sessionStorage.getItem("token")
+                    }, 
+                    body: JSON.stringify({
+                        "title": title,
+                        "image": image,
+                        "api_id": api_id,
+                    })
+                }
+                let response = await fetch (`${process.env.BACKEND_URL}/api/user/favourites`, opt)
+                if (response.status !== 200) {
+                    return false
+                }
+                else {
+                    let data = await response.json()
+                    console.log (data)
+                    actions.getFavourites() //get the updated list of favourites
+                    return true
+                }
+            },
+
+            deleteFavourite: async (api_id) => {
+                try {
+                  let actions = getActions();
+                  let opt = {
+                    method: 'DELETE',
+                    headers: {
+                      'Authorization': 'Bearer ' + sessionStorage.getItem("token"),
+                      'Content-Type': 'application/json' // Specify content type for the request body
+                    },
+                    body: JSON.stringify({ api_id: api_id }) // Convert the data to JSON format
+                  };
+                  let response = await fetch(`${process.env.BACKEND_URL}/api/user/favourites`, opt);
+              
+                  if (!response.status == 200) { 
+                    let error = await response.json()
+                    console.log(response.status);
+                    console.log('Failed to delete favourite', error.message);
+                    return false
+                  }
+              
+                  // Success: Trigger the action to refresh the favourites
+                  actions.getFavourites();
+                  return true;
+                } catch (error) {
+                  console.error('Error deleting favourite:', error);
+                  return false;
+                }
+              }
+              
+            
 		}
 	};
 };
