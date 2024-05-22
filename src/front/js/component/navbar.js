@@ -1,5 +1,5 @@
-import React, { useState, useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState, useContext, useEffect } from "react";
+import { Link, useNavigate, useParams, useLocation } from "react-router-dom";
 import { ChatBot } from "./chatbot";
 import { FilterCard } from "./filtercard"
 import recipedia from "../../img/recipedia.png";
@@ -7,11 +7,24 @@ import "../../styles/home.css";
 import "../../styles/filternavbar.css";
 import { Context } from "../store/appContext";
 
-export const Navbar = ({ setOrigin }) => {
-  const [showChatBot, setShowChatBot] = useState(false);
+export const Navbar = ({ setOrigin, showChatBot, setShowChatBot }) => {
   const navigate = useNavigate();
   console.log(useNavigate);
   const { store, actions } = useContext(Context);
+  const [showCredentialsVersion, setShowCredentialsVersion] = useState(false);
+
+  const location = useLocation();
+  
+  useEffect(() => { 
+    console.log("Current pathname:", location.pathname);
+
+    setShowChatBot(false)
+    if (location.pathname === `/login` || location.pathname === `/signup` || location.pathname === `/manageaccount`) {
+      setShowCredentialsVersion(true);
+    } else {
+      setShowCredentialsVersion(false);
+    }
+  }, [location]);  
   const [showFilterCard, setShowFilterCard] = useState(false);
 
   const toggleFilterCard = () => {
@@ -50,8 +63,8 @@ export const Navbar = ({ setOrigin }) => {
           </div>
         }
 
-        <span
-          className="navbar navbarCustom"
+        <span 
+          className={"navbar navbarCustom "+(showCredentialsVersion ? "invisible" : "")}
           onClick={() => setShowChatBot(!showChatBot)}
         >
           Chatbot
@@ -65,7 +78,7 @@ export const Navbar = ({ setOrigin }) => {
           </button>
           <ul className="dropdown-menu ps-2" style={{fontSize:"18px", width:"200px"}}>
           <li className="dropdown-element pb-2"><Link style={{ textDecoration: "none", outline: "none", color:"black"}} to="/favourites">Favourites</Link></li>
-          <li className="dropdown-element pb-2"><Link style={{ textDecoration: "none", outline: "none", color:"black"}} to="/manageaccount">Manage my Account</Link></li>
+          <li className={"dropdown-element pb-2" +(showCredentialsVersion ? "invisible" : "")}><Link style={{ textDecoration: "none", outline: "none", color:"black"}} to="/manageaccount">Manage my Account</Link></li>
           <li className="dropdown-element"><a type="button" onClick={actions.logout}> Logout</a></li>
           {/* <button className="navbar navbarCustom" style={{ border: "none", background: "transparent",}} onClick={actions.logout}>
               Logout
