@@ -187,7 +187,7 @@ export const RecipeCard = ({ origin }) => {
             >
               <div className="card" style={{ borderColor: "white" }}>
                 <div className="card-body" style={{ padding: "20px" }}>
-                  <h5 className="card-title">COOKING MINUTES</h5>
+                  <h5 className="card-title">COOKING TIME</h5>
                   <p
                     className="card-text"
                     style={{ fontSize: "20px", paddingLeft: "10px" }}
@@ -402,7 +402,7 @@ export const RecipeCard = ({ origin }) => {
               <div className="card" style={{ borderColor: "white" }}>
                 <div className="card-body" style={{ padding: "20px" }}>
                   <h5 className="card-title">
-                  COOKING MINUTES
+                  COOKING TIME
                   </h5>
                   <p
                     className="card-text"
@@ -435,7 +435,7 @@ export const RecipeCard = ({ origin }) => {
                       listStyleType: "disc",
                       flexDirection: "row",
                       alignItems: "center",
-                      paddingLeft: "40px",
+                      paddingLeft: "20px",
                     }}>
       {Array.isArray(store.ingredients) && store.ingredients.map((ingredient, index) => (
         <li key={index} style={{ marginRight: "20px", marginBottom: "8px", width: "calc(50% - 20px)" }}>{ingredient}</li>

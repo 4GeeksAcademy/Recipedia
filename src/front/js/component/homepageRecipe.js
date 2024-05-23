@@ -84,7 +84,7 @@
 import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext.js";
-import background from "../../img/background.png";
+import { Tooltip } from 'react-tooltip'
 
 const HomepageRecipe = ({ recipe, setOrigin }) => {
   const { actions, store } = useContext(Context);
@@ -104,7 +104,7 @@ const HomepageRecipe = ({ recipe, setOrigin }) => {
         maxWidth: "100%",
         marginTop: "100px",
       }}
-    >
+    > 
       <div
         style={{
           display: "flex",
@@ -157,6 +157,9 @@ const HomepageRecipe = ({ recipe, setOrigin }) => {
         >
           <strong>{recipe.title}</strong>
         </h5>
+        <Tooltip anchorSelect=".my-anchor-element" place="top">
+          Sign in to save your favourite recipes!
+        </Tooltip>
         {store.favourites.find((item)=> item.title == recipe.title)? (<svg onClick={()=> actions.deleteFavourite(recipe.id)} xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#E84A43" className="bi bi-heart-fill" viewBox="0 0 16 16" >
              <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
              </svg>) : (<svg onClick={(()=> actions.addFavourites(recipe.title, recipe.image, recipe.id))} xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="#E84A43" className="bi bi-heart" viewBox="0 0 16 16" >

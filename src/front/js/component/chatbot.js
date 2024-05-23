@@ -13,13 +13,13 @@ export const ChatBot = ({ setShowChatBot, setOrigin }) => {
 
   const sendMessage = async () => {
     if (input.trim() !== "") {
-      setMessages([
-        ...messages,
-        {
-          text: input,
-          sender: "user",
-        },
-      ]);
+      // setMessages([
+      //   ...messages,
+      //   {
+      //     text: input,
+      //     sender: "user",
+      //   },
+      // ]);
 
       let response = await fetch(
         "https://api.spoonacular.com/food/converse?apiKey=" +
@@ -35,7 +35,6 @@ export const ChatBot = ({ setShowChatBot, setOrigin }) => {
         actions.handleChatbotMessage();
         console.log(data);
         setMessages([
-          ...messages,
           {
             text: data.answerText,
             sender: "ChefBot",

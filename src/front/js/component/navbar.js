@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Link, useNavigate, useParams, useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { ChatBot } from "./chatbot";
 import recipedia from "../../img/recipedia.png";
 import "../../styles/home.css";
@@ -10,7 +10,6 @@ export const Navbar = ({ setOrigin, showChatBot, setShowChatBot }) => {
   console.log(useNavigate);
   const { store, actions } = useContext(Context);
   const [showCredentialsVersion, setShowCredentialsVersion] = useState(false);
-  // const { title } = useParams();
 
   const location = useLocation();
   
@@ -18,10 +17,9 @@ export const Navbar = ({ setOrigin, showChatBot, setShowChatBot }) => {
     console.log("Current pathname:", location.pathname);
     // console.log("locationpathname:",`/recipe/${title}` );
 
-    // || location.pathname === `/recipe/${params.title}`
 
     setShowChatBot(false)
-    if (location.pathname === `/login` || location.pathname === `/signup` || location.pathname === `/manageaccount`) {
+    if (location.pathname === `/login` || location.pathname === `/signup` || location.pathname === `/manageaccount` || location.pathname.includes("/recipe/")) {
       setShowCredentialsVersion(true);
     } else {
       setShowCredentialsVersion(false);
@@ -43,13 +41,13 @@ export const Navbar = ({ setOrigin, showChatBot, setShowChatBot }) => {
         style={{ justifyContent: "center" }}
       >
         {" "}
-        <Link to="/">
+        <a href="/">
           <img
             src={recipedia}
-            style={{ width: "250px", height: "auto", marginLeft: "-110px" }}
+            style={{ width: "270px", height: "auto", marginLeft: "-110px" }}
             alt="recipedia"
           />
-        </Link>
+        </a>
       </div>
       <div className="ml-auto d-flex justify-content-start">
         <span className={"navbar navbarCustom m-5 "+(showCredentialsVersion ? "invisible" : "")}>Filters</span>
