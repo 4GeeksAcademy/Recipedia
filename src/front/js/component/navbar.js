@@ -10,11 +10,15 @@ export const Navbar = ({ setOrigin, showChatBot, setShowChatBot }) => {
   console.log(useNavigate);
   const { store, actions } = useContext(Context);
   const [showCredentialsVersion, setShowCredentialsVersion] = useState(false);
+  // const { title } = useParams();
 
   const location = useLocation();
   
   useEffect(() => { 
     console.log("Current pathname:", location.pathname);
+    // console.log("locationpathname:",`/recipe/${title}` );
+
+    // || location.pathname === `/recipe/${params.title}`
 
     setShowChatBot(false)
     if (location.pathname === `/login` || location.pathname === `/signup` || location.pathname === `/manageaccount`) {
@@ -59,16 +63,13 @@ export const Navbar = ({ setOrigin, showChatBot, setShowChatBot }) => {
       <div className="ml-auto me-3" style={{fontFamily: "avenir-light", color: "#303131",}}>
         {store.logged ? (
           <div className="dropdown">
-          <button className="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style={{ border: "none", background: "transparent", fontSize:"22px"}}>
+          <button className="dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style={{ border: "none", background: "transparent", fontSize:"24px"}}>
             My Profile
           </button>
           <ul className="dropdown-menu ps-2" style={{fontSize:"18px", width:"200px"}}>
           <li className="dropdown-element pb-2"><Link style={{ textDecoration: "none", outline: "none", color:"black"}} to="/favourites">Favourites</Link></li>
           <li className={"dropdown-element pb-2" +(showCredentialsVersion ? "invisible" : "")}><Link style={{ textDecoration: "none", outline: "none", color:"black"}} to="/manageaccount">Manage my Account</Link></li>
           <li className="dropdown-element"><a type="button" onClick={actions.logout}> Logout</a></li>
-          {/* <button className="navbar navbarCustom" style={{ border: "none", background: "transparent",}} onClick={actions.logout}>
-              Logout
-          </button> */}
           </ul>
         </div>
           ) : (

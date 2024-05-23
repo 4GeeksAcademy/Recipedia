@@ -22,7 +22,7 @@ export const Signup = () => {
     };
 
 	return (
-		<div className="card" style={{minHeight: "100vh", fontFamily:"avenir-light", color: "#303131", borderBottomColor:"white"}}>
+		<div className="card" style={{minHeight: "50vh", fontFamily:"avenir-light", color: "#303131", borderBottomColor:"white"}}>
 		<div className="row">
 			<div className="col-md-6" style={{ height: "700px", overflow: "hidden", position:"relative", paddingLeft:"0" }}>
 			<img src={signup} className="img-fluid rounded-start" alt="signup" style={{ position: "absolute", width:"110vh"}} />

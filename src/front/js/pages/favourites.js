@@ -6,13 +6,35 @@ import background from "../../img/background.png";
 export const Favourites = ({showChatBot}) => {
 const {store, actions} = useContext(Context);
 let favouritesList = store.favourites
+const [authStatus, setAuthStatus] = useState("pending");
 
-useEffect (() =>{
-  actions.getFavourites()
-},[])
+useEffect (()=> {
+    const authentication = async () => {
+        let result = await actions.verifyAuthToken()
+        if (result) {
+            setAuthStatus("granted")
+            actions.getFavourites()
+        }
+        else {
+            setAuthStatus("denied")
+        }
+    }
+    authentication()
+}, []) 
+
 
 return(
 <div style={{backgroundColor:showChatBot == false ? "#F0F3F6" : "", display:"flex", alignItems:"center", flexDirection:"column", paddingBottom:"40px"}}>
+{authStatus == "pending" ? (<div style={{fontSize: "40px",}}>Please wait while we authenticate you.</div>):
+             authStatus == "denied" ? (
+				<div className="bg-white text-center p-5 h-25">
+					<h2 className="text-danger" style={{fontSize: "40px",}}>Oops! You don't have access to this area.</h2>
+					<p className="text-muted" style={{fontSize: "40px",}}>
+						Please <Link to="/login">login</Link> first.
+					</p>
+				</div>
+			) : authStatus == "granted" ? (
+  <div>
     {showChatBot == false ? "": ( <img 
         className="mt-5"
         src={background}
@@ -42,6 +64,12 @@ return(
         </div>
         </div>
     ))}
+  </div>) : (<div className="bg-white text-center p-5 h-25">
+            <h2 className="text-danger" style={{fontSize: "40px",}}>Oops! An error accurred.</h2>
+            <p className="text-muted" style={{fontSize: "40px",}}>
+                Please try again.
+            </p>
+        </div>)}
 </div>
 )
 }
