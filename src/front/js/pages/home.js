@@ -1,26 +1,32 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
-import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
+import background from "../../img/background.png";
+import { Link } from "react-router-dom";
+import HomepageRecipe from "../component/homepageRecipe";
 
-export const Home = () => {
-	const { store, actions } = useContext(Context);
+export const Home = ({ setOrigin }) => {
+  const { store, actions } = useContext(Context);
 
-	return (
-		<div className="text-center mt-5">
-			<h1>Hello Rigo!!</h1>
-			<p>
-				<img src={rigoImageUrl} />
-			</p>
-			<div className="alert alert-info">
-				{store.message || "Loading message from the backend (make sure your python backend is running)..."}
-			</div>
-			<p>
-				This boilerplate comes with lots of documentation:{" "}
-				<a href="https://start.4geeksacademy.com/starters/react-flask">
-					Read documentation
-				</a>
-			</p>
-		</div>
-	);
+  const homeRecipes = store.homeRecipes || [];
+  const chatbotMessage = store.chatbotMessage; // Flag to track chatbot messages
+
+  useEffect(() => {
+    actions.getRandomRecipe();
+  }, []);
+
+  return (
+    <div className="text-center mt-5" style={{ minHeight: "100vh" }}>
+      <img
+        src={background}
+        style={{ width: "100%", position: "absolute", zIndex: "-1", left: "0" }}
+        alt="Background"
+      />
+      {homeRecipes.map((recipe, index) => (
+          <HomepageRecipe key={index} recipe={recipe} setOrigin={setOrigin} />
+        ))}
+    </div>
+  );
 };
+
+export default Home;
