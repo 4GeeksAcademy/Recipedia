@@ -10,6 +10,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 			ingredients: "",
             id:"",
             title:"",
+            summary:"",
 			chatbotMessage: false,
 			
 			//authentication
@@ -38,7 +39,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			getRandomRecipe: async () => {
 				try{
-					const resp = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${process.env.SPOONACULAR_API_KEY_2}&number=1`)
+					const resp = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${process.env.SPOONACULAR_API_KEY_2}&number=0`)
 					const data = await resp.json()
 					console.log(data)
 					setStore({ homeRecipes: data.recipes, instructions: data.instructions, })
@@ -56,7 +57,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					const ingredientsOriginal = data.extendedIngredients.map(ingredient => ingredient.original);
 					let ingredientsString = ingredientsOriginal.slice(0, -1).join(", ") + (ingredientsOriginal.length > 1 ? " and " : "") + ingredientsOriginal.slice(-1);
 			
-					setStore({ imageURL: data.image, instructions: data.instructions, cookingTime: data.readyInMinutes, ingredients: ingredientsOriginal, id: data.id, title: data.title });
+					setStore({ summary: data.summary, imageURL: data.image, instructions: data.instructions, cookingTime: data.readyInMinutes, ingredients: ingredientsOriginal, id: data.id, title: data.title });
 					return data;
 				} catch (error) {
 					console.log("Error loading message from backend", error);
@@ -145,7 +146,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				console.log(token);
                 if (!token) {
                     setStore({ logged: false });
-                    window.location = '/login';
+                    // window.location = '/login';
                     return false;
                 }
 
@@ -168,16 +169,19 @@ const getState = ({ getStore, getActions, setStore }) => {
                             token: token,
                             logged: true
                         });
+                        return true 
                     } else {
                         sessionStorage.removeItem("token");
                         setStore({ logged: false });
-						window.location = '/login';
+						// window.location = '/login';
+                        return false 
                     }
                 } catch (error) {
                     console.error("Token validation failed", error);
                     sessionStorage.removeItem("token");
                     setStore({ logged: false });
-					window.location = '/login';
+					// window.location = '/login';
+                    return false
                 }
             },
             logout: () => {
@@ -185,9 +189,11 @@ const getState = ({ getStore, getActions, setStore }) => {
                     user: null,
                     token: null,
                     logged: false,
+                    favourites: [],
                 });
                 sessionStorage.removeItem("token");
                 sessionStorage.removeItem("userID");
+                window.location = '/';
             },
 
             update: async (dataEmail, dataPassword) => {

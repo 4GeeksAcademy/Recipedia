@@ -36,6 +36,7 @@ const Layout = () => {
             <Route element={<Favourites showChatBot={showChatBot}/>} path="/favourites" />
             <Route element={<h1>Not found!</h1>} />
           </Routes>
+          <Footer/>
         </ScrollToTop>
       </BrowserRouter>
     </div>

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
 import background from "../../img/background.png";
@@ -11,6 +11,10 @@ export const Home = ({ setOrigin }) => {
   const homeRecipes = store.homeRecipes || [];
   const chatbotMessage = store.chatbotMessage; // Flag to track chatbot messages
 
+  useEffect(() => {
+    actions.getRandomRecipe();
+  }, []);
+
   return (
     <div className="text-center mt-5" style={{ minHeight: "100vh" }}>
       <img
@@ -18,8 +22,7 @@ export const Home = ({ setOrigin }) => {
         style={{ width: "100%", position: "absolute", zIndex: "-1", left: "0" }}
         alt="Background"
       />
-      {!chatbotMessage &&
-        homeRecipes.map((recipe, index) => (
+      {homeRecipes.map((recipe, index) => (
           <HomepageRecipe key={index} recipe={recipe} setOrigin={setOrigin} />
         ))}
     </div>

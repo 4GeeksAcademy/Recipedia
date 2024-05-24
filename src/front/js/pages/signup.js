@@ -22,14 +22,14 @@ export const Signup = () => {
     };
 
 	return (
-		<div className="card" style={{minHeight: "100vh", fontFamily:"avenir-light", color: "#303131", borderBottomColor:"white"}}>
+		<div className="card" style={{minHeight: "50vh", fontFamily:"avenir-light", color: "#303131", borderBottomColor:"white"}}>
 		<div className="row">
 			<div className="col-md-6" style={{ height: "700px", overflow: "hidden", position:"relative", paddingLeft:"0" }}>
 			<img src={signup} className="img-fluid rounded-start" alt="signup" style={{ position: "absolute", width:"110vh"}} />
 			</div>
 			<div className="col-md-6 mx-auto" style={{ width: "700px" }}>
 				<div className="card-body ">
-					<h5 className="card-title" style={{ fontSize: "60px", margin:"90px 0 60px 0" }}>SIGNUP</h5>
+					<h5 className="card-title" style={{ fontSize: "60px", margin:"90px 0 60px 0" }}>SIGN UP</h5>
 						<label for="InputEmail" className="form-label">Email</label>
 						<input
 						type="email"
@@ -46,7 +46,7 @@ export const Signup = () => {
 						onChange={(e) => setPassword(e.target.value)}
 						placeholder="Your Password"
 						/>
-					<button type="button" className="btn btn-light mb-3 w-100 mt-4" onClick={handleSignup} style={{backgroundColor:"#273A4E", color:"white"}}>Register</button>
+					<button type="button" className="btn btn-light mb-3 w-100 mt-4" onClick={handleSignup} style={{backgroundColor:"#273A4E", color:"white"}}>Sign up</button>
 					<Link to="/login">
 					<button type="button" className="btn btn-light w-100" style={{backgroundColor:"#273A4E", color:"white"}}>Do you already have an account? Login here!</button>
 					</Link>
