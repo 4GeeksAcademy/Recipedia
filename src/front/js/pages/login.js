@@ -68,7 +68,7 @@ export const Login = () => {
                         />
                         <button type="button" className="btn btn-light mb-3 w-100 mt-4" onClick={handleLogin} style={{ backgroundColor: "#273A4E", color: "white" }}>Login</button>
                         <Link to="/signup">
-                            <button type="button" className="btn btn-light w-100" style={{ backgroundColor: "#273A4E", color: "white" }}>Not a user yet? Register here!</button>
+                            <button type="button" className="btn btn-light w-100" style={{ backgroundColor: "#273A4E", color: "white" }}>Not a user yet? Sign up here!</button>
                         </Link>
                     </div>
                 </div>

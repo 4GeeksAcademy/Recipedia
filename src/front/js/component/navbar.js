@@ -74,7 +74,7 @@ export const Navbar = ({ setOrigin, showChatBot, setShowChatBot }) => {
           <Link style={{ textDecoration: "none", outline: "none" }} to="/login">
           <button
             className="navbar navbarCustom"
-            style={{ border: "none", background: "transparent", }}
+            style={{ border: "none", background: "transparent", marginRight:"8px" }}
           >
             Login
           </button>

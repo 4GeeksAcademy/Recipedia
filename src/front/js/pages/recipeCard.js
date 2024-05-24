@@ -190,7 +190,7 @@ export const RecipeCard = ({ origin }) => {
                   <h5 className="card-title">COOKING TIME</h5>
                   <p
                     className="card-text"
-                    style={{ fontSize: "20px", paddingLeft: "10px" }}
+                    style={{ fontSize: "20px", }}
                   >
                     {recipeInfo?.readyInMinutes}'
                   </p>
@@ -220,7 +220,7 @@ export const RecipeCard = ({ origin }) => {
                       listStyleType: "disc",
                       flexDirection: "row",
                       alignItems: "center",
-                      paddingLeft: "40px",
+                      paddingLeft: "20px",
                     }}
                   >
                     {recipeInfo?.extendedIngredients?.map(
@@ -257,7 +257,7 @@ export const RecipeCard = ({ origin }) => {
               className="card"
               style={{ borderColor: "white", padding: "20px 20px 0 0" }}
             >
-              <h5 className="card-title" style={{ padding: "0 0 0 5px" }}>
+              <h5 className="card-title" style={{ padding: "0 0 0 16px" }}>
                 PREPARATION
               </h5>
               <ol className="list-group" style={{ marginTop: "10px" }}>
@@ -266,7 +266,7 @@ export const RecipeCard = ({ origin }) => {
                     return (
                       <li
                         className="list-group-item"
-                        style={{ paddingRight: "5px", borderColor:"white"  }}
+                        style={{ padding: "5px 0 0 18px", borderColor:"white"  }}
                       >
                         {index + 1}. {item.step}
                       </li>
@@ -425,7 +425,7 @@ export const RecipeCard = ({ origin }) => {
                     margin: "20px 0 20px 0",
                   }}
                 >
-                  <h5 className="card-title" style={{ margin: "0 0 0 0" }}>
+                  <h5 className="card-title">
                     INGREDIENTS
                   </h5>
                   <ul style={{
@@ -459,7 +459,7 @@ export const RecipeCard = ({ origin }) => {
                 className="card"
                 style={{ borderColor: "white", padding: "20px 16px 0 0" }}
               >
-                <h5 className="card-title" style={{ padding: "0" }}>
+                <h5 className="card-title" style={{ padding: "0 0 0 2px" }}>
                   PREPARATION
                 </h5>
                 <ol className="list-group" style={{ marginTop: "10px", }}>
