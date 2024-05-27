@@ -23,7 +23,7 @@ export const ChatBot = ({ setShowChatBot, setOrigin }) => {
 
       let response = await fetch(
         "https://api.spoonacular.com/food/converse?apiKey=" +
-          process.env.SPOONACULAR_API_KEY +
+          process.env.SPOONACULAR_API_KEY_2 +
           "&text=" +
           input
       );
@@ -34,6 +34,7 @@ export const ChatBot = ({ setShowChatBot, setOrigin }) => {
         let data = await response.json();
         actions.handleChatbotMessage();
         console.log(data);
+        store.filterStatus = false
         setMessages([
           ...messages,
           {
