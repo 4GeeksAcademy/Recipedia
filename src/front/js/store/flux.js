@@ -57,7 +57,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
 			getRandomRecipe: async () => {
 				try{
-					const resp = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${process.env.SPOONACULAR_API_KEY_2}&number=0`)
+					const resp = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${process.env.SPOONACULAR_API_KEY_2}&number=10`)
 					const data = await resp.json()
 					console.log(data)
 					setStore({ homeRecipes: data.recipes, instructions: data.instructions, filterStatus: false})

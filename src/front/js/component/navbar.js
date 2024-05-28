@@ -64,7 +64,6 @@ export const Navbar = ({ setOrigin, showChatBot, setShowChatBot }) => {
             <FilterCard />
           </div>
         }
-
         <button 
           type="button"
           className={"navbar filters-button "+(showCredentialsVersion ? "invisible" : "")}

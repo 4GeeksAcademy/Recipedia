@@ -8,7 +8,7 @@ import HomepageRecipe from "../component/homepageRecipe";
 
 export const Home = ({ setOrigin }) => {
   const { store, actions } = useContext(Context);
-  const homeRecipe = store.homeRecipe || [];
+  const homeRecipe = store.homeRecipes || [];
   const filteredRecipes = store.filteredRecipes || []
   const chatbotMessage = store.chatbotMessage; // Flag to track chatbot messages
 

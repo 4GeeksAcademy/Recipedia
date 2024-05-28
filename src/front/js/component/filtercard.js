@@ -1,5 +1,5 @@
 import React, {useContext, useState} from 'react';
-import {NavLink, useHistory} from 'react-router-dom';
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import "../../styles/filternavbar.css";
 import { Context } from "../store/appContext";
 
@@ -22,6 +22,8 @@ export const FilterCard = () => {
     const [selectedDiet, setSelectedDiet] = useState([]);
     const [selectedIntolerance, setSelectedIntolerance] = useState([]);
     const [selectedCuisine, setSelectedCuisine] = useState([]); 
+
+    const navigate = useNavigate();
 
     const handleShowCuisine = () => {
         setShowCuisine(!showCuisine);
@@ -147,7 +149,7 @@ export const FilterCard = () => {
                     )}
                 </ul>
                 )}
-            <button className="apply-filters-button" onClick={() => {actions.filterRecipes(selectedDiet, selectedIntolerance, selectedCuisine);}}>Apply Filters</button>
+            <button className="apply-filters-button" onClick={() => {actions.filterRecipes(selectedDiet, selectedIntolerance, selectedCuisine); actions.clearChatbotMessage; navigate("/")}}>Apply Filters</button>
         </div>
     </div>
 )}
