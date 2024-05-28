@@ -35,20 +35,6 @@
     /* display: ${setCuisines ? 'block' : 'none'}; */
 }
 
-/* .filter-options {
-    list-style-type: disc;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-}
-
-.filter-options li {
-    margin-right: 10px;
-    margin-bottom: 10px;
-    flex: 0 0 calc(25% - 10px);
-} */
-
 .filter-options {
     list-style-type: disc;
     padding: 0;
@@ -63,16 +49,6 @@
     flex: 0 0 calc(25% - 10px);
 }
 
-/* .filter-options a {
-    text-decoration: none;
-    color: inherit;
-}
-
-.filter-options .active {
-    background-color: #007bff;
-    color: #fff;
-} */
-
 .filter-options .filter-item {
     text-decoration: none;
     color: inherit;
@@ -80,7 +56,6 @@
     left: 10px;
 }
 
-/* .filter-options .filter-item.active, */
 .filter-options .filter-item:hover {
     background-color: #007bff;
     color: #fff;

@@ -4,14 +4,17 @@ import "../../styles/home.css";
 import background from "../../img/background.png";
 import { Link, useLocation } from "react-router-dom";
 import HomepageRecipe from "../component/homepageRecipe";
-import { FilteredRecipes } from "./FilteredRecipes";
 
 
 export const Home = ({ setOrigin }) => {
   const { store, actions } = useContext(Context);
-  const homeRecipe = store.homeRecipe || [];
+  const homeRecipe = store.homeRecipes || [];
   const filteredRecipes = store.filteredRecipes || []
   const chatbotMessage = store.chatbotMessage; // Flag to track chatbot messages
+
+  useEffect(() => {
+    actions.getRandomRecipe();
+  }, []);
 
   console.log(filteredRecipes)
 
@@ -35,3 +38,4 @@ export const Home = ({ setOrigin }) => {
 
 
 export default Home;
+

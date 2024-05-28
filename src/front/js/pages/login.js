@@ -26,11 +26,11 @@ export const Login = () => {
     };
 
     return (
-        <div className="card" style={{ minHeight: "100vh", fontFamily: "avenir-light", color: "#303131", borderBottomColor: "white" }}>
+        <div className="card" style={{ minHeight: "50vh", fontFamily: "avenir-light", color: "#303131", borderBottomColor: "white" }}>
 			{loginStatus === "error" && (
 				<div className="bg-white text-center p-5 h-25">
-					<h2 className="text-danger">Oops! Incorrect username or password..</h2>
-					<p className="text-muted">
+					<h2 className="text-danger"style={{fontSize: "40px",}}>Oops! Incorrect username or password..</h2>
+					<p className="text-muted" style={{fontSize: "40px",}}>
 						Please try again.
 					</p>
 				</div>
@@ -68,7 +68,7 @@ export const Login = () => {
                         />
                         <button type="button" className="btn btn-light mb-3 w-100 mt-4" onClick={handleLogin} style={{ backgroundColor: "#273A4E", color: "white" }}>Login</button>
                         <Link to="/signup">
-                            <button type="button" className="btn btn-light w-100" style={{ backgroundColor: "#273A4E", color: "white" }}>Not a user yet? Register here!</button>
+                            <button type="button" className="btn btn-light w-100" style={{ backgroundColor: "#273A4E", color: "white" }}>Not a user yet? Sign up here!</button>
                         </Link>
                     </div>
                 </div>

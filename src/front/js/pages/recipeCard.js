@@ -81,9 +81,9 @@ export const RecipeCard = ({ origin }) => {
     <div
       className="jumbotron text-center d-flex mt-5"
       style={{
-        backgroundImage: `url(${background})`,
-        backgroundSize: "cover",
+        backgroundSize: "100%",
         backgroundRepeat: "no-repeat",
+        backgroundColor: "#F0F3F6",
         backgroundPosition: "center",
         padding: "50px 0 20px 0",
         minHeight: "100vh",
@@ -95,13 +95,19 @@ export const RecipeCard = ({ origin }) => {
       {fecthStatus == "pending" && origin == "chatbot" ? (
         <div className="text-center p-5 h-25">
           <div className="spinner-border text-primary" role="status">
-            <span className="sr-only">Loading...</span>
+            <span className="sr-only" style={{ fontSize: "40px" }}>
+              Loading...
+            </span>
           </div>
-          <p className="mt-3">Fetching recipe information...</p>
+          <p className="mt-3" style={{ fontSize: "40px" }}>
+            Fetching recipe information...
+          </p>
         </div>
       ) : fecthStatus == "error" && origin == "chatbot" ? (
         <div className="bg-white text-center p-5 h-25">
-          <h2 className="text-danger">Oops! Something went wrong...</h2>
+          <h2 className="text-danger" style={{ fontSize: "40px" }}>
+            Oops! Something went wrong...
+          </h2>
           <p className="text-muted">
             We apologize for the inconvenience. Please try again later.
           </p>
@@ -112,26 +118,58 @@ export const RecipeCard = ({ origin }) => {
           style={{
             width: "100rem",
             padding: "50px 30px 50px 30px",
-            maxWidth: "800px",
+            maxWidth: "1500px",
             // alignItems: "center",
-            maxHeight: "1500px",
+            alignItems: "center",
+            textAlign: "left",
+            // maxHeight: "1500px",
           }}
         >
-          <h5
-            className="card-title"
+          <div
             style={{
-              margin: "50px 30px 50px 30px",
-              fontSize: "30px",
+              display: "flex",
+              alignItems: "flex-start",
+              margin: "50px 80px 0px 50px",
             }}
           >
-            {recipe?.title}
-          </h5>
-          <span>
-            <img
-              src={recipe?.image}
-              style={{ width: "600px", height: "auto", borderRadius: "5px" }}
-            />
-          </span>
+            <div style={{ borderRadius: "5px", marginRight: "30px" }}>
+              <img
+                src={recipe?.image}
+                style={{
+                  width: "600px",
+                  height: "auto",
+                  borderRadius: "5px",
+                  margin: "0 0 0 45px",
+                }}
+              />
+            </div>
+            <div style={{ flex: "1" }}>
+              <h2
+                style={{
+                  fontSize: "40px",
+                  fontStyle: "avenir-light",
+                  textAlign: "center",
+                }}
+              >
+                {recipe?.title}
+              </h2>
+              <hr
+                style={{
+                  width: "50%",
+                  margin: "50px auto",
+                  border: "1px solid grey",
+                }}
+              />
+              <p
+                style={{
+                  marginTop: "50px",
+                  paddingLeft: "30px",
+                  textAlign: "justify",
+                }}
+                dangerouslySetInnerHTML={{ __html: recipeInfo?.summary }}
+              ></p>
+            </div>
+          </div>
 
           <div
             className="row"
@@ -143,32 +181,63 @@ export const RecipeCard = ({ origin }) => {
               justifyContent: "flex-start",
             }}
           >
-            <div className="col-sm-12 mb-3 mb-sm-0">
+            <div
+              className="col-sm-12 mb-3 mb-sm-0"
+              style={{ marginLeft: "-20px" }}
+            >
               <div className="card" style={{ borderColor: "white" }}>
-                <div className="card-body">
-                  <h5 className="card-title">COOKING MINUTES</h5>
-                  <p className="card-text" style={{ fontSize: "20px" }}>
-                    {recipeInfo?.readyInMinutes}
+                <div className="card-body" style={{ padding: "20px" }}>
+                  <h5 className="card-title">COOKING TIME</h5>
+                  <p
+                    className="card-text"
+                    style={{ fontSize: "20px", }}
+                  >
+                    {recipeInfo?.readyInMinutes}'
                   </p>
                 </div>
               </div>
             </div>
-            <div className="col-sm-12">
+            <div
+              className="col-sm-12 mb-3 mb-sm-0"
+              style={{ marginLeft: "-10px" }}
+            >
               <div className="card" style={{ borderColor: "white" }}>
-                <div className="card-body" style={{ textAlign: "justify" }}>
-                  <h5 className="card-title">
+                <div
+                  className="card-body ingredient-container"
+                  style={{
+                    backgroundColor: "#F0F3F6",
+                    margin: "20px 0 20px 0",
+                  }}
+                >
+                  <h5 className="card-title" style={{ margin: "10px 0 0 0" }}>
                     INGREDIENTS
                   </h5>
-                  {recipeInfo?.extendedIngredients?.map((ingredient, index) => {
-                    return (
-                      <>
-                        {ingredient.original}
-                        {index == recipeInfo.extendedIngredients.length - 1
-                          ? "."
-                          : ", "}
-                      </>
-                    );
-                  })}
+                  <ul
+                    style={{
+                      margin: "20px 0 0 0",
+                      display: "flex",
+                      flexWrap: "wrap",
+                      listStyleType: "disc",
+                      flexDirection: "row",
+                      alignItems: "center",
+                      paddingLeft: "20px",
+                    }}
+                  >
+                    {recipeInfo?.extendedIngredients?.map(
+                      (ingredient, index) => (
+                        <li
+                          key={index}
+                          style={{
+                            marginBottom: "8px",
+                            width: "calc(50% - 20px)",
+                            marginRight: "20px",
+                          }}
+                        >
+                          {ingredient.original}
+                        </li>
+                      )
+                    )}
+                  </ul>
                 </div>
               </div>
             </div>
@@ -184,93 +253,266 @@ export const RecipeCard = ({ origin }) => {
               marginTop: "10px",
             }}
           >
-            <div className="card" style={{ borderColor: "white", padding:"0 25px 0 25px"}}>
-            <h5 className="card-title">PREPARATION</h5>
-              {/* <>{recipeInfo?.instructions}
-            </> */}
-            <ol className="list-group">
-          {recipeInfo?.analyzedInstructions[0].steps.map((item, index)=>{
-            return(
-              <li className="list-group-item">
-                {item.step}
-              </li>
-            );
-          })}
-          </ol>
-          </div>
-          {store.favourites.find((item)=> item.title == recipe.title)? (<svg onClick={()=> actions.deleteFavourite(recipeInfo.id)} xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#E84A43" className="bi bi-heart-fill" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
-            </svg>) : (<svg onClick={(()=> actions.addFavourites(recipe.title, recipe.image, recipeInfo.id))} xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#E84A43" class="bi bi-heart" viewBox="0 0 16 16">
-  <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/>
-</svg>)
-} 
+            <div
+              className="card"
+              style={{ borderColor: "white", padding: "20px 20px 0 0" }}
+            >
+              <h5 className="card-title" style={{ padding: "0 0 0 16px" }}>
+                PREPARATION
+              </h5>
+              <ol className="list-group" style={{ marginTop: "10px" }}>
+                {recipeInfo?.analyzedInstructions[0].steps.map(
+                  (item, index) => {
+                    return (
+                      <li
+                        className="list-group-item"
+                        style={{ padding: "5px 0 0 18px", borderColor:"white"  }}
+                      >
+                        {index + 1}. {item.step}
+                      </li>
+                    );
+                  }
+                )}
+              </ol>
+            </div>
+            <div
+              className="icon-container d-flex"
+              style={{
+                justifyContent: "flex-end",
+                padding: "50px 30px 30px 30px",
+              }}
+            >
+              {store.favourites.find((item) => item.title == recipe.title) ? (
+                <svg
+                  onClick={() => actions.deleteFavourite(recipeInfo.id)}
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="25"
+                  height="25"
+                  fill="#E84A43"
+                  className="bi bi-heart-fill"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"
+                  />
+                </svg>
+              ) : (
+                <svg
+                  onClick={() =>
+                    actions.addFavourites(
+                      recipe.title,
+                      recipe.image,
+                      recipeInfo.id
+                    )
+                  }
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="25"
+                  height="25"
+                  fill="#E84A43"
+                  class="bi bi-heart"
+                  viewBox="0 0 16 16"
+                >
+                  <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
+                </svg>
+              )}
+            </div>
           </div>
         </div>
       ) : (
+        // STAN
         <div
           style={{
             width: "100rem",
-            display: "flex",
+            // display: "flex",
             background: "white",
             flexDirection: "column",
-            padding: "20px",
-            maxWidth: "800px",
-            maxHeight: "1500px",
+            padding: "50px 30px 50px 30px",
+            maxWidth: "1500px",
+            // maxHeight: "1500px",
             alignItems: "center",
-            textAlign: "justify" 
+            // textAlign: "justify"
+            textAlign: "left",
           }}
         >
-          <h2 style={{margin: "50px 30px 50px 30px",
-              fontSize: "30px",}}>{title}</h2>
-          {loading ? (
-            <p>Loading...</p>
-          ) : (
-            
-            <div style={{ width: "600px", height: "auto", borderRadius: "5px" }}>
-              <img src={store.imageURL} alt="recipe" />
-            </div>
-          )}
-          <div className="row" style={{margin: "0 80px 0 50px"}}>
-          <div className="col-sm-12 mb-3 mb-sm-0">
-              <div className="card" style={{ borderColor: "white", margin:"20px 0 0 0" }}>
-                <div className="card-body" >
-          <h5 className="card-title">
-          COOKING MINUTES{" "}
-            <p className="card-text" style={{ fontSize: "20px", fontWeight: "normal" }}>{store.cookingTime}</p> 
-          </h5>
-          </div>
-          </div>
-          </div>
-          <div className="col-sm-12">
-              <div className="card" style={{ borderColor: "white", }}>
-                <div className="card-body">
-          <h5 className="card-title">
-          INGREDIENTS</h5> <>{store.ingredients}</>
-          </div>
-          </div>
-          </div>
-          <div className="card" style={{ borderColor: "white", padding:"0 25px 0 25px"}}>
-          <h5 className="card-title">PREPARATION</h5>
-              <>{store.instructions} </>
-          </div>
-          {store.favourites.find((item)=> item.title == store.title)? (<svg onClick={()=> actions.deleteFavourite(store.id)} xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#E84A43" className="bi bi-heart-fill" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
-            </svg>) : (<svg onClick={(()=> actions.addFavourites(store.title, store.imageURL, store.id))} xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#E84A43" class="bi bi-heart" viewBox="0 0 16 16">
-  <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/>
-</svg>)
-} 
-          {/* <div
-            className="card-text"
+          <div
             style={{
-              width: "600px",
-              textAlign: "justify",
-              marginTop: "10px",
+              display: "flex",
+              alignItems: "flex-start",
+              margin: "50px 40px 0 0",
             }}
           >
-            {analyzedInstructions.map((step, index) => (
-              <p  className="card-text" key={index}>{step.step}</p>
-            ))}
-          </div> */}
+            {!loading && (
+              <div style={{ borderRadius: "5px", marginRight: "30px" }}>
+                <img
+                  src={store.imageURL}
+                  alt="recipe"
+                  style={{
+                    width: "600px",
+                    height: "auto",
+                    borderRadius: "5px",
+                    margin: "0 0 0 45px",
+                  }}
+                />
+              </div>
+            )}
+            <div style={{ flex: "1" }}>
+              <h2
+                style={{
+                  fontSize: "40px",
+                  fontStyle: "avenir-light",
+                  textAlign: "center",
+                }}
+              >
+                {title}
+              </h2>
+              <hr
+                style={{
+                  width: "50%",
+                  margin: "50px auto",
+                  border: "1px solid grey",
+                }}
+              />
+              <p
+                style={{
+                  marginTop: "50px",
+                  paddingLeft: "30px",
+                  textAlign: "justify",
+                }}
+                dangerouslySetInnerHTML={{ __html: store.summary }}
+              ></p>
+              {loading ? <p>Loading...</p> : null}
+            </div>
+          </div>
+
+          <div
+            className="row"
+            style={{
+              maxWidth: "100%",
+              margin: "40px 0 0 40px",
+              fontSize: "16px",
+              textAlign: "initial",
+              justifyContent: "flex-start",
+            }}
+          >
+            <div
+              className="col-sm-12 mb-3 mb-sm-0"
+              style={{ marginLeft: "-20px" }}
+            >
+              <div className="card" style={{ borderColor: "white" }}>
+                <div className="card-body" style={{ padding: "20px" }}>
+                  <h5 className="card-title">
+                  COOKING TIME
+                  </h5>
+                  <p
+                    className="card-text"
+                    style={{ fontSize: "20px", paddingLeft: "0px" }}
+                  >
+                    {store.cookingTime}'
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div
+              className="col-sm-12 mb-3 mb-sm-0"
+              style={{ marginLeft: "-10px" }}
+            >
+              <div className="card" style={{ borderColor: "white" }}>
+                <div
+                  className="card-body ingredient-container"
+                  style={{
+                    backgroundColor: "#F0F3F6",
+                    margin: "20px 0 20px 0",
+                  }}
+                >
+                  <h5 className="card-title">
+                    INGREDIENTS
+                  </h5>
+                  <ul style={{
+                      margin: "20px 0 0 0",
+                      display: "flex",
+                      flexWrap: "wrap",
+                      listStyleType: "disc",
+                      flexDirection: "row",
+                      alignItems: "center",
+                      paddingLeft: "20px",
+                    }}>
+      {Array.isArray(store.ingredients) && store.ingredients.map((ingredient, index) => (
+        <li key={index} style={{ marginRight: "20px", marginBottom: "8px", width: "calc(50% - 20px)" }}>{ingredient}</li>
+      ))}
+    </ul>
+                </div>
+              </div>
+            </div>
+            <div
+              className="col-sm-12"
+              style={{
+                maxWidth: "100%",
+                margin: "0",
+                textAlign: "initial",
+                justifyContent: "flex-start",
+                textAlign: "justify",
+                marginTop: "10px",
+              }}
+            >
+              <div
+                className="card"
+                style={{ borderColor: "white", padding: "20px 16px 0 0" }}
+              >
+                <h5 className="card-title" style={{ padding: "0 0 0 2px" }}>
+                  PREPARATION
+                </h5>
+                <ol className="list-group" style={{ marginTop: "10px", }}>
+                  {analyzedInstructions.map((step, index) => (
+                    <li
+                      className="list-group-item"
+                      style={{ padding: "5px 0 0 5px", borderColor:"white" }}
+                      key={index}
+                    >
+                      {step.number}. {step.step}
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            <div
+              className="icon-container d-flex"
+              style={{
+                justifyContent: "flex-end",
+                padding: "50px 30px 30px 30px",
+              }}
+              >
+              {store.favourites.find((item) => item.title == store.title) ? (
+                <svg
+                onClick={() => actions.deleteFavourite(store.id)}
+                xmlns="http://www.w3.org/2000/svg"
+                width="25"
+                height="25"
+                fill="#E84A43"
+                className="bi bi-heart-fill"
+                viewBox="0 0 16 16"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"
+                    />
+                </svg>
+              ) : (
+                <svg
+                onClick={() =>
+                  actions.addFavourites(store.title, store.imageURL, store.id)
+                }
+                xmlns="http://www.w3.org/2000/svg"
+                width="25"
+                height="25"
+                fill="#E84A43"
+                class="bi bi-heart"
+                viewBox="0 0 16 16"
+                >
+                  <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
+                </svg>
+              )}
+              </div>
+            </div>
           </div>
         </div>
       )}
