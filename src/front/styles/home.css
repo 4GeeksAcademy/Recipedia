@@ -3,7 +3,7 @@
     color: #303131;
 }
 .navbarCustom{
-    font-size: 24px;
+    font-size: 22px;
     margin: 0 10% 0 4%;
 }
 
@@ -15,6 +15,18 @@
     font-family: 'avenir light';
     font-size: 20px;
     color: #303131;
+}
+
+.chatbot-container {
+    position: absolute;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    z-index: 1000;
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 10px;
 }
 
 .invisible{

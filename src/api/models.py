@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+from uuid import uuid4
 
 db = SQLAlchemy()
 
@@ -11,7 +12,7 @@ class User(db.Model):
     favourites = db.relationship("Favourite", back_populates = "user")
 
     def __repr__(self):
-        return f'<User {self.email}>'
+        return f'<Users {self.email}>'
 
     def serialize(self):
         return {

@@ -1,6 +1,11 @@
+
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
+			filteredRecipes: [],
+			filterStatus: false,
+			token: null,
+			homeRecipe: [],
 			recentlyFetchedRecipes: [],			
             favourites: [],
 			homeRecipes: [],
@@ -12,6 +17,9 @@ const getState = ({ getStore, getActions, setStore }) => {
             title:"",
             summary:"",
 			chatbotMessage: false,
+			recentlyFetchedRecipes: [
+
+			],		
 			
 			//authentication
 			message: null,
@@ -19,12 +27,19 @@ const getState = ({ getStore, getActions, setStore }) => {
             user: null,
             logged: null,
 		},
-		actions: {	
+		actions: {
+			// Use getActions to call a function within a fuction
+			exampleFunction: () => {
+				getActions().changeColor(0, "green");
+			},
+	
 			addRecipes: (recipes) => {
 				console.log(recipes);
 				let store = getStore()
 				store.recentlyFetchedRecipes= store.recentlyFetchedRecipes.concat(recipes)
 				setStore(store)
+                const chatRecipes = recipes;
+                console.log("chatbotRecipes:", chatRecipes);
 			},	
 				// other actions...
 				clearHomeRecipes: () => {
@@ -33,16 +48,19 @@ const getState = ({ getStore, getActions, setStore }) => {
 	
 				// Call this action when the chatbot sends a message
 				handleChatbotMessage: () => {
-					setStore({ chatbotMessage: true });
-					getActions().clearHomeRecipes(); // Clear homeRecipes when chatbot sends a message
+					setStore({ chatbotMessage: true, filterStatus: false });
+                    getActions().clearHomeRecipes(); // Clear homeRecipes when chatbot sends a message
 				},
+                clearChatbotMessage: () => {
+                    setStore({ chatbotMessage: false });
+                },
 
 			getRandomRecipe: async () => {
 				try{
-					const resp = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${process.env.SPOONACULAR_API_KEY_2}&number=0`)
+					const resp = await fetch(`https://api.spoonacular.com/recipes/random?apiKey=${process.env.SPOONACULAR_API_KEY_2}&number=10`)
 					const data = await resp.json()
 					console.log(data)
-					setStore({ homeRecipes: data.recipes, instructions: data.instructions, })
+					setStore({ homeRecipes: data.recipes, instructions: data.instructions, filterStatus: false})
 					return data;
 				}catch(error){
 					console.log("Error loading message from backend", error)
@@ -63,7 +81,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log("Error loading message from backend", error);
 				}
 			},
-			
 		
 			getAnalyzedInstructions: async (id) => {
 				try{
@@ -75,6 +92,91 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log("Error loading message from backend", error)
 				}
 			},
+		filterRecipes: async (diet, intolerance, cuisine) => { 
+			console.log(diet, intolerance, cuisine);
+			let apiURL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.SPOONACULAR_API_KEY_2}`;
+			if (diet) {
+				apiURL += `&diet=${diet}`;
+			}
+			if (intolerance) {
+				apiURL += `&intolerance=${intolerance}`;
+			}
+			if (cuisine) {
+				apiURL += `&cuisine=${cuisine}`;
+			}
+			console.log(apiURL);
+			
+			try {
+				const response = await fetch(apiURL);
+				if (!response.ok) {
+					throw new Error(response.status);
+				}
+				const data = await response.json();
+				console.log(data);
+				const recipes = data.results || [];
+				setStore({ filteredRecipes: recipes, filterStatus: true, chatbotMessage: false, recentlyFetchedRecipes: []});
+                let store = getStore()
+				console.log(store.recentlyFetchedRecipes)
+				return recipes;
+			} catch (error) {
+				console.error(error);
+			}
+		},
+		resetFilters: () => {
+			setStore({filterStatus: false})
+		},
+		loginUser: (email, password) => {
+			const options = {
+					method: 'POST',
+					headers: {"Content-type": "application/json"},
+				 	body: JSON.stringify({
+						"email": email,
+				 		"password": password
+				 	})
+				}
+			fetch(`https://supreme-memory-w6477gj4g7xcr4w-3001.app.github.dev/api/login`, options)
+			.then(resp => {
+				if (resp.ok) {
+					const data = resp.json();
+					setStore({
+						user: data.user,
+						token: data.token,
+						logged: true
+					});
+					console.log(data.token)
+					sessionStorage.setItem("token", data.token);
+					sessionStorage.setItem("userID", data.user.id);
+					window.location = '/private';
+					return true;
+				} else {
+					console.error("An error occurred during user login");
+					return false;
+				}
+			})
+			.catch(error => { 
+				console.log(error);
+			})
+		},
+		signUpUser: (email, password) => {
+			const options = {
+				method: "POST",
+				headers: {"Content-type": "application/json"},
+				 	body: JSON.stringify({
+						"email": email,
+				 		"password": password
+				 	})
+			}
+			fetch(`https://supreme-memory-w6477gj4g7xcr4w-3001.app.github.dev/api/signup`, options)
+			.then(resp => {
+				console.log(resp);
+			})
+			.catch(error => {
+				console.log(error);
+				if (error) {
+					alert("Not registered")
+				}
+			})
+		},
 
 			//authentication
 			signup: async (dataEmail, dataPassword) => {
@@ -319,4 +421,4 @@ const getState = ({ getStore, getActions, setStore }) => {
 	};
 };
 
-export default getState;
+export default getState

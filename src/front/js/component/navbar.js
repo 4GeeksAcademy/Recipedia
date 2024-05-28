@@ -1,8 +1,10 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { ChatBot } from "./chatbot";
+import { FilterCard } from "./filtercard"
 import recipedia from "../../img/recipedia.png";
 import "../../styles/home.css";
+import "../../styles/filternavbar.css";
 import { Context } from "../store/appContext";
 
 export const Navbar = ({ setOrigin, showChatBot, setShowChatBot }) => {
@@ -10,6 +12,7 @@ export const Navbar = ({ setOrigin, showChatBot, setShowChatBot }) => {
   console.log(useNavigate);
   const { store, actions } = useContext(Context);
   const [showCredentialsVersion, setShowCredentialsVersion] = useState(false);
+  const [showFilterCard, setShowFilterCard] = useState(false);
 
   const location = useLocation();
   
@@ -25,6 +28,10 @@ export const Navbar = ({ setOrigin, showChatBot, setShowChatBot }) => {
       setShowCredentialsVersion(false);
     }
   }, [location]);  
+
+  const toggleFilterCard = () => {
+    setShowFilterCard(!showFilterCard);
+};
 
   return (
     <nav
@@ -50,13 +57,20 @@ export const Navbar = ({ setOrigin, showChatBot, setShowChatBot }) => {
         </a>
       </div>
       <div className="ml-auto d-flex justify-content-start">
-        <span className={"navbar navbarCustom m-5 "+(showCredentialsVersion ? "invisible" : "")}>Filters</span>
-        <span 
-          className={"navbar navbarCustom "+(showCredentialsVersion ? "invisible" : "")}
-          onClick={() => setShowChatBot(!showChatBot)}
+
+        <button className="navbar filters-button" type="button" onClick={toggleFilterCard}>Filters</button>
+        {showFilterCard && 
+          <div className="col">
+            <FilterCard />
+          </div>
+        }
+        <button 
+          type="button"
+          className={"navbar filters-button "+(showCredentialsVersion ? "invisible" : "")}
+          onClick={() => {setShowChatBot(!showChatBot); console.log("Chatbot clicked!")}}
         >
           Chatbot
-        </span>
+        </button>
       </div>
       <div className="ml-auto me-3" style={{fontFamily: "avenir-light", color: "#303131",}}>
         {store.logged ? (
@@ -73,7 +87,8 @@ export const Navbar = ({ setOrigin, showChatBot, setShowChatBot }) => {
           ) : (
           <Link style={{ textDecoration: "none", outline: "none" }} to="/login">
           <button
-            className="navbar navbarCustom"
+            type="button"
+            className="navbar navbarCustom filters-button"
             style={{ border: "none", background: "transparent", marginRight:"8px" }}
           >
             Login

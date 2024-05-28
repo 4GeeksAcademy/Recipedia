@@ -7,7 +7,6 @@ from flask_jwt_extended import create_access_token
 from flask_jwt_extended import get_jwt_identity
 from flask_jwt_extended import jwt_required
 
-
 api = Blueprint('api', __name__)
 CORS(api)
 
@@ -17,7 +16,6 @@ def handle_hello():
         "message": "Hello! I'm a message that came from the backend, check the network tab on the Google inspector and you will see the GET request"
     }
     return jsonify(response_body), 200
-
 
 @api.route("/signup", methods=["POST"])
 def signup():
@@ -49,6 +47,7 @@ def signup():
     return jsonify(response_body), 200
 
 
+
 @api.route('/login', methods=['POST'])
 def login():
     request_body = request.get_json(force=True)
@@ -70,6 +69,8 @@ def login():
     print(response_body),
     return jsonify(response_body), 200
 
+
+
 @api.route('/protected', methods=['GET'])
 @jwt_required()
 def protected():
@@ -85,6 +86,8 @@ def protected():
     }
 
     return jsonify(success=True, response=response_body), 200
+
+        
 
 @api.route('/update', methods=['PUT'])
 @jwt_required()
