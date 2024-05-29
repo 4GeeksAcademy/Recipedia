@@ -20,3 +20,29 @@
 .invisible{
     visibility: hidden;
 }
+
+/* button {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+  margin: 0 10% 0 4%;
+  border: none;
+  background-color: transparent;
+  } */
+
+.filter-button {
+    display: block;
+    height: 80px;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #000;
+    text-align: center;
+    text-decoration: none;
+    color: #000;
+}

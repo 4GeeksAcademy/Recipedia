@@ -1,9 +1,15 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			recentlyFetchedRecipes: [],			
+            //filters
+            filteredRecipes: [],
+			filterStatus: false,
+
+			recentlyFetchedRecipes: [],
+
             favourites: [],
 			homeRecipes: [],
+
 			imageURL: "",
 			instructions: "",
 			cookingTime: "",
@@ -36,6 +42,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 					setStore({ chatbotMessage: true });
 					getActions().clearHomeRecipes(); // Clear homeRecipes when chatbot sends a message
 				},
+                clearChatbotMessage: () => {
+                    setStore({ chatbotMessage: false });
+                },
 
 			getRandomRecipe: async () => {
 				try{
@@ -75,6 +84,45 @@ const getState = ({ getStore, getActions, setStore }) => {
 					console.log("Error loading message from backend", error)
 				}
 			},
+
+            //Filters
+            filterRecipes: async (diet, ingredient, cuisine) => { 
+                console.log(diet, ingredient, cuisine);
+                let apiURL = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${process.env.SPOONACULAR_API_KEY_2}`;
+                if (diet) {
+                    apiURL += `&diet=${diet}`;
+                }
+                if (ingredient) {
+                    apiURL += `&excludeIngredients=${ingredient}`;
+                }
+                if (cuisine) {
+                    apiURL += `&cuisine=${cuisine}`;
+                }
+                console.log(apiURL);
+                
+                try {
+                    const response = await fetch(apiURL);
+                    if (!response.ok) {
+                        throw new Error(response.status);
+                    }
+                    const data = await response.json();
+                    console.log(data);
+                    const recipes = data.results || [];
+                    setStore({ filteredRecipes: recipes, filterStatus: true, chatbotMessage: false, recentlyFetchedRecipes: []});
+                    let store = getStore()
+                    console.log(store.recentlyFetchedRecipes)
+                    return recipes;
+                } catch (error) {
+                    console.error(error);
+                }
+            },
+            resetFilters: () => {
+                setStore({filterStatus: false})
+            },
+            // clearFilters: () => {
+            //     filtered
+            // }
+
 
 			//authentication
 			signup: async (dataEmail, dataPassword) => {
