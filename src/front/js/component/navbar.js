@@ -56,14 +56,14 @@ export const Navbar = ({ setOrigin, showChatBot, setShowChatBot }) => {
         </a>
       </div>
       <div className="ml-auto d-flex justify-content-start">
-        <span className={"navbar navbarCustom m-5 "+(showCredentialsVersion ? "invisible" : "")} onClick={() => {toggleFilterCard(); navigate("/");
+        <span type="button" className={"navbar navbarCustom m-5 "+(showCredentialsVersion ? "invisible" : "")} onClick={() => {toggleFilterCard(); navigate("/");
       }}>Filters</span>
         {showFilterCard && 
             <div className="col">
               <FilterCard />
             </div>
           }
-        <span 
+        <span type="button"
           className={"navbar navbarCustom "+(showCredentialsVersion ? "invisible" : "")}
           onClick={() => {
             setShowChatBot(!showChatBot);
@@ -73,22 +73,6 @@ export const Navbar = ({ setOrigin, showChatBot, setShowChatBot }) => {
           Chatbot
         </span>
       </div>
-        {/* <div className="ml-auto d-flex justify-content-start">
-
-          <span className="navbar" type="button" onClick={toggleFilterCard}>Filters</span>
-          {showFilterCard && 
-            <div className="col">
-              <FilterCard />
-            </div>
-          }
-          <span 
-            type="button"
-            className={"navbar "+(showCredentialsVersion ? "invisible" : "")}
-            onClick={() => {setShowChatBot(!showChatBot); console.log("Chatbot clicked!")}}
-          >
-            Chatbot
-          </span>
-        </div> */}
 
       <div className="ml-auto me-3" style={{fontFamily: "avenir-light", color: "#303131",}}>
         {store.logged ? (
@@ -106,7 +90,7 @@ export const Navbar = ({ setOrigin, showChatBot, setShowChatBot }) => {
           <Link style={{ textDecoration: "none", outline: "none" }} to="/login">
           <button
             className="navbar navbarCustom"
-            style={{ border: "none", background: "transparent", marginRight:"8px" }}
+            style={{ border: "none", background: "transparent", marginRight:"8px", fontFamily: "avenir-light", color: "#303131", }}
           >
             Login
           </button>

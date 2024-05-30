@@ -32,7 +32,6 @@
 .white-space-section {
     width: 100%;
     margin-left: 20px;
-    /* display: ${setCuisines ? 'block' : 'none'}; */
 }
 
 .filter-options {
@@ -45,15 +44,16 @@
 
 .filter-options li {
     margin-right: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     flex: 0 0 calc(25% - 10px);
 }
 
 .filter-options .filter-item {
     text-decoration: none;
     color: inherit;
-    font-size: medium;
+    font-size: 18px;
     left: 10px;
+    color: #303131;
 }
 
 .filter-options .filter-item:hover {
