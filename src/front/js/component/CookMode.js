@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import NoSleep from 'nosleep.js';
 import "../../styles/home.css"
 
 // const CookModeContainer = styled.div`
@@ -30,9 +31,15 @@ import "../../styles/home.css"
 
 export const CookMode = () => {
     const [isChecked, setIsChecked] = useState(false);
+    const noSleep = new NoSleep();
   
     const handleToggle = () => {
       setIsChecked(!isChecked);
+      if (!isChecked) {
+        noSleep.enable();
+      } else {
+        noSleep.disable();
+      }
     };
   
     return (

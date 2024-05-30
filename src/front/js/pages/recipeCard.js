@@ -120,10 +120,8 @@ export const RecipeCard = ({ origin }) => {
             width: "100rem",
             padding: "50px 30px 50px 30px",
             maxWidth: "1500px",
-            // alignItems: "center",
             alignItems: "center",
             textAlign: "left",
-            // maxHeight: "1500px",
           }}
         >
           <div

@@ -83,7 +83,7 @@ const HomepageRecipe = ({ recipe, setOrigin }) => {
             style={{
               paddingLeft: "50px",
               textAlign: "center",
-              fontSize: "30px", // Increased font size
+              fontSize: "30px", 
               maxWidth: "80%",
               height: "3em",
               textShadow: "2px 2px 4px rgba(0, 0, 0, 0.8)",

@@ -14,7 +14,7 @@ const diets = ["Gluten Free", "Ketogenic", "Vegetarian", "Lacto-Vegetarian", "Ov
 const ingredients = ["Dairy", "Egg", "Sugar", "Grain", "Peanut", "Seafood", 
 "Shellfish", "Sesame", "Soy", "Potato", "Tomato", "Wheat", "Chicken", "Beef", "Pork", "Lamb", "Mushroom"]
 
-export const FilterCard = () => {
+export const FilterCard = ({setShowFilterCard}) => {
     const { store, actions } = useContext(Context);
     const [showCuisine, setShowCuisine] = useState(false);
     const [showDiets, setShowDiets] = useState(false);
@@ -158,7 +158,7 @@ export const FilterCard = () => {
                     )}
                 </ul>
                 )}
-            <button className="apply-filters-button" style={{ backgroundColor: "#273A4E", color: "white", borderRadius: '5px', display:"flex", alignContent:"center", fontSize:"20px", marginBottom:"5px"}} onClick={() => {actions.filterRecipes(selectedDiet, selectedIngredient, selectedCuisine); navigate("/"); clearAllFilters()}}>Apply Filters</button>
+            <button className="apply-filters-button" style={{ backgroundColor: "#273A4E", color: "white", borderRadius: '5px', display:"flex", alignContent:"center", fontSize:"20px", marginBottom:"5px"}} onClick={() => {actions.filterRecipes(selectedDiet, selectedIngredient, selectedCuisine); setShowFilterCard(false); navigate("/"); clearAllFilters()}}>Apply Filters</button>
         </div>
     </div>
 )}

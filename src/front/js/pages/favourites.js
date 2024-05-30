@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import background from "../../img/background.png";
 
-export const Favourites = ({showChatBot}) => {
+export const Favourites = ({showChatBot, setOrigin}) => {
 const {store, actions} = useContext(Context);
 let favouritesList = store.favourites
 const [authStatus, setAuthStatus] = useState("pending");
+const navigate = useNavigate();
 
 useEffect (()=> {
     const authentication = async () => {
@@ -20,6 +21,7 @@ useEffect (()=> {
         }
     }
     authentication()
+    actions.addRecipes(favouritesList);
 }, []) 
 
 
@@ -45,7 +47,11 @@ return(
         <div className={"card mt-5 "+(showChatBot == false? "": "invisible")} style={{width: "1000px"}}>
         <div className="row g-0">
             <div className="col-md-4">
-            <img src={item.image} className="img-fluid rounded-start" alt="..."style={{width:"700px", height:"280px"}}/>
+            <img src={item.image} className="img-fluid rounded-start" onClick={() => {
+              setOrigin("chatbot");
+              navigate("/recipe/" + item.title);
+            }} 
+            style={{width:"700px", height:"280px"}}/>
             </div>
             <div className="col-md-8 d-flex" style={{flexDirection:"column"}}>
             <div className="card-body" style={{padding:"20px 0 0 50px"}}>

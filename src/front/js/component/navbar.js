@@ -23,6 +23,7 @@ export const Navbar = ({ setOrigin, showChatBot, setShowChatBot }) => {
     setShowChatBot(false)
     if (location.pathname === `/login` || location.pathname === `/signup` || location.pathname === `/manageaccount` || location.pathname.includes("/recipe/")) {
       setShowCredentialsVersion(true);
+      setShowFilterCard(false);
     } else {
       setShowCredentialsVersion(false);
     }
@@ -60,7 +61,7 @@ export const Navbar = ({ setOrigin, showChatBot, setShowChatBot }) => {
       }}>Filters</span>
         {showFilterCard && 
             <div className="col">
-              <FilterCard />
+              <FilterCard setShowFilterCard = {setShowFilterCard} />
             </div>
           }
         <span type="button"

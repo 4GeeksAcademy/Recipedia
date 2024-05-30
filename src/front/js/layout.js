@@ -19,6 +19,7 @@ const Layout = () => {
   const [origin, setOrigin] = useState("chatbot");
   const [showChatBot, setShowChatBot] = useState(false);
 
+
   if (!process.env.BACKEND_URL || process.env.BACKEND_URL == "")
     return <BackendURL />;
 
@@ -33,7 +34,7 @@ const Layout = () => {
             <Route element={<Signup />} path="/signup" />
             <Route element={<ManageAccount />} path="/manageaccount" />
             <Route element={<RecipeCard origin={origin} />}path="/recipe/:title"/>
-            <Route element={<Favourites showChatBot={showChatBot}/>} path="/favourites" />
+            <Route element={<Favourites setOrigin={setOrigin} showChatBot={showChatBot}/>} path="/favourites" />
             <Route element={<h1>Not found!</h1>} />
           </Routes>
           <Footer/>
