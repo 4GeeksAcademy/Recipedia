@@ -79,6 +79,7 @@
 		"react-dom": "^16.8.4",
 		"react-polyfills": "0.0.1",
 		"react-router-dom": "^6.3.0",
-		"react-tooltip": "^5.26.4"
+		"react-tooltip": "^5.26.4",
+		"styled-components": "^6.1.11"
 	}
 }

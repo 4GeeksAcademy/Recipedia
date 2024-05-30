@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
-import background from "../../img/background.png";
+import { CookMode } from "../component/CookMode";
+import "../../styles/home.css"
 
 export const RecipeCard = ({ origin }) => {
   console.log("Origin", origin);
@@ -143,6 +144,9 @@ export const RecipeCard = ({ origin }) => {
                 }}
               />
             </div>
+
+
+
             <div style={{ flex: "1" }}>
               <h2
                 style={{
@@ -185,7 +189,7 @@ export const RecipeCard = ({ origin }) => {
               className="col-sm-12 mb-3 mb-sm-0"
               style={{ marginLeft: "-20px" }}
             >
-              <div className="card" style={{ borderColor: "white" }}>
+              <div className="card" style={{ borderColor: "white",}}>
                 <div className="card-body" style={{ padding: "20px" }}>
                   <h5 className="card-title">COOKING TIME</h5>
                   <p
@@ -197,6 +201,9 @@ export const RecipeCard = ({ origin }) => {
                 </div>
               </div>
             </div>
+
+
+
             <div
               className="col-sm-12 mb-3 mb-sm-0"
               style={{ marginLeft: "-10px" }}
@@ -260,7 +267,8 @@ export const RecipeCard = ({ origin }) => {
               <h5 className="card-title" style={{ padding: "0 0 0 16px" }}>
                 PREPARATION
               </h5>
-              <ol className="list-group" style={{ marginTop: "10px" }}>
+              <CookMode />
+              <ol className="list-group" style={{ marginTop: "20px" }}>
                 {recipeInfo?.analyzedInstructions[0].steps.map(
                   (item, index) => {
                     return (
@@ -399,7 +407,7 @@ export const RecipeCard = ({ origin }) => {
               className="col-sm-12 mb-3 mb-sm-0"
               style={{ marginLeft: "-20px" }}
             >
-              <div className="card" style={{ borderColor: "white" }}>
+              <div className="card" style={{ borderColor: "white",}}>
                 <div className="card-body" style={{ padding: "20px" }}>
                   <h5 className="card-title">
                   COOKING TIME
@@ -412,6 +420,7 @@ export const RecipeCard = ({ origin }) => {
                   </p>
                 </div>
               </div>
+
             </div>
             <div
               className="col-sm-12 mb-3 mb-sm-0"
@@ -462,7 +471,8 @@ export const RecipeCard = ({ origin }) => {
                 <h5 className="card-title" style={{ padding: "0 0 0 2px" }}>
                   PREPARATION
                 </h5>
-                <ol className="list-group" style={{ marginTop: "10px", }}>
+                <CookMode />
+                <ol className="list-group" style={{ marginTop: "20px", }}>
                   {analyzedInstructions.map((step, index) => (
                     <li
                       className="list-group-item"
