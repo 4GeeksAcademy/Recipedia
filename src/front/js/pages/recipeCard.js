@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Context } from "../store/appContext";
 import { CookMode } from "../component/CookMode";
-import "../../styles/home.css"
+import "../../styles/home.css";
 
 export const RecipeCard = ({ origin }) => {
   console.log("Origin", origin);
@@ -25,10 +25,10 @@ export const RecipeCard = ({ origin }) => {
 
   useEffect(() => {
     const getInfo = async () => {
-      let parts = recipe.link.split("/");
+      let parts = recipe.image.split("/");
       let recipeString = parts[parts.length - 1];
       let recipeStringParts = recipeString.split("-");
-      let recipeId = recipeStringParts[recipeStringParts.length - 1];
+      let recipeId = recipeStringParts[recipeStringParts.length - 2];
       let resp = await fetch(
         "https://api.spoonacular.com/recipes/" +
           recipeId +
@@ -86,14 +86,15 @@ export const RecipeCard = ({ origin }) => {
         backgroundRepeat: "no-repeat",
         backgroundColor: "#F0F3F6",
         backgroundPosition: "center",
-        padding: "50px 0 20px 0",
+        padding: "50px 0 50px 0",
         minHeight: "100vh",
         justifyContent: "space-around",
         fontFamily: "avenir-light",
         color: "#303131",
       }}
     >
-      {fecthStatus == "pending" && origin == "chatbot" ? (
+      {fecthStatus == "pending" &&
+      (origin == "chatbot" || origin == "favourites" || origin == "filter") ? (
         <div className="text-center p-5 h-25">
           <div className="spinner-border text-primary" role="status">
             <span className="sr-only" style={{ fontSize: "40px" }}>
@@ -104,7 +105,10 @@ export const RecipeCard = ({ origin }) => {
             Fetching recipe information...
           </p>
         </div>
-      ) : fecthStatus == "error" && origin == "chatbot" ? (
+      ) : fecthStatus == "error" &&
+        (origin == "chatbot" ||
+          origin == "favourites" ||
+          origin == "filter") ? (
         <div className="bg-white text-center p-5 h-25">
           <h2 className="text-danger" style={{ fontSize: "40px" }}>
             Oops! Something went wrong...
@@ -113,7 +117,10 @@ export const RecipeCard = ({ origin }) => {
             We apologize for the inconvenience. Please try again later.
           </p>
         </div>
-      ) : fecthStatus == "success" && origin == "chatbot" ? (
+      ) : fecthStatus == "success" &&
+        (origin == "chatbot" ||
+          origin == "favourites" ||
+          origin == "filter") ? (
         <div
           className="card"
           style={{
@@ -142,8 +149,6 @@ export const RecipeCard = ({ origin }) => {
                 }}
               />
             </div>
-
-
 
             <div style={{ flex: "1" }}>
               <h2
@@ -187,20 +192,15 @@ export const RecipeCard = ({ origin }) => {
               className="col-sm-12 mb-3 mb-sm-0"
               style={{ marginLeft: "-20px" }}
             >
-              <div className="card" style={{ borderColor: "white",}}>
+              <div className="card" style={{ borderColor: "white" }}>
                 <div className="card-body" style={{ padding: "20px" }}>
                   <h5 className="card-title">COOKING TIME</h5>
-                  <p
-                    className="card-text"
-                    style={{ fontSize: "20px", }}
-                  >
+                  <p className="card-text" style={{ fontSize: "20px" }}>
                     {recipeInfo?.readyInMinutes}'
                   </p>
                 </div>
               </div>
             </div>
-
-
 
             <div
               className="col-sm-12 mb-3 mb-sm-0"
@@ -260,7 +260,7 @@ export const RecipeCard = ({ origin }) => {
           >
             <div
               className="card"
-              style={{ borderColor: "white", padding: "20px 20px 0 0" }}
+              style={{ borderColor: "white", padding: "30px 20px 0 0" }}
             >
               <h5 className="card-title" style={{ padding: "0 0 0 16px" }}>
                 PREPARATION
@@ -272,7 +272,10 @@ export const RecipeCard = ({ origin }) => {
                     return (
                       <li
                         className="list-group-item"
-                        style={{ padding: "5px 0 0 18px", borderColor:"white"  }}
+                        style={{
+                          padding: "5px 0 0 18px",
+                          borderColor: "white",
+                        }}
                       >
                         {index + 1}. {item.step}
                       </li>
@@ -292,8 +295,8 @@ export const RecipeCard = ({ origin }) => {
                 <svg
                   onClick={() => actions.deleteFavourite(recipeInfo.id)}
                   xmlns="http://www.w3.org/2000/svg"
-                  width="25"
-                  height="25"
+                  width="27"
+                  height="27"
                   fill="#E84A43"
                   className="bi bi-heart-fill"
                   viewBox="0 0 16 16"
@@ -313,8 +316,8 @@ export const RecipeCard = ({ origin }) => {
                     )
                   }
                   xmlns="http://www.w3.org/2000/svg"
-                  width="25"
-                  height="25"
+                  width="27"
+                  height="27"
                   fill="#E84A43"
                   class="bi bi-heart"
                   viewBox="0 0 16 16"
@@ -405,11 +408,9 @@ export const RecipeCard = ({ origin }) => {
               className="col-sm-12 mb-3 mb-sm-0"
               style={{ marginLeft: "-20px" }}
             >
-              <div className="card" style={{ borderColor: "white",}}>
+              <div className="card" style={{ borderColor: "white" }}>
                 <div className="card-body" style={{ padding: "20px" }}>
-                  <h5 className="card-title">
-                  COOKING TIME
-                  </h5>
+                  <h5 className="card-title">COOKING TIME</h5>
                   <p
                     className="card-text"
                     style={{ fontSize: "20px", paddingLeft: "0px" }}
@@ -418,7 +419,6 @@ export const RecipeCard = ({ origin }) => {
                   </p>
                 </div>
               </div>
-
             </div>
             <div
               className="col-sm-12 mb-3 mb-sm-0"
@@ -432,10 +432,9 @@ export const RecipeCard = ({ origin }) => {
                     margin: "20px 0 20px 0",
                   }}
                 >
-                  <h5 className="card-title">
-                    INGREDIENTS
-                  </h5>
-                  <ul style={{
+                  <h5 className="card-title">INGREDIENTS</h5>
+                  <ul
+                    style={{
                       margin: "20px 0 0 0",
                       display: "flex",
                       flexWrap: "wrap",
@@ -443,11 +442,22 @@ export const RecipeCard = ({ origin }) => {
                       flexDirection: "row",
                       alignItems: "center",
                       paddingLeft: "20px",
-                    }}>
-      {Array.isArray(store.ingredients) && store.ingredients.map((ingredient, index) => (
-        <li key={index} style={{ marginRight: "20px", marginBottom: "8px", width: "calc(50% - 20px)" }}>{ingredient}</li>
-      ))}
-    </ul>
+                    }}
+                  >
+                    {Array.isArray(store.ingredients) &&
+                      store.ingredients.map((ingredient, index) => (
+                        <li
+                          key={index}
+                          style={{
+                            marginRight: "20px",
+                            marginBottom: "8px",
+                            width: "calc(50% - 20px)",
+                          }}
+                        >
+                          {ingredient}
+                        </li>
+                      ))}
+                  </ul>
                 </div>
               </div>
             </div>
@@ -464,17 +474,17 @@ export const RecipeCard = ({ origin }) => {
             >
               <div
                 className="card"
-                style={{ borderColor: "white", padding: "20px 16px 0 0" }}
+                style={{ borderColor: "white", padding: "30px 16px 0 0" }}
               >
                 <h5 className="card-title" style={{ padding: "0 0 0 2px" }}>
                   PREPARATION
                 </h5>
                 <CookMode />
-                <ol className="list-group" style={{ marginTop: "20px", }}>
+                <ol className="list-group" style={{ marginTop: "20px" }}>
                   {analyzedInstructions.map((step, index) => (
                     <li
                       className="list-group-item"
-                      style={{ padding: "5px 0 0 5px", borderColor:"white" }}
+                      style={{ padding: "5px 0 0 5px", borderColor: "white" }}
                       key={index}
                     >
                       {step.number}. {step.step}
@@ -482,43 +492,47 @@ export const RecipeCard = ({ origin }) => {
                   ))}
                 </ol>
               </div>
-            <div
-              className="icon-container d-flex"
-              style={{
-                justifyContent: "flex-end",
-                padding: "50px 30px 30px 30px",
-              }}
+              <div
+                className="icon-container d-flex"
+                style={{
+                  justifyContent: "flex-end",
+                  padding: "50px 30px 30px 30px",
+                }}
               >
-              {store.favourites.find((item) => item.title == store.title) ? (
-                <svg
-                onClick={() => actions.deleteFavourite(store.id)}
-                xmlns="http://www.w3.org/2000/svg"
-                width="25"
-                height="25"
-                fill="#E84A43"
-                className="bi bi-heart-fill"
-                viewBox="0 0 16 16"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"
+                {store.favourites.find((item) => item.title == store.title) ? (
+                  <svg
+                    onClick={() => actions.deleteFavourite(store.id)}
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="27"
+                    height="27"
+                    fill="#E84A43"
+                    className="bi bi-heart-fill"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"
                     />
-                </svg>
-              ) : (
-                <svg
-                onClick={() =>
-                  actions.addFavourites(store.title, store.imageURL, store.id)
-                }
-                xmlns="http://www.w3.org/2000/svg"
-                width="25"
-                height="25"
-                fill="#E84A43"
-                class="bi bi-heart"
-                viewBox="0 0 16 16"
-                >
-                  <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
-                </svg>
-              )}
+                  </svg>
+                ) : (
+                  <svg
+                    onClick={() =>
+                      actions.addFavourites(
+                        store.title,
+                        store.imageURL,
+                        store.id
+                      )
+                    }
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="27"
+                    height="27"
+                    fill="#E84A43"
+                    class="bi bi-heart"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
+                  </svg>
+                )}
               </div>
             </div>
           </div>

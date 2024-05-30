@@ -13,8 +13,7 @@ const HomepageRecipe = ({ recipe, setOrigin }) => {
       let result = await actions.verifyAuthToken();
       if (result) {
         setAuthStatus("granted");
-      }
-      else {
+      } else {
         setAuthStatus("denied");
       }
     };
@@ -64,7 +63,12 @@ const HomepageRecipe = ({ recipe, setOrigin }) => {
             }}
             alt="Recipe"
             onClick={() => {
-              setOrigin("home");
+              if (store.filterStatus) {
+                setOrigin("filter");
+              } else {
+                setOrigin("home");
+              }
+
               navigate("/recipe/" + recipe.title);
             }}
             onMouseEnter={(e) => {
@@ -83,7 +87,7 @@ const HomepageRecipe = ({ recipe, setOrigin }) => {
             style={{
               paddingLeft: "50px",
               textAlign: "center",
-              fontSize: "30px", 
+              fontSize: "30px",
               maxWidth: "80%",
               height: "3em",
               textShadow: "2px 2px 4px rgba(0, 0, 0, 0.8)",
@@ -92,52 +96,57 @@ const HomepageRecipe = ({ recipe, setOrigin }) => {
             <strong>{recipe.title}</strong>
           </h5>
           {authStatus === "granted" ? (
-          store.favourites.find((item) => item.title === recipe.title) ? (
-            <svg
-              onClick={() => actions.deleteFavourite(recipe.id)}
-              xmlns="http://www.w3.org/2000/svg"
-              width="25"
-              height="25"
-              fill="#E84A43"
-              className="bi bi-heart-fill"
-              viewBox="0 0 16 16"
-            >
-              <path
-                fillRule="evenodd"
-                d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"
-              />
-            </svg>
+            store.favourites.find((item) => item.title === recipe.title) ? (
+              <svg
+                onClick={() => actions.deleteFavourite(recipe.id)}
+                xmlns="http://www.w3.org/2000/svg"
+                width="25"
+                height="25"
+                fill="#E84A43"
+                className="bi bi-heart-fill"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"
+                />
+              </svg>
+            ) : (
+              <svg
+                onClick={() =>
+                  actions.addFavourites(recipe.title, recipe.image, recipe.id)
+                }
+                xmlns="http://www.w3.org/2000/svg"
+                width="25"
+                height="25"
+                fill="#E84A43"
+                className="bi bi-heart"
+                viewBox="0 0 16 16"
+              >
+                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
+              </svg>
+            )
           ) : (
-            <svg
-              onClick={() => actions.addFavourites(recipe.title, recipe.image, recipe.id)}
-              xmlns="http://www.w3.org/2000/svg"
-              width="25"
-              height="25"
-              fill="#E84A43"
-              className="bi bi-heart"
-              viewBox="0 0 16 16"
-            >
-              <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
-            </svg>
-          )
-        ) : (
-          <>
-            <svg
-              id="notClickable"
-              xmlns="http://www.w3.org/2000/svg"
-              width="25"
-              height="25"
-              fill="#E84A43"
-              className="bi bi-heart"
-              viewBox="0 0 16 16"
-            >
-              <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
-            </svg>
-            <Tooltip anchorSelect="#notClickable" style={{fontSize:"20px"}}>
-              Sign in to save your favourite recipes!
-            </Tooltip>
-          </>
-        )}
+            <>
+              <svg
+                id="notClickable"
+                xmlns="http://www.w3.org/2000/svg"
+                width="25"
+                height="25"
+                fill="#E84A43"
+                className="bi bi-heart"
+                viewBox="0 0 16 16"
+              >
+                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
+              </svg>
+              <Tooltip
+                anchorSelect="#notClickable"
+                style={{ fontSize: "20px" }}
+              >
+                Sign in to save your favourite recipes!
+              </Tooltip>
+            </>
+          )}
         </div>
       </div>
     </div>

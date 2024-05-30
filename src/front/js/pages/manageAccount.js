@@ -91,12 +91,11 @@ export const ManageAccount = () => {
         </svg>
 	</div>
     <button type="button" className="btn btn-light mb-3 mt-4" onClick={handleUpdate} style={{ backgroundColor: "#273A4E", color: "white", width:"622px" }}>Update my Account</button>
-        {/* <button type="button" className="btn btn-light w-100" onClick={handleDelete} style={{ backgroundColor: "red", color: "white" }}>Delete my Account</button> */}
         <button type="button" className="btn btn-light" onClick={() => setShowModal(true)} style={{ backgroundColor: "#E84A43", color: "white", width:"622px" }}>Delete my Account</button>
 
 {showModal && (
-    <div className="modal-dialog modal-dialog-centered" style={{width:"622px" }}>
-        <div className="modal-content" >
+    <div className="modal-dialog modal-dialog-centered" style={{maxWidth:"700px", width:"625px", zIndex:"3", position:"absolute", top:"370px" }}>
+        <div className="modal-content">
             <div className="modal-header">
                 <h5 className="modal-title">Are you sure you want to delete your account?</h5>
                 <button type="button" className="btn-close" onClick={() => setShowModal(false)} aria-label="Close"></button>

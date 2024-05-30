@@ -113,7 +113,8 @@ def update():
 @jwt_required()
 def delete_account():
     # Get the current user
-    current_user_id = get_jwt_identity()
+    current_user_id = get_jwt_identity() 
+    print (current_user_id)
     user = User.query.filter_by(id=current_user_id).first()
 
     # Check if user exists

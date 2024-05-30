@@ -83,11 +83,15 @@ export const FilterCard = ({setShowFilterCard}) => {
         console.log(selectedDiet, selectedIngredient, selectedCuisine);
     }
 
-    return(<div className="card filter-card" style={{margin:"18px 0 0 45px",}}>
+    return(<div className="card filter-card" style={{margin:"18px 0 0 45px", border: "1px solid grey",
+            borderRadius: "5px",}}>
         <div className="buttons-section">
-            <button className="btn filter-button" type="button" onClick={handleShowDiets}>Diets</button>
-            <button className="btn filter-button" type="button" onClick={handleShowIngredients}>Exclude Ingredients</button>
-            <button className="btn filter-button" onClick={handleShowCuisine}>Cuisine</button>
+            <button className="btn filter-button" type="button" onClick={handleShowDiets} style={{border: "1px solid grey",
+            borderRadius: "5px",}}>Diets</button>
+            <button className="btn filter-button" type="button" onClick={handleShowIngredients} style={{border: "1px solid grey",
+            borderRadius: "5px",}}>Exclude Ingredients</button>
+            <button className="btn filter-button" onClick={handleShowCuisine} style={{border: "1px solid grey",
+            borderRadius: "5px",}}>Cuisine</button>
             </div>
         <div className="white-space-section">
         {showDiets && (
@@ -158,7 +162,7 @@ export const FilterCard = ({setShowFilterCard}) => {
                     )}
                 </ul>
                 )}
-            <button className="apply-filters-button" style={{ backgroundColor: "#273A4E", color: "white", borderRadius: '5px', display:"flex", alignContent:"center", fontSize:"20px", marginBottom:"5px"}} onClick={() => {actions.filterRecipes(selectedDiet, selectedIngredient, selectedCuisine); setShowFilterCard(false); navigate("/"); clearAllFilters()}}>Apply Filters</button>
+            <button className="apply-filters-button" style={{ backgroundColor: "#273A4E", color: "white", borderRadius: '5px', display:"flex", alignContent:"center", fontSize:"18px", marginBottom:"5px"}} onClick={() => {actions.filterRecipes(selectedDiet, selectedIngredient, selectedCuisine); setShowFilterCard(false); navigate("/"); clearAllFilters()}}>Apply Filters</button>
         </div>
     </div>
 )}
